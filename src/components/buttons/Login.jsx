@@ -7,7 +7,11 @@ export default function Login() {
     signIn("google");
   }
   return (
-    <Button onClick={handleClick} variant="ghost" className="w-10 text-base">
+    <Button
+      onClick={handleClick}
+      variant="ghost"
+      className="w-10 text-lg  text-white"
+    >
       Login
     </Button>
   );
