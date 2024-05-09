@@ -5,15 +5,23 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import Logout from "../buttons/Logout";
 import Image from "next/image";
+import { Pacifico } from "next/font/google";
+
+const pacifico = Pacifico({
+  weight: ["400"],
+  subsets: ["latin"],
+});
 
 export default async function Header() {
   const session = await getServerSession(authOptions);
   return (
     <div className=" mt-1  flex h-16 w-full flex-row  items-center   justify-between bg-white px-3 py-3   ">
-      <div className=" flex flex-row items-center justify-center gap-[2px]">
-        <span className="text-2xl font-semibold text-pink-700 ">C</span>
-        <span className="text-base font-semibold text-pink-600 ">
-          herry <span className="text-black">Glitz</span>
+      <div
+        className={`${pacifico.className} flex flex-row items-center justify-center gap-[1px]`}
+      >
+        <span className="text-3xl font-normal text-pink-700 ">C</span>
+        <span className="font text-base font-medium text-pink-600 ">
+          herry <span className="font-semibold text-black">Glitz</span>
         </span>
       </div>
 

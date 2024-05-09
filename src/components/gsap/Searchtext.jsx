@@ -12,30 +12,9 @@ import { AiOutlineDingding } from "react-icons/ai";
 
 gsap.registerPlugin(TextPlugin);
 export default function Searchtext() {
-  const timeline1 = gsap.timeline({ repeat: -1, repeatDelay: 1, yoyo: true });
   const timeline = gsap.timeline({ repeat: -1, repeatDelay: 0.5 });
 
   useGSAP(() => {
-    timeline1.to(
-      "#textt",
-      {
-        duration: 1,
-        text: "Fessions",
-        ease: "none",
-        color: "red",
-      },
-      "+=2",
-    );
-    timeline1.to(
-      "#textt",
-      {
-        duration: 1,
-        text: "Salon",
-        ease: "none",
-        color: "#cf19bc",
-      },
-      "+=2",
-    );
     timeline.fromTo(
       "#t1",
       {
@@ -218,14 +197,40 @@ export default function Searchtext() {
     // );
   });
   return (
-    <div className="w-full px-3">
-      <div className=" flex h-10 w-full flex-row items-center rounded-full bg-white/30  px-4 shadow-sm shadow-black ring-1 ring-white/50  ">
+    <div className="flex h-14 w-full  flex-row items-center justify-between  px-6 shadow-md shadow-black/20">
+      <div className=" flex h-10 w-full flex-row items-center rounded-full bg-white   px-2 shadow-sm shadow-black ring-1 ring-white/50  ">
         <IoSearch className="mr-3 h-6 w-6 text-pink-500  " />
-        <span>
-          <span className="text-black/60">Search for </span>
-          <span id="textt" className="text-base  font-semibold text-blue-700">
-            Citys
-          </span>
+        <span className="flex flex-row gap-8">
+          <span>Search for </span>
+          <div className="relative  flex items-center justify-center  p-2">
+            <span
+              id="t1"
+              className="absolute flex flex-row items-center gap-1 text-base  font-normal text-yellow-400 "
+            >
+              Spas
+              <FaSpa />
+            </span>
+            <span
+              id="t2"
+              className="absolute flex flex-row items-center justify-center  text-base font-normal text-blue-500  "
+            >
+              Parler
+              <MdOutlineGirl />
+            </span>
+            <span
+              id="t3"
+              className="absolute flex flex-row items-center justify-center gap-1 text-base font-normal text-orange-400  "
+            >
+              Salone <FaShop />
+            </span>
+            <span
+              id="t4"
+              className="absolute flex flex-row items-center  justify-center gap-1 text-base font-normal text-lime-600"
+            >
+              Tatoo
+              <AiOutlineDingding />
+            </span>
+          </div>
         </span>
       </div>
     </div>
