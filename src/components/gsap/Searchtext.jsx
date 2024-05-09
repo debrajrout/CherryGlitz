@@ -218,43 +218,14 @@ export default function Searchtext() {
     // );
   });
   return (
-    <div className="flex h-14 w-full  flex-row items-center justify-between  px-6 shadow-md shadow-black/20">
-      <div className=" flex h-10 w-[260px] flex-row items-center rounded-full bg-white   px-2 shadow-sm shadow-black ring-1 ring-white/50  ">
+    <div className="w-full px-3">
+      <div className=" flex h-10 w-full flex-row items-center rounded-full bg-white/30  px-4 shadow-sm shadow-black ring-1 ring-white/50  ">
         <IoSearch className="mr-3 h-6 w-6 text-pink-500  " />
         <span>
           <span className="text-black/60">Search for </span>
           <span id="textt" className="text-base  font-semibold text-blue-700">
             Citys
           </span>
-        </span>
-      </div>
-      <div className="relative  flex h-10 w-[108px] items-center justify-center rounded-full bg-white p-2 shadow-sm shadow-black/50">
-        <span
-          id="t1"
-          className="absolute flex flex-row items-center gap-1 text-xl  font-normal text-yellow-400 "
-        >
-          Spas
-          <FaSpa />
-        </span>
-        <span
-          id="t2"
-          className="absolute flex flex-row items-center justify-center  text-xl font-normal text-blue-500  "
-        >
-          Parler
-          <MdOutlineGirl />
-        </span>
-        <span
-          id="t3"
-          className="absolute flex flex-row items-center justify-center gap-1 text-xl font-normal text-orange-400  "
-        >
-          Salone <FaShop />
-        </span>
-        <span
-          id="t4"
-          className="absolute flex flex-row items-center  justify-center gap-1 text-xl font-normal text-lime-600"
-        >
-          Tatoo
-          <AiOutlineDingding />
         </span>
       </div>
     </div>

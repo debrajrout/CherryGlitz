@@ -9,16 +9,10 @@ import Image from "next/image";
 export default async function Header() {
   const session = await getServerSession(authOptions);
   return (
-    <div className="bg  mt-1  flex h-16 w-full flex-row  items-center   justify-between bg-white px-3 py-3   ">
-      <div className="relative flex h-full flex-row items-center ">
-        <Image
-          width={47}
-          height={45}
-          alt="Logo"
-          src="/images/logof.png"
-          className="absolute mb-2"
-        />
-        <span className="ml-10 mt-[5px] text-base font-semibold text-pink-600 ">
+    <div className=" mt-1  flex h-16 w-full flex-row  items-center   justify-between bg-white px-3 py-3   ">
+      <div className=" flex flex-row items-center justify-center gap-[2px]">
+        <span className="text-2xl font-semibold text-pink-700 ">C</span>
+        <span className="text-base font-semibold text-pink-600 ">
           herry <span className="text-black">Glitz</span>
         </span>
       </div>
