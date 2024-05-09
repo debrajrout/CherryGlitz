@@ -10,7 +10,7 @@ export default function Login() {
     <Button
       onClick={handleClick}
       variant="ghost"
-      className="w-10 text-lg  text-white"
+      className="w-10 text-lg  text-gray-900"
     >
       Login
     </Button>
