@@ -198,7 +198,7 @@ export default function Searchtext() {
   });
   return (
     <div className="flex h-14 w-full  flex-row items-center justify-between  px-6 shadow-md shadow-black/20">
-      <div className=" flex h-10 w-full flex-row items-center rounded-full bg-white   px-2 shadow-sm shadow-black ring-1 ring-white/50  ">
+      <div className=" flex h-10 w-full flex-row items-center rounded-md bg-white   px-2 shadow-sm shadow-black ring-1 ring-white/50  ">
         <IoSearch className="mr-3 h-6 w-6 text-pink-500  " />
         <span className="flex flex-row gap-8">
           <span>Search for </span>
