@@ -15,9 +15,9 @@ import Image from "next/image";
 export default function Home() {
   return (
     <main className=" bg-black px-3 ">
+      <Header />
       <SparklesPreview />
       <Searchbar />
-      <Header />
       <CatagoryHero />
       <FlipWordsDemo />
       <LayoutGridDemo />

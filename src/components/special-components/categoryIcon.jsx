@@ -11,15 +11,15 @@ export function MovingBorderDemo() {
           <Image
             src="/category/hairdresser.png"
             alt=""
-            width={40}
-            height={40}
+            width={50}
+            height={50}
           />
         </Button>
         <span className="text-white">Salon</span>
       </div>
       <div className="flex flex-col items-center justify-center">
         <Button borderRadius="1.55rem">
-          <Image src="/category/makeup.png" alt="" width={40} height={40} />
+          <Image src="/category/makeup.png" alt="" width={50} height={50} />
         </Button>
         <span className="text-white">Salon</span>
       </div>
@@ -28,21 +28,21 @@ export function MovingBorderDemo() {
           <Image
             src="/category/tattoo-studio.png"
             alt=""
-            width={40}
-            height={40}
+            width={50}
+            height={50}
           />
         </Button>
         <span className="text-white">Salon</span>
       </div>
       <div className="flex flex-col items-center justify-center">
         <Button borderRadius="1.55rem">
-          <Image src="/category/massage.png" alt="" width={40} height={40} />
+          <Image src="/category/massage.png" alt="" width={50} height={50} />
         </Button>
         <span className="text-white">Salon</span>
       </div>
       <div className="flex flex-col items-center justify-center">
         <Button borderRadius="1.55rem">
-          <Image src="/category/spa.png" alt="" width={40} height={40} />
+          <Image src="/category/spa.png" alt="" width={50} height={50} />
         </Button>
         <span className="text-white">Salon</span>
       </div>

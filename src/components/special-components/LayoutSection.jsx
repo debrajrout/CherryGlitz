@@ -4,7 +4,7 @@ import { LayoutGrid } from "../ui/layout-grid";
 
 export function LayoutGridDemo() {
   return (
-    <div className="h-screen w-full py-4">
+    <div className="h-screen w-full py-2">
       <LayoutGrid cards={cards} />
     </div>
   );
@@ -15,7 +15,7 @@ const SkeletonOne = () => {
     <div>
       <p className="text-xl font-bold text-yellow-500">House in the woods</p>
       <p className="text-base font-normal text-white"></p>
-      <p className=" max-w-lg text-base font-normal text-neutral-200">
+      <p className=" max-w-lg text-xs font-normal text-neutral-200">
         A serene and tranquil retreat, this house in the woods offers a peaceful
       </p>
     </div>
@@ -29,7 +29,7 @@ const SkeletonTwo = () => {
         House above the clouds
       </p>
       <p className="text-base font-normal text-white"></p>
-      <p className=" max-w-lg text-base font-normal text-neutral-200">
+      <p className=" max-w-lg text-xs font-normal text-neutral-200">
         Perched high above the world, this house offers breathtaking views
       </p>
     </div>
@@ -40,7 +40,7 @@ const SkeletonThree = () => {
     <div>
       <p className="text-xl font-bold text-yellow-500">Greens all over</p>
       <p className="text-base font-normal text-white"></p>
-      <p className=" max-w-lg text-base font-normal text-neutral-200">
+      <p className=" max-w-lg text-xs font-normal text-neutral-200">
         A house surrounded by greenery and nature&apos;s beauty. It&apos;s the
       </p>
     </div>
@@ -51,7 +51,7 @@ const SkeletonFour = () => {
     <div>
       <p className="text-xl font-bold text-yellow-500">Rivers are serene</p>
       <p className="text-base font-normal text-white"></p>
-      <p className=" max-w-lg text-base font-normal text-neutral-200">
+      <p className=" max-w-lg text-xs font-normal text-neutral-200">
         A house by the river is a place of peace and tranquility. It&apos;s the
       </p>
     </div>

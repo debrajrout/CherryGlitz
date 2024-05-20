@@ -1,7 +1,8 @@
+"use client";
 import React from "react";
 import { FlipWords } from "../ui/flip-words";
 import { MdDoubleArrow } from "react-icons/md";
-
+import { motion } from "framer-motion";
 export function FlipWordsDemo() {
   const words = [
     "Tattoo and Piercing",
@@ -12,7 +13,7 @@ export function FlipWordsDemo() {
   ];
 
   return (
-    <div className="mt-3 flex flex-col items-center justify-center ">
+    <div className="mt-3 flex h-[77px] flex-col items-center justify-center ">
       <div className="mx-auto text-2xl font-normal text-white">
         Best
         <FlipWords words={words} /> <br />
@@ -21,7 +22,19 @@ export function FlipWordsDemo() {
         <span className="w-full  text-center font-serif text-lg font-medium text-yellow-300">
           Of your city
         </span>
-        <MdDoubleArrow className="ml-4 mt-1 h-6 w-6 text-white" />
+
+        <motion.div
+          animate={{
+            translateX: [0, -3, 0],
+          }}
+          transition={{
+            duration: 0.7,
+            ease: "linear",
+            repeat: Infinity,
+          }}
+        >
+          <MdDoubleArrow className="ml-4 mt-1 h-6 w-6 text-white" />
+        </motion.div>
       </div>
     </div>
   );

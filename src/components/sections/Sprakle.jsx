@@ -26,7 +26,6 @@ export function SparklesPreview() {
         />
 
         {/* Radial Gradient to prevent sharp edges */}
-        <div className="absolute inset-0 h-full w-full bg-black [mask-image:radial-gradient(350px_200px_at_top,transparent_20%,white)]"></div>
       </div>
     </div>
   );
