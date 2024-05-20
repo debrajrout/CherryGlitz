@@ -6,7 +6,8 @@ import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import Logout from "../buttons/Logout";
 import Image from "next/image";
 import { Pacifico } from "next/font/google";
-import { MdOutlineMenuOpen } from "react-icons/md";
+
+import CartSection from "./CartSection";
 
 const pacifico = Pacifico({
   weight: ["400"],
@@ -16,33 +17,30 @@ const pacifico = Pacifico({
 export default async function Header() {
   const session = await getServerSession(authOptions);
   return (
-    <div className=" mt-1  flex h-16 w-full flex-row  items-center   justify-between bg-white px-3 py-3   ">
-      <div
-        className={`${pacifico.className} flex flex-row items-center justify-center gap-[1px]`}
-      >
-        <MdOutlineMenuOpen className="mr-1 h-7 w-7 " />
-        <span className="text-3xl font-normal text-pink-700 ">C</span>
-        <span className="font text-base font-medium text-pink-600 ">
-          herry <span className="font-semibold text-black">Glitz</span>
+    <div className="fixed  left-0 right-0 top-0 z-50 flex h-16 w-full flex-row items-center justify-between bg-black px-3 py-3 shadow-sm shadow-white/50  ">
+      <div className="flex flex-row items-center justify-center ">
+        <span className="mb-[1px] text-3xl font-semibold  text-blue-700">
+          C
+        </span>
+        <span className="font text-base font-bold text-blue-800 ">
+          herry
+          <span className="font-sans text-xl font-bold text-orange-400">
+            Glitz
+          </span>
         </span>
       </div>
 
-      <div className="mr-1 flex flex-row items-center justify-center gap-3 ">
+      <div className="flex flex-row items-center justify-center gap-4 ">
+        <CartSection />
         {session ? (
           <>
-            <span className="text-sm font-medium text-slate-600">
-              {session?.user?.name}
-            </span>
             <Logout url={session?.user?.image} />
           </>
         ) : (
           <>
-            <CgProfile className="h-6 w-6 text-white" />
             <Login />
           </>
         )}
-
-        <div className="hidden h-8 w-8 rounded-full bg-black"></div>
       </div>
     </div>
   );

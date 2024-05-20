@@ -9,6 +9,7 @@ import { FaSpa } from "react-icons/fa";
 import { FaShop } from "react-icons/fa6";
 import { MdOutlineGirl } from "react-icons/md";
 import { AiOutlineDingding } from "react-icons/ai";
+import { MdOutlineAddLocationAlt } from "react-icons/md";
 
 gsap.registerPlugin(TextPlugin);
 export default function Searchtext() {
@@ -76,7 +77,6 @@ export default function Searchtext() {
       "#t4",
       {
         y: 20,
-
         opacity: 0,
       },
       {
@@ -91,147 +91,46 @@ export default function Searchtext() {
       { y: -10, opacity: 0, duration: 1, ease: "power1.out" },
       "+=1",
     );
-    // timeline1.fromTo(
-    //   "#s1",
-    //   {
-    //     scale: 0,
-    //     rotation: 0,
-    //     opacity: 0,
-    //     borderRadius: "0%",
-    //   },
-    //   {
-    //     borderRadius: "20%",
-    //     duration: 1,
-    //     ease: "power4.out",
-    //     opacity: 1,
-    //     scale: 1,
-    //   },
-    // );
-    // timeline1.to(
-    //   "#s1",
-    //   {
-    //     opacity: 0,
-    //     scale: 0,
-    //     duration: 1,
-    //     ease: "power4.out",
-    //   },
-    //   "+=2",
-    // );
-    // timeline1.fromTo(
-    //   "#s2",
-    //   {
-    //     scale: 0,
-    //     rotation: 0,
-    //     opacity: 0,
-    //     borderRadius: "0%",
-    //   },
-    //   {
-    //     borderRadius: "20%",
-    //     duration: 1,
-    //     ease: "power4.out",
-    //     opacity: 1,
-    //     scale: 1,
-    //   },
-    // );
-    // timeline1.to(
-    //   "#s2",
-    //   {
-    //     opacity: 0,
-    //     scale: 0,
-    //     duration: 1,
-    //     ease: "power4.out",
-    //   },
-    //   "+=1",
-    // );
-    // timeline1.fromTo(
-    //   "#s3",
-    //   {
-    //     scale: 0,
-    //     rotation: 0,
-    //     opacity: 0,
-    //     borderRadius: "0%",
-    //   },
-    //   {
-    //     borderRadius: "20%",
-    //     duration: 1,
-    //     ease: "power4.out",
-    //     opacity: 1,
-    //     scale: 1,
-    //   },
-    // );
-    // timeline1.to(
-    //   "#s3",
-    //   {
-    //     opacity: 0,
-    //     scale: 0,
-    //     duration: 1,
-    //     ease: "power4.out",
-    //   },
-    //   "+=1",
-    // );
-    // timeline1.fromTo(
-    //   "#s4",
-    //   {
-    //     scale: 0,
-    //     rotation: 0,
-    //     opacity: 0,
-    //     borderRadius: "0%",
-    //   },
-    //   {
-    //     borderRadius: "20%",
-    //     duration: 1,
-    //     ease: "power4.out",
-    //     opacity: 1,
-    //     scale: 1,
-    //   },
-    // );
-    // timeline1.to(
-    //   "#s4",
-    //   {
-    //     opacity: 0,
-    //     scale: 0,
-    //     duration: 1,
-    //     ease: "power4.out",
-    //   },
-    //   "+=1",
-    // );
   });
   return (
-    <div className="flex h-14 w-full  flex-row items-center justify-between  px-6 shadow-md shadow-black/20">
-      <div className=" flex h-10 w-full flex-row items-center rounded-md bg-white   px-2 shadow-sm shadow-black ring-1 ring-white/50  ">
-        <IoSearch className="mr-3 h-6 w-6 text-pink-500  " />
+    <div className="flex h-14 w-full  flex-row items-center justify-between  px-2 ">
+      <div className=" flex h-10 w-full flex-row items-center justify-between rounded-full bg-white/10  px-2 shadow-sm shadow-black ring-1 ring-white/30  ">
+        <IoSearch className=" ml-2 h-6 w-6 text-pink-500 " />
         <span className="flex flex-row gap-8">
-          <span>Search for </span>
+          <span className="mr-1 text-xl font-light text-white/65">
+            Search for
+          </span>
           <div className="relative  flex items-center justify-center  p-2">
             <span
               id="t1"
-              className="absolute flex flex-row items-center gap-1 text-base  font-normal text-yellow-400 "
+              className="absolute flex flex-row items-center gap-1 text-base  font-normal text-yellow-400  opacity-0 "
             >
               Spas
               <FaSpa />
             </span>
             <span
               id="t2"
-              className="absolute flex flex-row items-center justify-center  text-base font-normal text-blue-500  "
+              className="absolute flex flex-row items-center justify-center  text-base font-normal text-blue-500  opacity-0 "
             >
               Parler
               <MdOutlineGirl />
             </span>
             <span
               id="t3"
-              className="absolute flex flex-row items-center justify-center gap-1 text-base font-normal text-orange-400  "
+              className="absolute flex flex-row items-center justify-center gap-1 text-base font-normal text-orange-400  opacity-0 "
             >
               Salone <FaShop />
             </span>
             <span
               id="t4"
-              className="absolute flex flex-row items-center  justify-center gap-1 text-base font-normal text-lime-600"
+              className="absolute flex flex-row items-center  justify-center gap-1 text-base font-normal text-lime-600 opacity-0"
             >
               Tatoo
               <AiOutlineDingding />
             </span>
           </div>
         </span>
+        <MdOutlineAddLocationAlt className="mr-2 h-6 w-6 text-blue-700" />
       </div>
     </div>
   );

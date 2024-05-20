@@ -12,12 +12,19 @@ import Searchtext from "./gsap/Searchtext";
 
 export default function Searchbar() {
   return (
-    <div className="w-full bg-transparent bg-white ">
+    <div className=" w-full ">
       <Popover>
         <PopoverTrigger className="w-full">
           <Searchtext />
         </PopoverTrigger>
-        <PopoverContent>Place content for the popover here.</PopoverContent>
+        <PopoverContent>
+          <div className="h-96 w-full bg-slate-600">jdflskl</div>
+          <div className="h-96 w-full bg-slate-600">jdflskl</div>
+          <div className="h-96 w-full bg-slate-600">jdflskl</div>
+          <div className="h-96 w-full bg-slate-600">jdflskl</div>
+          <div className="h-96 w-full bg-slate-600">jdflskl</div>
+          <div className="h-96 w-full bg-slate-600">jdflskl</div>
+        </PopoverContent>
       </Popover>
     </div>
   );

@@ -8,6 +8,12 @@ const nextConfig = {
       {
         hostname: "linky.s3.amazonaws.com",
       },
+      {
+        hostname: "cdn.builder.io",
+      },
+      {
+        hostname: "images.unsplash.com",
+      },
     ],
   },
 };

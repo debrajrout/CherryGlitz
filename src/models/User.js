@@ -5,6 +5,8 @@ const UserSchema = new Schema({
   email: String,
   image: String,
   emailVerified: Date,
+  location: String,
+  liked: Array,
 });
 
 export const User = models?.User || model("User", UserSchema);
