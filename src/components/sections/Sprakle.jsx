@@ -2,12 +2,13 @@
 import React from "react";
 import { SparklesCore } from "../ui/sparkles";
 import { MovingBorderDemo } from "../special-components/categoryIcon";
-import { TypewriterEffectSmoothDemo } from "../special-components/Text";
 
 export function SparklesPreview() {
   return (
-    <div className="mt-16 flex  w-full flex-col items-center justify-center overflow-hidden rounded-md bg-black">
-      <TypewriterEffectSmoothDemo />
+    <div className="flex  w-full flex-col items-center justify-center overflow-hidden  bg-black">
+      {/* <span className="text-xl font-normal text-white">
+        Our top <span className="text-lime-400">category</span>
+      </span> */}
       <div className="relative h-28 w-full ">
         {/* Gradients */}
         <div className="absolute inset-x-20 top-0 h-[3px]  bg-gradient-to-r from-transparent via-indigo-500 to-transparent blur-sm" />
@@ -20,9 +21,9 @@ export function SparklesPreview() {
           background="transparent"
           minSize={0.4}
           maxSize={1}
-          particleDensity={1200}
+          particleDensity={2000}
           className="absolute top-0 h-full w-full"
-          particleColor="#D9DF87"
+          particleColor="#1E90FF"
         />
 
         {/* Radial Gradient to prevent sharp edges */}

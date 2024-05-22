@@ -5,16 +5,16 @@ import { MdDoubleArrow } from "react-icons/md";
 import { motion } from "framer-motion";
 export function FlipWordsDemo() {
   const words = [
-    "Tattoo and Piercing",
-    "Men’s and Unisex Salon",
-    "Beauty Parlour",
-    "Massage Parlour",
-    "Spa Centre",
+    "Tattoo&Piercing",
+    "Salon",
+    "BeautyParlour",
+    "MassageParlour",
+    "SpaCentre",
   ];
 
   return (
-    <div className="mt-3 flex h-[77px] flex-col items-center justify-center ">
-      <div className="mx-auto text-2xl font-normal text-white">
+    <div className=" flex h-[77px] flex-col items-center justify-start bg-black/90 ">
+      <div className="mx-auto max-h-10 overflow-hidden text-2xl font-normal text-white">
         Best
         <FlipWords words={words} /> <br />
       </div>

@@ -17,7 +17,7 @@ const pacifico = Pacifico({
 export default async function Header() {
   const session = await getServerSession(authOptions);
   return (
-    <div className="fixed  left-0 right-0 top-0 z-50 flex h-16 w-full flex-row items-center justify-between bg-black px-3 py-3 shadow-sm shadow-white/50  ">
+    <div className="fixed  left-0 right-0 top-0 z-10 flex h-16 w-full flex-row items-center justify-between  bg-white px-3 py-3 shadow-sm shadow-black/50 ">
       <div className="flex flex-row items-center justify-center ">
         <span className="mb-[1px] text-3xl font-semibold  text-blue-700">
           C

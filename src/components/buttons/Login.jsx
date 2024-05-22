@@ -9,7 +9,7 @@ export default function Login() {
   }
   return (
     <Button onClick={handleClick} variant="ghost" className=" rounded-full ">
-      <CgProfile className=" h-7 w-7 text-black" />
+      <CgProfile className=" h-7 w-7 text-white" />
     </Button>
   );
 }

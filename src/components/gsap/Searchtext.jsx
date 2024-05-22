@@ -93,43 +93,43 @@ export default function Searchtext() {
     );
   });
   return (
-    <div className="flex h-14 w-full  flex-row items-center justify-between  px-2 ">
-      <div className=" flex h-10 w-full flex-row items-center justify-between rounded-full bg-white/10  px-2 shadow-sm shadow-black ring-1 ring-white/30  ">
-        <IoSearch className=" ml-2 h-6 w-6 text-pink-500 " />
-        <span className="flex flex-row gap-8">
-          <span className="mr-1 text-xl font-light text-white/65">
+    <div className="flex h-16 w-full  flex-row items-center justify-between  px-2 ">
+      <div className=" flex h-10 w-full flex-row items-center justify-between rounded-full bg-white/90  px-2 shadow-sm shadow-sky-500 ring-1 ring-sky-400  ">
+        <div className="flex flex-row gap-2">
+          <IoSearch className=" ml-2 mt-1 h-6 w-6 text-pink-500 " />
+          <span className="mr-5 text-lg font-semibold text-black/60">
             Search for
           </span>
-          <div className="relative  flex items-center justify-center  p-2">
-            <span
+          <div className="relative ml-2 flex items-center justify-center  p-2">
+            <div
               id="t1"
               className="absolute flex flex-row items-center gap-1 text-base  font-normal text-yellow-400  opacity-0 "
             >
               Spas
               <FaSpa />
-            </span>
-            <span
+            </div>
+            <div
               id="t2"
               className="absolute flex flex-row items-center justify-center  text-base font-normal text-blue-500  opacity-0 "
             >
               Parler
               <MdOutlineGirl />
-            </span>
-            <span
+            </div>
+            <div
               id="t3"
               className="absolute flex flex-row items-center justify-center gap-1 text-base font-normal text-orange-400  opacity-0 "
             >
               Salone <FaShop />
-            </span>
-            <span
+            </div>
+            <div
               id="t4"
               className="absolute flex flex-row items-center  justify-center gap-1 text-base font-normal text-lime-600 opacity-0"
             >
-              Tatoo
+              Tatoos
               <AiOutlineDingding />
-            </span>
+            </div>
           </div>
-        </span>
+        </div>
         <MdOutlineAddLocationAlt className="mr-2 h-6 w-6 text-blue-700" />
       </div>
     </div>
