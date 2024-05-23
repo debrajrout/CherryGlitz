@@ -26,13 +26,13 @@ const ImageSlider = () => {
   }, []);
 
   return (
-    <div className="relative  h-72 w-full overflow-hidden bg-black py-3 shadow-md shadow-black/50">
-      <div className="absolute bottom-0 left-0 right-0 z-[2] mx-[15%] mb-4 flex list-none justify-center gap-3 overflow-hidden rounded-lg  p-0">
+    <div className="relative  h-72 w-full overflow-hidden bg-white/90 py-3 shadow-sm shadow-black/50">
+      <div className="absolute bottom-0 left-0 right-0 z-[2] mx-[15%] mb-4 flex list-none justify-center gap-3 overflow-hidden   p-0">
         {images.map((_, index) => (
           <button
             key={index}
             type="button"
-            className={`duration-[600ms] ease-[cubic-bezier(0.25,0.1,0.25,1.0)] mx-[3px] box-content h-3 w-3  cursor-pointer rounded-full   border-transparent bg-white opacity-50 transition-opacity motion-reduce:transition-none ${index === currentIndex ? "opacity-100" : ""}`}
+            className={`duration-[600ms] ease-[cubic-bezier(0.25,0.1,0.25,1.0)] mx-[3px] box-content h-3 w-3  cursor-pointer rounded-full   border-transparent bg-black opacity-50 transition-opacity motion-reduce:transition-none ${index === currentIndex ? "opacity-100" : ""}`}
             onClick={() => setCurrentIndex(index)}
             aria-label={`Slide ${index + 1}`}
           />
@@ -45,7 +45,7 @@ const ImageSlider = () => {
           style={{ transform: `translateX(-${currentIndex * 100}%)` }}
         >
           {images.map((image, index) => (
-            <div key={index} className="w-full flex-shrink-0">
+            <div key={index} className="w-full flex-shrink-0 overflow-hidden ">
               <Image
                 src={image}
                 alt={`Slide ${index + 1}`}

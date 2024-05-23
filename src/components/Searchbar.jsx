@@ -12,7 +12,7 @@ import Searchtext from "./gsap/Searchtext";
 
 export default function Searchbar() {
   return (
-    <div className=" mt-[70px] w-full  ">
+    <div className=" mt-[65px] w-full  ">
       <Popover>
         <PopoverTrigger className="w-full">
           <Searchtext />

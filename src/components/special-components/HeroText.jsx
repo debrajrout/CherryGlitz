@@ -13,13 +13,13 @@ export function FlipWordsDemo() {
   ];
 
   return (
-    <div className=" flex h-[77px] flex-col items-center justify-start bg-black/90 ">
-      <div className="mx-auto max-h-10 overflow-hidden text-2xl font-normal text-white">
+    <div className=" mt-3 flex h-[77px] flex-col items-center justify-start bg-neutral-300 ">
+      <div className="mx-auto max-h-10 overflow-hidden text-2xl  font-semibold text-black/90">
         Best
         <FlipWords words={words} /> <br />
       </div>
       <div className="flex flex-row items-center justify-center ">
-        <span className="w-full  text-center font-serif text-lg font-medium text-yellow-300">
+        <span className="w-full  text-center   text-lg font-semibold text-blue-800">
           Of your city
         </span>
 
@@ -33,7 +33,7 @@ export function FlipWordsDemo() {
             repeat: Infinity,
           }}
         >
-          <MdDoubleArrow className="ml-4 mt-1 h-6 w-6 text-white" />
+          <MdDoubleArrow className="ml-4 mt-1 h-6 w-6 text-black" />
         </motion.div>
       </div>
     </div>
