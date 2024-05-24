@@ -6,7 +6,6 @@ import FinalCity from "@/components/city/FinalCity";
 
 import Footer from "@/components/footer/Footer";
 import CatagoryHero from "@/components/sections/CatagoryHero";
-import Header from "@/components/sections/Header";
 
 import { FlipWordsDemo } from "@/components/special-components/HeroText";
 

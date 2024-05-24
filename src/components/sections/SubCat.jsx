@@ -3,8 +3,8 @@ import React from "react";
 
 const images1 = [
   "/category/a (1).png",
-  "/category/a (2).png",
-  "/category/a (3).png",
+  "/category/haircutg.png",
+  "/category/groomg.png",
   "/category/a (4).png",
   "/category/a (5).png",
   "/category/a (6).png",
@@ -15,16 +15,14 @@ const images1 = [
 ];
 
 const name1 = [
-  "dskjh jhfds",
-  "dsfcx cxczds",
-  "dsfds fvvds",
-  "dsfs awdads",
-  "daSAs sfds",
-  "dsfdd sss",
-  "dsdd fds",
-  "dsfsd fxz xzxzs",
-  "dsfsdf shj gdghfb",
-  "dsf sdfshjhg dghfb",
+  "Radiant Makeup",
+  "Haircuts styling",
+  "Hair Grooming",
+  "Waxing Threading",
+  "SkinCare BodyCare",
+  "Manicure Padicure",
+  "Mehendi BodyArt",
+  "EyeCare Eyelash",
 ];
 
 const name2 = [
@@ -53,11 +51,11 @@ const images2 = [
 export default function SubCat() {
   return (
     <div className="flex flex-col gap-4 px-1">
-      <div className="flex flex-row items-center gap-3 overflow-x-auto ">
+      <div className="flex flex-row items-center gap-5 overflow-x-auto ">
         {images1.map((image, index) => (
           <div
             key={index}
-            className="flex h-[100px]   flex-col items-center justify-between   p-1"
+            className="flex    flex-col items-center   gap-1  p-1"
           >
             <Image
               src={image}
@@ -66,18 +64,15 @@ export default function SubCat() {
               height={100}
               className=" object-cover "
             />
-            <span className="w-10 text-wrap text-center text-xs font-medium text-black">
+            <span className="w-10  text-balance text-center text-xs font-semibold text-black">
               {name1[index]}
             </span>
           </div>
         ))}
       </div>
-      <div className="flex flex-row items-center gap-3 overflow-x-auto">
+      <div className="flex flex-row items-center gap-5 overflow-x-auto">
         {images2.map((image, index) => (
-          <div
-            key={index}
-            className="flex h-[100px]   flex-col items-center justify-between   p-1"
-          >
+          <div key={index} className="flex    flex-col items-center gap-1 p-1">
             <Image
               src={image}
               alt="category"
@@ -85,7 +80,7 @@ export default function SubCat() {
               height={100}
               className=" object-cover "
             />
-            <span className="w-10 text-wrap text-center text-xs font-medium text-black">
+            <span className="w-10 text-wrap text-center text-xs font-semibold text-black">
               {name2[index]}
             </span>
           </div>
