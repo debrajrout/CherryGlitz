@@ -14,7 +14,7 @@ import City from "@/components/city/city";
 
 export default function Home() {
   return (
-    <main className=" bg-white  ">
+    <main>
       <Searchbar />
       <SubCat />
       <CatagoryHero />

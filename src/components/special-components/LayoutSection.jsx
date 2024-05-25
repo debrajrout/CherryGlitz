@@ -4,7 +4,7 @@ import React, { useState, useRef, useEffect } from "react";
 
 export function LayoutGridDemo() {
   return (
-    <div className=" -mt-[7px] flex h-48 w-full flex-row items-center gap-2 overflow-x-auto bg-neutral-300 px-2">
+    <div className="mt-4 flex h-48 w-full flex-row items-center gap-2 overflow-x-auto bg-neutral-300 px-2">
       <div className="flex h-44 w-1/3 flex-col gap-1  rounded-md bg-white p-2 ">
         <div className="h-22 w-full overflow-hidden rounded-lg shadow-md  shadow-black">
           <Image

@@ -13,7 +13,7 @@ export function FlipWordsDemo() {
   ];
 
   return (
-    <div className=" flex h-[70px] flex-col items-center justify-start bg-black/25 ">
+    <div className=" flex h-[60px] flex-col items-center justify-start bg-black/25 ">
       <div className="mx-auto max-h-10 overflow-hidden text-2xl  font-semibold text-black">
         Best
         <FlipWords words={words} /> <br />

@@ -86,47 +86,50 @@ const additionalImages = [
 
 export default function SubCat() {
   return (
-    <div className="flex flex-col gap-4 px-1">
-      <div className="scrollbar-hide flex flex-row items-center gap-6 overflow-x-auto">
-        {images.map(({ src, name, url }, index) => (
-          <Link
-            href={url}
-            key={index}
-            className="flex flex-col items-center gap-1 p-1"
-          >
-            <Image
-              src={src}
-              alt="category"
-              width={100}
-              height={100}
-              className="object-cover"
-            />
-            <span className="w-10 text-balance text-center text-xs font-semibold text-black">
-              {name}
-            </span>
-          </Link>
-        ))}
+    <div className="flex flex-row gap-2 px-1 py-1">
+      <div className="flex  w-4/5 flex-col gap-4 rounded-lg  px-1 ring-1 ring-black">
+        <div className="scrollbar-hide flex flex-row items-center gap-6 overflow-x-auto">
+          {images.map(({ src, name, url }, index) => (
+            <Link
+              href={url}
+              key={index}
+              className="flex flex-col items-center gap-1 p-1"
+            >
+              <Image
+                src={src}
+                alt="category"
+                width={100}
+                height={100}
+                className="object-cover"
+              />
+              <span className="w-10 text-balance text-center text-xs font-semibold text-black">
+                {name}
+              </span>
+            </Link>
+          ))}
+        </div>
+        <div className="scrollbar-hide flex flex-row items-center gap-6 overflow-x-auto">
+          {additionalImages.map(({ src, name, url }, index) => (
+            <Link
+              href={url}
+              key={index}
+              className="flex flex-col items-center gap-1 p-1"
+            >
+              <Image
+                src={src}
+                alt="category"
+                width={100}
+                height={100}
+                className="object-cover"
+              />
+              <span className="w-10 text-wrap text-center text-xs font-semibold text-black">
+                {name}
+              </span>
+            </Link>
+          ))}
+        </div>
       </div>
-      <div className="scrollbar-hide flex flex-row items-center gap-6 overflow-x-auto">
-        {additionalImages.map(({ src, name, url }, index) => (
-          <Link
-            href={url}
-            key={index}
-            className="flex flex-col items-center gap-1 p-1"
-          >
-            <Image
-              src={src}
-              alt="category"
-              width={100}
-              height={100}
-              className="object-cover"
-            />
-            <span className="w-10 text-wrap text-center text-xs font-semibold text-black">
-              {name}
-            </span>
-          </Link>
-        ))}
-      </div>
+      <div className="w-1/5 rounded-lg ring-1 ring-black"></div>
     </div>
   );
 }
