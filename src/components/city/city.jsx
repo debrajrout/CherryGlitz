@@ -2,7 +2,7 @@ import Image from "next/image";
 
 const City = () => {
   return (
-    <div className="flex w-full flex-row items-center overflow-x-auto bg-yellow-300/40 px-1 py-2">
+    <div className="flex w-full flex-row items-center overflow-x-auto bg-black/25 px-1 py-2">
       <div className="flex h-28 space-x-4">
         <div className="h-24 w-20 flex-shrink-0 shadow-md shadow-yellow-400">
           <Image
@@ -27,6 +27,16 @@ const City = () => {
         <div className="h-24 w-20 flex-shrink-0 shadow-md shadow-lime-400">
           <Image
             src="/city/chennai.png"
+            alt="City 3"
+            className="rounded-lg object-cover"
+            width={160}
+            height={160}
+            layout="responsive"
+          />
+        </div>
+        <div className="h-24 w-20 flex-shrink-0 shadow-md shadow-lime-400">
+          <Image
+            src="/city/delhi.png"
             alt="City 3"
             className="rounded-lg object-cover"
             width={160}
@@ -96,7 +106,7 @@ const City = () => {
         </div>
         <div className="h-24 w-20 flex-shrink-0 shadow-md shadow-yellow-400">
           <Image
-            src="/city/surat.png"
+            src="/city/ahemdabad.png"
             alt="City 10"
             className="rounded-lg object-cover"
             width={160}
@@ -104,6 +114,7 @@ const City = () => {
             layout="responsive"
           />
         </div>
+        <div className="h-full w-20 flex-shrink-0 rounded-xl bg-blue-400 shadow-md"></div>
       </div>
     </div>
   );

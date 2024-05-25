@@ -17,7 +17,6 @@ import { signOut } from "next-auth/react";
 import { toast } from "sonner";
 import Image from "next/image";
 export default function Logout(url) {
-  console.log(url);
   function handleClick() {
     signOut("google");
     toast.success("See you soon!");
