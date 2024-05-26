@@ -1,10 +1,11 @@
 "use client";
 import { motion } from "framer-motion";
 import Image from "next/image";
+import Link from "next/link";
 import { FcNext } from "react-icons/fc";
 const City = () => {
   return (
-    <div className="flex w-full flex-row items-center overflow-x-auto bg-black/25 px-1 py-2">
+    <div className="flex w-full flex-row items-center overflow-x-auto px-1 py-2">
       <div className="flex h-28 items-center  space-x-4">
         <div className="h-24 w-20 flex-shrink-0 shadow-md shadow-yellow-400">
           <Image
@@ -107,19 +108,20 @@ const City = () => {
         </div>
         <div className="mt-2 flex h-[108px] w-14 flex-col items-center justify-center rounded-xl  bg-white/40  px-1 text-center shadow-md shadow-black/50 ring-2 ring-blue-400">
           <span className="mb-1 text-sm font-semibold">All citys</span>
-
-          <motion.div
-            animate={{
-              translateX: [0, -3, 0],
-            }}
-            transition={{
-              duration: 0.7,
-              ease: "linear",
-              repeat: Infinity,
-            }}
-          >
-            <FcNext className="h-6 w-6  text-blue-800" />
-          </motion.div>
+          <Link href="/city">
+            <motion.div
+              animate={{
+                translateX: [0, -3, 0],
+              }}
+              transition={{
+                duration: 0.7,
+                ease: "linear",
+                repeat: Infinity,
+              }}
+            >
+              <FcNext className="h-6 w-6  text-blue-800" />
+            </motion.div>
+          </Link>
         </div>
       </div>
     </div>

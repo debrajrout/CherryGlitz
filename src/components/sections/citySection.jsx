@@ -1,5 +1,12 @@
 import React from "react";
+import { FlipWordsDemo } from "../special-components/HeroText";
+import City from "../city/city";
 
-export default function citySection() {
-  return <div>citySection</div>;
+export default function CitySection() {
+  return (
+    <div className="bg-black/25">
+      <FlipWordsDemo />
+      <City />
+    </div>
+  );
 }

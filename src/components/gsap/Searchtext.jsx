@@ -94,7 +94,7 @@ export default function Searchtext() {
   });
   return (
     <div className="flex h-16 w-full  flex-row items-center justify-between  px-2 ">
-      <div className=" flex h-10 w-full flex-row items-center justify-between rounded-full bg-white/90  px-2 shadow-sm shadow-sky-500 ring-1 ring-sky-400  ">
+      <div className=" flex h-10 w-full flex-row items-center justify-between rounded-full bg-white/90  px-2 shadow-sm shadow-sky-500/30 ring-1 ring-sky-400/50  ">
         <div className="flex flex-row gap-2">
           <IoSearch className=" ml-2 mt-1 h-6 w-6 text-pink-500 " />
           <span className="mr-5 text-lg font-semibold text-black/60">
