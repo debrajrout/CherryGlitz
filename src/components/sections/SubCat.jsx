@@ -1,7 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
-import { Separator } from "../ui/separator";
 
 const images = [
   {
@@ -116,7 +115,7 @@ const images3 = [
 export default function SubCat() {
   return (
     <div className="flex h-[210px] flex-row gap-2 px-1 py-1">
-      <div className="flex  w-4/5 flex-col gap-2 rounded-lg  px-1 shadow-md shadow-black/50 ring-1 ring-black/50">
+      <div className="flex  w-4/5 flex-col gap-4 rounded-lg  px-1 shadow-md shadow-black/50 ring-1 ring-black/50">
         <div className="scrollbar-hide flex flex-row items-center gap-6 overflow-x-auto">
           {images.map(({ src, name, url }, index) => (
             <Link
@@ -137,7 +136,7 @@ export default function SubCat() {
             </Link>
           ))}
         </div>
-        <Separator className="bg-black/35" />
+
         <div className="scrollbar-hide flex flex-row items-center gap-6 overflow-x-auto">
           {additionalImages.map(({ src, name, url }, index) => (
             <Link

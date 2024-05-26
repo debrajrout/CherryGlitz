@@ -4,7 +4,7 @@ import { LayoutGrid } from "../ui/layout-grid";
 
 export function BeautySection() {
   return (
-    <div className="mb-4 mt-6 flex  w-full flex-col gap-2  ">
+    <div className="mb-4 mt-6 flex  w-full flex-col gap-2 bg-green-900/20 shadow-md shadow-black/30 ">
       <span className="text-xl font-bold text-black">
         Explore Saloons and Parlours{" "}
         {/* <span className=" text-pink-500">CherryGlitz</span> */}
