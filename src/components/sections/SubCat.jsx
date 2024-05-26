@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
+import { Separator } from "../ui/separator";
 
 const images = [
   {
@@ -84,10 +85,38 @@ const additionalImages = [
   { src: "/category/a (10).png", name: "Waxing Threading", url: "/men/waxing" },
 ];
 
+const images3 = [
+  {
+    src: "/category/a (11).png",
+    name: "Haircutting styling",
+    url: "/category/functions",
+  },
+  {
+    src: "/category/a (12).png",
+    name: "Hair Grooming",
+    url: "/men/hairgroom",
+  },
+  {
+    src: "/category/a (13).png",
+    name: "Beard Mustache",
+    url: "/men/beard",
+  },
+  {
+    src: "/category/a (14).png",
+    name: "Kids Haircut",
+    url: "/men/kids",
+  },
+  {
+    src: "/category/a (8).png",
+    name: "Manicure Padicure",
+    url: "/men/manicure",
+  },
+];
+
 export default function SubCat() {
   return (
-    <div className="flex flex-row gap-2 px-1 py-1">
-      <div className="flex  w-4/5 flex-col gap-4 rounded-lg  px-1 ring-1 ring-black">
+    <div className="flex h-[210px] flex-row gap-2 px-1 py-1">
+      <div className="flex  w-4/5 flex-col gap-2 rounded-lg  px-1 shadow-md shadow-black/50 ring-1 ring-black/50">
         <div className="scrollbar-hide flex flex-row items-center gap-6 overflow-x-auto">
           {images.map(({ src, name, url }, index) => (
             <Link
@@ -108,6 +137,7 @@ export default function SubCat() {
             </Link>
           ))}
         </div>
+        <Separator className="bg-black/35" />
         <div className="scrollbar-hide flex flex-row items-center gap-6 overflow-x-auto">
           {additionalImages.map(({ src, name, url }, index) => (
             <Link
@@ -129,7 +159,28 @@ export default function SubCat() {
           ))}
         </div>
       </div>
-      <div className="w-1/5 rounded-lg ring-1 ring-black"></div>
+      <div className="scrollbar-hide h-full w-1/5 overflow-y-auto rounded-lg p-1 shadow-md shadow-black/50 ring-1 ring-black/50">
+        <div className=" flex flex-col items-center gap-4">
+          {images3.map(({ src, name, url }, index) => (
+            <Link
+              href={url}
+              key={index}
+              className="flex w-11  flex-col items-center gap-1"
+            >
+              <Image
+                src={src}
+                alt="category"
+                width={80}
+                height={80}
+                className="object-cover"
+              />
+              <span className="text-balance text-center text-xs font-semibold text-black">
+                {name}
+              </span>
+            </Link>
+          ))}
+        </div>
+      </div>
     </div>
   );
 }

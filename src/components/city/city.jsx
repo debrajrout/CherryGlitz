@@ -13,7 +13,6 @@ const City = () => {
             className="rounded-lg object-cover"
             width={160}
             height={160}
-            layout="responsive"
           />
         </div>
         <div className="h-24 w-20 flex-shrink-0 shadow-md shadow-sky-400">
@@ -23,7 +22,6 @@ const City = () => {
             className="rounded-lg object-cover"
             width={160}
             height={160}
-            layout="responsive"
           />
         </div>
         <div className="h-24 w-20 flex-shrink-0 shadow-md shadow-lime-400">
@@ -33,7 +31,6 @@ const City = () => {
             className="rounded-lg object-cover"
             width={160}
             height={160}
-            layout="responsive"
           />
         </div>
         <div className="h-24 w-20 flex-shrink-0 shadow-md shadow-lime-400">
@@ -43,7 +40,6 @@ const City = () => {
             className="rounded-lg object-cover"
             width={160}
             height={160}
-            layout="responsive"
           />
         </div>
         <div className="h-24 w-20 flex-shrink-0 shadow-md shadow-pink-500">
@@ -53,7 +49,6 @@ const City = () => {
             className="rounded-lg object-cover"
             width={160}
             height={160}
-            layout="responsive"
           />
         </div>
         <div className="h-24 w-20 flex-shrink-0 shadow-md shadow-blue-500">
@@ -63,7 +58,6 @@ const City = () => {
             className="rounded-lg object-cover"
             width={160}
             height={160}
-            layout="responsive"
           />
         </div>
         <div className="h-24 w-20 flex-shrink-0 shadow-md shadow-yellow-400">
@@ -73,7 +67,6 @@ const City = () => {
             className="rounded-lg object-cover"
             width={160}
             height={160}
-            layout="responsive"
           />
         </div>
         <div className="h-24 w-20 flex-shrink-0 shadow-md shadow-green-400">
@@ -83,7 +76,6 @@ const City = () => {
             className="rounded-lg object-cover"
             width={160}
             height={160}
-            layout="responsive"
           />
         </div>
         <div className="h-24 w-20 flex-shrink-0 shadow-md shadow-yellow-400">
@@ -93,7 +85,6 @@ const City = () => {
             className="rounded-lg object-cover"
             width={160}
             height={160}
-            layout="responsive"
           />
         </div>
         <div className="h-24 w-20 flex-shrink-0 shadow-md shadow-yellow-400">
@@ -103,7 +94,6 @@ const City = () => {
             className="rounded-lg object-cover"
             width={160}
             height={160}
-            layout="responsive"
           />
         </div>
         <div className="h-24 w-20 flex-shrink-0 shadow-md shadow-yellow-400">
@@ -113,7 +103,6 @@ const City = () => {
             className="rounded-lg object-cover"
             width={160}
             height={160}
-            layout="responsive"
           />
         </div>
         <div className="mt-2 flex h-[108px] w-14 flex-col items-center justify-center rounded-xl  bg-white/40  px-1 text-center shadow-md shadow-black/50 ring-2 ring-blue-400">

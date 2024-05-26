@@ -32,7 +32,7 @@ const ImageSlider = () => {
           <button
             key={index}
             type="button"
-            className={`duration-[600ms] ease-[cubic-bezier(0.25,0.1,0.25,1.0)] mx-[1px] box-content h-2 w-2  cursor-pointer rounded-full   border-transparent bg-white  transition-opacity motion-reduce:transition-none ${index === currentIndex ? "opacity-100" : ""}`}
+            className="mx-[1px] box-content h-2 w-2  cursor-pointer rounded-full   border-transparent bg-white"
             onClick={() => setCurrentIndex(index)}
             aria-label={`Slide ${index + 1}`}
           />
@@ -41,7 +41,7 @@ const ImageSlider = () => {
 
       <div className="relative h-full w-full overflow-hidden after:clear-both after:block after:content-['']">
         <div
-          className="duration-[600ms] flex transition-transform ease-in-out"
+          className="flex transition-transform ease-in-out"
           style={{ transform: `translateX(-${currentIndex * 100}%)` }}
         >
           {images.map((image, index) => (
