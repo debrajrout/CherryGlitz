@@ -6,6 +6,7 @@ import CatagoryHero from "@/components/sections/CatagoryHero";
 import { LayoutGridDemo } from "@/components/special-components/LayoutSection";
 import SubCat from "@/components/sections/SubCat";
 import CitySection from "@/components/sections/citySection";
+import ManCat from "@/components/sections/ManCat";
 
 export default function Home() {
   return (
@@ -14,7 +15,7 @@ export default function Home() {
       <SubCat />
       <CatagoryHero />
       <CitySection />
-      <LayoutGridDemo />
+      <ManCat />
       <TatooSection />
       <BeautySection />
       <Footer />

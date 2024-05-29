@@ -1,98 +1,132 @@
 "use client";
 import Image from "next/image";
-import React, { useState, useRef, useEffect } from "react";
-
+import { RxDoubleArrowRight } from "react-icons/rx";
+import { motion } from "framer-motion";
 export function LayoutGridDemo() {
   return (
-    <div className="mt-4 flex h-48 w-full flex-row items-end gap-3 overflow-x-auto bg-lime-700/25 px-2 ">
-      <div className="mb-3 flex h-[135px] w-1/3 flex-col gap-1  rounded-md bg-white p-2 ">
-        <div className="h-22 -mt-10 w-full overflow-hidden rounded-lg shadow-md  shadow-black">
-          <Image
-            alt=""
-            src="/mancat/test.png"
-            width={260}
-            height={300}
-            className="object-cover"
-          />
+    <div className="flex h-56 items-end overflow-x-scroll">
+      <div className="flex flex-row gap-3">
+        <div className=" mb-2 flex h-[175px] w-40 flex-col gap-1 rounded-md bg-white  shadow-md shadow-black/50 ">
+          <motion.div
+            whileHover={{ scale: 0.5 }}
+            whileTap={{ scale: 1.1 }}
+            className="-mt-10 h-48 w-full overflow-hidden  p-2 "
+          >
+            <Image
+              alt=""
+              src="/mancat/tatoo.jpg"
+              width={260}
+              height={300}
+              className="rounded-lg object-cover shadow-md shadow-black"
+            />
+          </motion.div>
+          <div className="flex h-full  w-full flex-col justify-between  px-2 pb-1 ">
+            <span className="text-base font-bold leading-none text-black">
+              Tattoo and Piercing
+            </span>
+            <span className=" text-xs font-semibold text-black/90">
+              Ink and Metal, Where Art Meets Body
+            </span>
+            <div className="flex h-4 w-32 flex-row items-center gap-1 rounded-sm bg-violet-500/30 px-2">
+              <RxDoubleArrowRight />{" "}
+              <span className="text-xs text-violet-950">Explore More</span>
+            </div>
+          </div>
         </div>
-        <div className="flex h-16 w-full flex-col p-2 ">
-          <span className="text-xl font-bold">sdalsjd</span>
-          <span className="text-xs">sdfeudhewdhwekb</span>
+        <div className=" mb-2 flex h-[175px] w-40 flex-col gap-1 rounded-md bg-rose-300  shadow-md shadow-black/50 ">
+          <div className="-mt-10 h-48 w-full overflow-hidden  p-2 ">
+            <Image
+              alt=""
+              src="/mancat/buty.jpg"
+              width={260}
+              height={300}
+              className="rounded-lg object-cover shadow-md shadow-black"
+            />
+          </div>
+          <div className="flex h-full w-full flex-col justify-between  px-2 pb-1 ">
+            <span className="text-base font-bold leading-none text-black">
+              Beauty Parlour
+            </span>
+            <span className=" text-xs font-semibold text-black/90">
+              Indulge in the Art of Beauty with{" "}
+              <span className="font-semibold text-pink-600">Cherry Glitz</span>
+            </span>
+            <div className="flex h-4 w-32 flex-row items-center gap-1 rounded-sm bg-violet-500/30 px-2">
+              <RxDoubleArrowRight />{" "}
+              <span className="text-xs text-violet-950">Explore More</span>
+            </div>
+          </div>
         </div>
-      </div>
-      <div className="mb-3 flex h-[135px] w-1/3 flex-col gap-1  rounded-md bg-white p-2 ">
-        <div className="h-22 -mt-10 w-full overflow-hidden rounded-lg shadow-md  shadow-black">
-          <Image
-            alt=""
-            src="/mancat/test.png"
-            width={260}
-            height={300}
-            className="object-cover"
-          />
+        <div className=" mb-2 flex h-[175px] w-40 flex-col gap-1 rounded-md bg-emerald-300  shadow-md shadow-black/50 ">
+          <div className="-mt-10 h-48 w-full overflow-hidden  p-2 ">
+            <Image
+              alt=""
+              src="/mancat/salon.jpg"
+              width={260}
+              height={300}
+              className="rounded-lg object-cover shadow-md shadow-black"
+            />
+          </div>
+          <div className="flex h-full w-full flex-col justify-between px-2 pb-1">
+            <span className="text-base font-bold leading-none text-black">
+              Men’s and Unisex salon
+            </span>
+            <span className=" text-xs font-semibold text-black/90">
+              Explore Your Ultimate Grooming Destination
+            </span>{" "}
+            <div className="flex h-4 w-32 flex-row items-center gap-1 rounded-sm bg-violet-500/30 px-2">
+              <RxDoubleArrowRight />{" "}
+              <span className="text-xs text-violet-950">Explore More</span>
+            </div>
+          </div>
         </div>
-        <div className="flex h-16 w-full flex-col p-2 ">
-          <span className="text-xl font-bold">sdalsjd</span>
-          <span className="text-xs">sdfeudhewdhwekb</span>
+        <div className=" mb-2 flex h-[175px] w-40 flex-col gap-1 rounded-md bg-violet-300  shadow-md shadow-black/50 ">
+          <div className="-mt-10 h-48 w-full overflow-hidden  p-2 ">
+            <Image
+              alt=""
+              src="/mancat/massage.jpg"
+              width={260}
+              height={300}
+              className="rounded-lg object-cover shadow-md shadow-black"
+            />
+          </div>
+          <div className="flex h-full w-full flex-col justify-between bg-slate-400/50 px-2 pb-1">
+            <span className="text-base font-bold leading-none text-black">
+              Massage Parlour
+            </span>
+            <span className=" text-xs font-semibold text-black/90">
+              Indulge in Ultimate Relaxation{" "}
+              <span className="font-semibold text-blue-600">Cherry Glitz</span>
+            </span>{" "}
+            <div className="flex h-4 w-32 flex-row items-center gap-1 rounded-sm bg-violet-500/30 px-2">
+              <RxDoubleArrowRight />{" "}
+              <span className="text-xs text-violet-950">Explore More</span>
+            </div>
+          </div>
         </div>
-      </div>
-      <div className="mb-3 flex h-[135px] w-1/3 flex-col gap-1  rounded-md bg-white p-2 ">
-        <div className="h-22 -mt-10 w-full overflow-hidden rounded-lg shadow-md  shadow-black">
-          <Image
-            alt=""
-            src="/mancat/test.png"
-            width={260}
-            height={300}
-            className="object-cover"
-          />
-        </div>
-        <div className="flex h-16 w-full flex-col p-2 ">
-          <span className="text-xl font-bold">sdalsjd</span>
-          <span className="text-xs">sdfeudhewdhwekb</span>
-        </div>
-      </div>
-      <div className="mb-3 flex h-[135px] w-1/3 flex-col gap-1  rounded-md bg-white p-2 ">
-        <div className="h-22 -mt-10 w-full overflow-hidden rounded-lg shadow-md  shadow-black">
-          <Image
-            alt=""
-            src="/mancat/test.png"
-            width={260}
-            height={300}
-            className="object-cover"
-          />
-        </div>
-        <div className="flex h-16 w-full flex-col p-2 ">
-          <span className="text-xl font-bold">sdalsjd</span>
-          <span className="text-xs">sdfeudhewdhwekb</span>
-        </div>
-      </div>
-      <div className="mb-3 flex h-[135px] w-1/3 flex-col gap-1  rounded-md bg-white p-2 ">
-        <div className="h-22 -mt-10 w-full overflow-hidden rounded-lg shadow-md  shadow-black">
-          <Image
-            alt=""
-            src="/mancat/test.png"
-            width={260}
-            height={300}
-            className="object-cover"
-          />
-        </div>
-        <div className="flex h-16 w-full flex-col p-2 ">
-          <span className="text-xl font-bold">sdalsjd</span>
-          <span className="text-xs">sdfeudhewdhwekb</span>
-        </div>
-      </div>
-      <div className="mb-3 flex h-[135px] w-1/3 flex-col gap-1  rounded-md bg-white p-2 ">
-        <div className="h-22 -mt-10 w-full overflow-hidden rounded-lg shadow-md  shadow-black">
-          <Image
-            alt=""
-            src="/mancat/test.png"
-            width={260}
-            height={300}
-            className="object-cover"
-          />
-        </div>
-        <div className="flex h-16 w-full flex-col p-2 ">
-          <span className="text-xl font-bold">sdalsjd</span>
-          <span className="text-xs">sdfeudhewdhwekb</span>
+        <div className=" mb-2 flex h-[175px] w-40 flex-col gap-1 rounded-md bg-yellow-300/50  shadow-md shadow-black/50 ">
+          <div className="-mt-10 h-48 w-full overflow-hidden  p-2 ">
+            <Image
+              alt=""
+              src="/mancat/spa.jpg"
+              width={260}
+              height={300}
+              className="rounded-lg object-cover shadow-md shadow-black"
+            />
+          </div>
+          <div className="flex h-full w-full flex-col justify-between  px-2 pb-1">
+            <span className="text-base font-bold leading-none text-black">
+              Spa Centre
+            </span>
+            <span className=" text-xs font-semibold text-black/90">
+              Pamper Yourself with Pure Indulgence{" "}
+              <span className="font-semibold text-red-500">Cherry Glitz</span>
+            </span>{" "}
+            <div className="flex h-4 w-32 flex-row items-center gap-1 rounded-sm bg-violet-500/30 px-2">
+              <RxDoubleArrowRight />{" "}
+              <span className="text-xs text-violet-950">Explore More</span>
+            </div>
+          </div>
         </div>
       </div>
     </div>

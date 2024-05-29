@@ -6,6 +6,7 @@ import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import Logout from "../buttons/Logout";
 import Image from "next/image";
 import { Pacifico } from "next/font/google";
+import { IoSearchCircleOutline } from "react-icons/io5";
 
 import CartSection from "./CartSection";
 
@@ -31,6 +32,7 @@ export default async function Header() {
       </div>
 
       <div className="flex flex-row items-center justify-center gap-4 ">
+        <IoSearchCircleOutline className="text-xl" />
         <CartSection />
         {session ? (
           <>

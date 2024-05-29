@@ -19,32 +19,32 @@ const images = [
     url: "/women/hairtream",
   },
   {
-    src: "/category/a (3).png",
+    src: "/category/haircolour.png",
     name: "Hair Coloring",
     url: "category/wedding",
   },
   {
-    src: "/category/a (4).png",
+    src: "/category/waxing.png",
     name: "Waxing Threading",
     url: "/women/waxing",
   },
   {
-    src: "/category/a (5).png",
+    src: "/category/skincare.png",
     name: "SkinCare BodyCare",
     url: "/women/skincare",
   },
   {
-    src: "/category/a (6).png",
+    src: "/category/manicare.png",
     name: "Manicure Padicure",
     url: "/women/padicare",
   },
   {
-    src: "/category/a (7).png",
+    src: "/category/mehendi.png",
     name: "Mehendi BodyArt",
     url: "/women/mehendi",
   },
   {
-    src: "/category/a (8).png",
+    src: "/category/eyecare.png",
     name: "EyeCare Eyelash",
     url: "/women/faceneye",
   },
@@ -52,63 +52,68 @@ const images = [
 
 const additionalImages = [
   {
-    src: "/category/a (11).png",
+    src: "/category/haircutm.jpg",
     name: "Haircutting styling",
     url: "/men/haircut",
   },
   {
-    src: "/category/a (12).png",
+    src: "/category/groomingm.jpg",
     name: "Hair Grooming",
     url: "/men/hairgroom",
   },
   {
-    src: "/category/a (13).png",
+    src: "/category/beard.png",
     name: "Beard Mustache",
     url: "/men/beard",
   },
   {
-    src: "/category/a (14).png",
+    src: "/category/kids.png",
     name: "Kids Haircut",
     url: "/men/kids",
   },
   {
-    src: "/category/a (8).png",
+    src: "/category/padicurem.jpg",
     name: "Manicure Padicure",
     url: "/men/manicure",
   },
   {
-    src: "/category/a (9).png",
+    src: "/category/skincare.png",
     name: "SkinCare BodyCare",
     url: "/men/skincare",
   },
-  { src: "/category/a (10).png", name: "Waxing Threading", url: "/men/waxing" },
+  {
+    src: "/category/waxingm.png",
+    name: "Waxing Threading",
+    url: "/men/waxing",
+  },
 ];
 
 const images3 = [
   {
-    src: "/category/a (11).png",
-    name: "Haircutting styling",
-    url: "/category/functions",
+    src: "/category/tatoos.png",
+    name: "Tatoos",
+    url: "/category/tatoos",
   },
   {
-    src: "/category/a (12).png",
-    name: "Hair Grooming",
-    url: "/men/hairgroom",
+    src: "/category/piercing.png",
+    name: "Piercing",
+    url: "/category/piercing",
   },
   {
-    src: "/category/a (13).png",
-    name: "Beard Mustache",
-    url: "/men/beard",
+    src: "/category/massage.png",
+    name: "Massage",
+    url: "/category/massage",
   },
   {
-    src: "/category/a (14).png",
-    name: "Kids Haircut",
-    url: "/men/kids",
+    src: "/category/spa.png",
+    name: "Spa",
+    url: "/category/spa",
   },
+
   {
-    src: "/category/a (8).png",
-    name: "Manicure Padicure",
-    url: "/men/manicure",
+    src: "/category/wedding.png",
+    name: "Wedding Functions",
+    url: "/category/wedding",
   },
 ];
 
@@ -147,8 +152,8 @@ export default function SubCat() {
               <Image
                 src={src}
                 alt="category"
-                width={100}
-                height={100}
+                width={120}
+                height={120}
                 className="object-cover"
               />
               <span className="w-10 text-wrap text-center text-xs font-semibold text-black">
