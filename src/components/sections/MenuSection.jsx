@@ -7,15 +7,15 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
-import CartButton from "../buttons/CartButton";
+import { CgMenuLeftAlt } from "react-icons/cg";
 
-export default function CartSection() {
+export default function MenuSection() {
   return (
-    <Sheet>
+    <Sheet side="left">
       <SheetTrigger>
-        <CartButton />
+        <CgMenuLeftAlt className=" mr-1 h-7 w-7 text-black/70" />
       </SheetTrigger>
-      <SheetContent>
+      <SheetContent side="left">
         <SheetHeader>
           <SheetTitle>Are you absolutely sure?</SheetTitle>
           <SheetDescription>

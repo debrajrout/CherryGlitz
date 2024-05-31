@@ -135,7 +135,7 @@ export default function SubCat() {
                 height={100}
                 className="object-cover"
               />
-              <span className="w-10 text-balance text-center text-xs font-semibold text-black">
+              <span className="w-10 text-balance text-center text-xs font-semibold text-black hover:text-red-500">
                 {name}
               </span>
             </Link>

@@ -73,6 +73,18 @@ module.exports = {
           from: { height: "var(--radix-accordion-content-height)" },
           to: { height: "0" },
         },
+        "accordion-down": {
+          from: { height: "0" },
+          to: { height: "var(--radix-accordion-content-height)" },
+        },
+        "accordion-up": {
+          from: { height: "var(--radix-accordion-content-height)" },
+          to: { height: "0" },
+        },
+        bounceLeft: {
+          "0%, 100%": { transform: "translateX(0)" },
+          "50%": { transform: "translateX(-6px)" },
+        },
         shimmer: {
           from: {
             backgroundPosition: "0 0",
@@ -83,9 +95,12 @@ module.exports = {
         },
       },
       animation: {
+        "bounce-left": "bounceLeft 1s infinite",
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
         shimmer: "shimmer 2s linear infinite",
+        "accordion-down": "accordion-down 0.2s ease-out",
+        "accordion-up": "accordion-up 0.2s ease-out",
       },
     },
   },

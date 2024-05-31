@@ -1,14 +1,15 @@
 import React from "react";
-import { CgProfile } from "react-icons/cg";
+
 import Login from "../buttons/Login";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import Logout from "../buttons/Logout";
 import Image from "next/image";
 import { Pacifico } from "next/font/google";
-import { IoSearchCircleOutline } from "react-icons/io5";
+import { IoSearchOutline } from "react-icons/io5";
 
 import CartSection from "./CartSection";
+import MenuSection from "./MenuSection";
 
 const pacifico = Pacifico({
   weight: ["400"],
@@ -20,6 +21,7 @@ export default async function Header() {
   return (
     <div className="fixed  left-0 right-0 top-0 z-[100] flex h-16 w-full flex-row items-center justify-between  bg-white px-3 py-3 shadow-sm shadow-black/50 ">
       <div className="flex flex-row items-center justify-center ">
+        <MenuSection />
         <span className="mb-[1px] text-3xl font-semibold  text-blue-700">
           C
         </span>
@@ -31,8 +33,8 @@ export default async function Header() {
         </span>
       </div>
 
-      <div className="flex flex-row items-center justify-center gap-4 ">
-        <IoSearchCircleOutline className="text-xl" />
+      <div className="flex flex-row items-center justify-center gap-5 ">
+        <IoSearchOutline className="h-8 w-8  text-black/70 " />
         <CartSection />
         {session ? (
           <>

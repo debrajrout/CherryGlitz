@@ -8,8 +8,8 @@ export function LayoutGridDemo() {
       <div className="flex flex-row gap-3">
         <div className=" mb-2 flex h-[175px] w-40 flex-col gap-1 rounded-md bg-white  shadow-md shadow-black/50 ">
           <motion.div
-            whileHover={{ scale: 0.5 }}
-            whileTap={{ scale: 1.1 }}
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.9 }}
             className="-mt-10 h-48 w-full overflow-hidden  p-2 "
           >
             <Image
