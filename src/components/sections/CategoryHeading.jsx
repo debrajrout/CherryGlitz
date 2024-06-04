@@ -2,20 +2,6 @@ import Link from "next/link";
 import React from "react";
 import { TbArrowBigLeftLines } from "react-icons/tb";
 import { CiLocationOn } from "react-icons/ci";
-// const fadeInUpAnimation = {
-//   hidden: {
-//     opacity: 0,
-//     y: 30,
-//   },
-//   show: {
-//     opacity: 1,
-//     y: 0,
-//     transition: {
-//       staggerChildren: 0.3,
-//       duration: 1,
-//     },
-//   },
-// };
 export default function CategoryHeading() {
   return (
     <div className="flex flex-row items-center justify-between rounded-b-3xl  bg-gradient-to-b from-white to-slate-200 px-2 shadow-lg   shadow-black/30">

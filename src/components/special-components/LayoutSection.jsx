@@ -14,7 +14,7 @@ export function LayoutGridDemo() {
           >
             <Image
               alt=""
-              src="/mancat/tatoo.jpg"
+              src="/mancat/mt.png"
               width={260}
               height={300}
               className="rounded-lg object-cover shadow-md shadow-black"
@@ -37,7 +37,7 @@ export function LayoutGridDemo() {
           <div className="-mt-10 h-48 w-full overflow-hidden  p-2 ">
             <Image
               alt=""
-              src="/mancat/buty.jpg"
+              src="/mancat/mb.png"
               width={260}
               height={300}
               className="rounded-lg object-cover shadow-md shadow-black"
@@ -61,7 +61,7 @@ export function LayoutGridDemo() {
           <div className="-mt-10 h-48 w-full overflow-hidden  p-2 ">
             <Image
               alt=""
-              src="/mancat/salon.jpg"
+              src="/mancat/msl.png"
               width={260}
               height={300}
               className="rounded-lg object-cover shadow-md shadow-black"
@@ -84,7 +84,7 @@ export function LayoutGridDemo() {
           <div className="-mt-10 h-48 w-full overflow-hidden  p-2 ">
             <Image
               alt=""
-              src="/mancat/massage.jpg"
+              src="/mancat/mm.png"
               width={260}
               height={300}
               className="rounded-lg object-cover shadow-md shadow-black"
@@ -108,7 +108,7 @@ export function LayoutGridDemo() {
           <div className="-mt-10 h-48 w-full overflow-hidden  p-2 ">
             <Image
               alt=""
-              src="/mancat/spa.jpg"
+              src="/mancat/ms.png"
               width={260}
               height={300}
               className="rounded-lg object-cover shadow-md shadow-black"

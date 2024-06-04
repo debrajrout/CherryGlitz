@@ -3,10 +3,10 @@ import Searchbar from "@/components/Searchbar";
 import { TatooSection } from "@/components/TatooSection/TatooHero";
 import Footer from "@/components/footer/Footer";
 import CatagoryHero from "@/components/sections/CatagoryHero";
-import { LayoutGridDemo } from "@/components/special-components/LayoutSection";
 import SubCat from "@/components/sections/SubCat";
 import CitySection from "@/components/sections/citySection";
 import ManCat from "@/components/sections/ManCat";
+import MassageSpa from "@/components/sections/MassageSpa";
 
 export default function Home() {
   return (
@@ -18,6 +18,7 @@ export default function Home() {
       <ManCat />
       <TatooSection />
       <BeautySection />
+      <MassageSpa />
       <Footer />
     </main>
   );

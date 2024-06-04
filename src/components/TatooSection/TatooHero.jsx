@@ -16,10 +16,11 @@ export function TatooSection() {
 const SkeletonOne = () => {
   return (
     <div>
-      <p className="text-xl font-semibold text-white">House in the woods</p>
+      <p className="text-xl font-semibold text-white">Traditional Tattoos</p>
 
       <p className="my-1 max-w-lg text-sm font-normal text-neutral-200">
-        A serene and tranquil retreat,
+        vibrant colors, and iconic imagery such as anchors, eagles, pin-up
+        girls, and roses.
       </p>
     </div>
   );
@@ -28,10 +29,12 @@ const SkeletonOne = () => {
 const SkeletonTwo = () => {
   return (
     <div>
-      <p className="text-xl font-semibold text-white">House above the clouds</p>
+      <p className="text-xl font-semibold text-white">
+        Neo-traditional Tattoos
+      </p>
 
       <p className="my-1 max-w-lg text-sm font-normal text-neutral-200">
-        Perched high above the world, this house offers
+        a broader color palette, and elaborate shading.
       </p>
     </div>
   );
@@ -39,10 +42,11 @@ const SkeletonTwo = () => {
 const SkeletonThree = () => {
   return (
     <div>
-      <p className="text-xl font-semibold text-white">Greens all over</p>
+      <p className="text-xl font-semibold text-white">Blackwork Tattoos</p>
 
       <p className="my-1 max-w-lg text-sm font-normal text-neutral-200">
-        A house surrounded by greenery and nature&
+        This style includes a range of motifs from tribal patterns to geometric
+        shapes
       </p>
     </div>
   );
@@ -50,10 +54,11 @@ const SkeletonThree = () => {
 const SkeletonFour = () => {
   return (
     <div>
-      <p className="text-xl font-semibold text-white">Rivers are serene</p>
+      <p className="text-xl font-semibold text-white">Fine Line Tattoos</p>
 
       <p className="my-1 max-w-lg text-sm font-normal text-neutral-200">
-        A house by the river is a place of peace
+        Fine line tattoos use thin, delicate lines to create detailed and
+        intricate designs.
       </p>
     </div>
   );
@@ -64,36 +69,32 @@ const cards = [
     id: 1,
     content: <SkeletonOne />,
     className: "md:col-span-2",
-    Tagline: "Tatoo1",
+    Tagline: "Traditional",
     subTagline: "A serene and tranquil retreat",
-    thumbnail:
-      "https://images.unsplash.com/photo-1476231682828-37e571bc172f?q=80&w=3474&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    thumbnail: "/mancat/tatoo.jpg",
   },
   {
     id: 2,
     content: <SkeletonTwo />,
     className: "col-span-1",
-    Tagline: "Tatoo2",
+    Tagline: "Neo-traditional",
     subTagline: "A serene and tranquil retreat",
-    thumbnail:
-      "https://images.unsplash.com/photo-1464457312035-3d7d0e0c058e?q=80&w=3540&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    thumbnail: "/tatoo/tatoob2.webp",
   },
   {
     id: 3,
     content: <SkeletonThree />,
     className: "col-span-1",
     subTagline: "A serene and tranquil retreat",
-    Tagline: "Tatoo3",
-    thumbnail:
-      "https://images.unsplash.com/photo-1588880331179-bc9b93a8cb5e?q=80&w=3540&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    Tagline: "Blackwork",
+    thumbnail: "/tatoo/tatoob3.webp",
   },
   {
     id: 4,
     content: <SkeletonFour />,
     className: "md:col-span-2",
     subTagline: "A serene and tranquil retreat",
-    Tagline: "Tatoo4",
-    thumbnail:
-      "https://images.unsplash.com/photo-1475070929565-c985b496cb9f?q=80&w=3540&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    Tagline: "Fine Line",
+    thumbnail: "/tatoo/tatoob1.webp",
   },
 ];

@@ -7,7 +7,7 @@ export default function ManCat() {
       <span className="px-1 text-xl font-semibold text-black">
         Explore our category
       </span>
-      <span className="-mt-1 flex flex-row items-center gap-1 px-1 text-sm font-normal text-black/70">
+      <span className="-mt-1 flex flex-row items-center gap-1 px-1 text-sm font-medium   text-blue-600">
         With Cherry Glitz <MdKeyboardDoubleArrowRight className="mt-1" />
       </span>
       <LayoutGridDemo />
