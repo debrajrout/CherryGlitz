@@ -1,5 +1,5 @@
-import React from "react";
 import Image from "next/image";
+import React from "react";
 import {
   FaHeart,
   FaGem,
@@ -24,121 +24,139 @@ import {
   FaArrowRight,
 } from "react-icons/fa";
 
-const makeupServices = [
+const makeupServices1 = [
   {
     name: "Everyday Makeup",
     description: "Subtle and natural makeup for everyday wear.",
-    icon: <FaSmile className="text-pink-500" />,
+    icon: <FaSmile className="text-3xl text-pink-500" />,
+    imageSrc: "/makeup/m1.png",
   },
   {
     name: "Glam Makeup",
     description: "Bold and glamorous look for special occasions.",
-    icon: <FaGem className="text-pink-500" />,
+    icon: <FaGem className="text-3xl text-pink-500" />,
+    imageSrc: "/makeup/m2.png",
   },
   {
     name: "Bridal Makeup",
     description: "Elegant and long-lasting makeup for your big day.",
-    icon: <FaHeart className="text-pink-500" />,
+    icon: <FaHeart className="text-3xl text-pink-500" />,
+    imageSrc: "/makeup/m3.png",
   },
   {
     name: "Evening Makeup",
     description: "Perfect for nights out and formal events.",
-    icon: <FaMoon className="text-pink-500" />,
+    icon: <FaMoon className="text-3xl text-pink-500" />,
+    imageSrc: "/makeup/m4.png",
+  },
+];
+
+const makeupServices = [
+  {
+    name: "Everyday Makeup",
+    description: "Subtle and natural makeup for everyday wear.",
+    icon: <FaSmile className="text-3xl text-pink-500" />,
+  },
+  {
+    name: "Glam Makeup",
+    description: "Bold and glamorous look for special occasions.",
+    icon: <FaGem className="text-3xl text-pink-500" />,
+  },
+  {
+    name: "Bridal Makeup",
+    description: "Elegant and long-lasting makeup for your big day.",
+    icon: <FaHeart className="text-3xl text-pink-500" />,
+  },
+  {
+    name: "Evening Makeup",
+    description: "Perfect for nights out and formal events.",
+    icon: <FaMoon className="text-3xl text-pink-500" />,
   },
   {
     name: "Prom Makeup",
     description: "Stand out at your prom with a unique makeup look.",
-    icon: <FaTheaterMasks className="text-pink-500" />,
+    icon: <FaTheaterMasks className="text-3xl text-pink-500" />,
   },
   {
     name: "Editorial Makeup",
     description: "Creative and artistic makeup for photoshoots.",
-    icon: <FaPaintBrush className="text-pink-500" />,
+    icon: <FaPaintBrush className="text-3xl text-pink-500" />,
   },
   {
     name: "Special Effects Makeup (SFX)",
     description: "Transform into characters with SFX makeup.",
-    icon: <FaPalette className="text-pink-500" />,
+    icon: <FaPalette className="text-3xl text-pink-500" />,
   },
   {
     name: "Airbrush Makeup",
     description: "Flawless and lightweight airbrush application.",
-    icon: <FaPaintRoller className="text-pink-500" />,
+    icon: <FaPaintRoller className="text-3xl text-pink-500" />,
   },
   {
     name: "Mature Skin Makeup",
     description: "Enhancing natural beauty for mature skin.",
-    icon: <FaLeaf className="text-pink-500" />,
+    icon: <FaLeaf className="text-3xl text-pink-500" />,
   },
   {
     name: "Men's Makeup",
     description: "Natural and polished looks for men.",
-    icon: <FaThumbsUp className="text-pink-500" />,
+    icon: <FaThumbsUp className="text-3xl text-pink-500" />,
   },
   {
     name: "Natural Makeup Look",
     description: "Minimalist makeup for a fresh-faced look.",
-    icon: <FaLeaf className="text-pink-500" />,
+    icon: <FaLeaf className="text-3xl text-pink-500" />,
   },
   {
     name: "Dewy Skin Makeup",
     description: "Achieve a glowing, dewy skin finish.",
-    icon: <FaTint className="text-pink-500" />,
+    icon: <FaTint className="text-3xl text-pink-500" />,
   },
   {
     name: "Bold Lip Colors",
     description: "Statement lips with bold, vibrant colors.",
-    icon: <FaGrinBeam className="text-pink-500" />,
+    icon: <FaGrinBeam className="text-3xl text-pink-500" />,
   },
   {
     name: "Smoky Eye Makeup",
     description: "Dramatic and smoldering smoky eyes.",
-    icon: <FaEye className="text-pink-500" />,
+    icon: <FaEye className="text-3xl text-pink-500" />,
   },
   {
     name: "Graphic Eyeliner",
     description: "Creative and bold eyeliner designs.",
-    icon: <FaStar className="text-pink-500" />,
+    icon: <FaStar className="text-3xl text-pink-500" />,
   },
   {
     name: "Feathered Brows",
     description: "Soft and natural-looking feathered brows.",
-    icon: <FaFire className="text-pink-500" />,
+    icon: <FaFire className="text-3xl text-pink-500" />,
   },
   {
     name: "Colorful Eyeshadow Looks",
     description: "Vibrant and colorful eyeshadow styles.",
-    icon: <FaEyeDropper className="text-pink-500" />,
+    icon: <FaEyeDropper className="text-3xl text-pink-500" />,
   },
   {
     name: "Glossy Lips",
     description: "High-shine and luscious glossy lips.",
-    icon: <FaHeartbeat className="text-pink-500" />,
+    icon: <FaHeartbeat className="text-3xl text-pink-500" />,
   },
   {
     name: "Monochromatic Makeup",
     description: "Single color makeup looks for a cohesive style.",
-    icon: <FaTrophy className="text-pink-500" />,
+    icon: <FaTrophy className="text-3xl text-pink-500" />,
   },
   {
     name: "Retro/Vintage Makeup",
     description: "Classic makeup styles from past decades.",
-    icon: <FaGlobe className="text-pink-500" />,
+    icon: <FaGlobe className="text-3xl text-pink-500" />,
   },
 ];
 
 const Layout1 = ({ service }) => (
   <div className="flex transform flex-col items-center rounded-lg bg-white p-4 shadow-md transition-transform hover:scale-105 hover:shadow-lg">
-    <div className="relative mb-4 h-32 w-full overflow-hidden rounded-lg">
-      <Image
-        src={`/makeup/${service.name.toLowerCase().replace(/\s+/g, "-")}.jpg`}
-        layout="fill"
-        objectFit="cover"
-        className="rounded-lg"
-        alt={service.name}
-      />
-    </div>
-    <div className="mb-2 text-pink-500">{service.icon}</div>
+    <div className="mb-4 text-pink-500">{service.icon}</div>
     <h2 className="text-xl font-semibold text-gray-800">{service.name}</h2>
     <p className="text-center text-sm text-gray-600">{service.description}</p>
     <button className="mt-4 flex items-center text-pink-500 hover:text-pink-700">
@@ -149,17 +167,8 @@ const Layout1 = ({ service }) => (
 );
 
 const Layout2 = ({ service }) => (
-  <div className="flex transform flex-col items-center rounded-lg bg-pink-200 p-4 shadow-md transition-transform hover:scale-105 hover:shadow-lg">
-    <div className="relative mb-4 h-32 w-32 overflow-hidden rounded-full">
-      <Image
-        src={`/makeup/${service.name.toLowerCase().replace(/\s+/g, "-")}.jpg`}
-        layout="fill"
-        objectFit="cover"
-        className="rounded-full"
-        alt={service.name}
-      />
-    </div>
-    <div className="mb-2 text-pink-500">{service.icon}</div>
+  <div className="flex transform flex-col items-center rounded-lg bg-pink-100 p-4 shadow-md transition-transform hover:scale-105 hover:shadow-lg">
+    <div className="mb-4 text-pink-500">{service.icon}</div>
     <h2 className="text-xl font-semibold text-gray-800">{service.name}</h2>
     <p className="text-center text-sm text-gray-600">{service.description}</p>
     <button className="mt-4 flex items-center text-pink-500 hover:text-pink-700">
@@ -170,17 +179,8 @@ const Layout2 = ({ service }) => (
 );
 
 const Layout3 = ({ service }) => (
-  <div className="flex transform flex-col items-center rounded-lg bg-blue-200 p-4 shadow-md transition-transform hover:scale-105 hover:shadow-lg">
-    <div className="relative mb-4 h-32 w-full overflow-hidden rounded-lg">
-      <Image
-        src={`/makeup/${service.name.toLowerCase().replace(/\s+/g, "-")}.jpg`}
-        layout="fill"
-        objectFit="cover"
-        className="rounded-lg"
-        alt={service.name}
-      />
-    </div>
-    <div className="mb-2 text-pink-500">{service.icon}</div>
+  <div className="flex transform flex-col items-center rounded-lg bg-blue-100 p-4 shadow-md transition-transform hover:scale-105 hover:shadow-lg">
+    <div className="mb-4 text-pink-500">{service.icon}</div>
     <h2 className="text-xl font-semibold text-gray-800">{service.name}</h2>
     <p className="text-center text-sm text-gray-600">{service.description}</p>
     <button className="mt-4 flex items-center text-pink-500 hover:text-pink-700">
@@ -199,6 +199,34 @@ export default function RadiantMakeupPage() {
           Transform your look with our exclusive makeup services
         </p>
       </header>
+
+      <div className="flex h-[260px] w-full flex-col  p-1">
+        <span className="mb-4 text-2xl font-medium text-blue-500">
+          Explore makeup with us
+        </span>
+        <div className="flex w-full flex-row gap-4 overflow-x-auto">
+          {makeupServices1.map((service, index) => (
+            <div
+              key={index}
+              className="flex w-1/3 flex-col items-center gap-2 rounded-lg  p-1 shadow-lg transition-transform hover:scale-105"
+            >
+              <div className="relative h-28 w-28  rounded-full">
+                <Image
+                  src={service.imageSrc}
+                  alt={service.name}
+                  className="rounded-full"
+                  width={112}
+                  height={112}
+                />
+              </div>
+
+              <span className="text-center text-base font-semibold text-gray-800">
+                {service.name}
+              </span>
+            </div>
+          ))}
+        </div>
+      </div>
 
       <div className="grid grid-cols-1 gap-6 overflow-x-auto sm:grid-cols-2 lg:grid-cols-3">
         {makeupServices.map((service, index) => (

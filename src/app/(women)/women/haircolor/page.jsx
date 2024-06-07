@@ -2,39 +2,42 @@ import Image from "next/image";
 import React from "react";
 import { FaArrowRight } from "react-icons/fa";
 
-const hairGroomingServices = [
+const hairColoringServices = [
   {
-    name: "Hairline Cleanup",
-    description: "Refine your hairline for a neat and polished look.",
-    imageSrc: "/haircuts/hairline_cleanup.jpg",
-  },
-  {
-    name: "Scalp Treatment",
-    description: "Nourish and revitalize your scalp for healthier hair growth.",
-    imageSrc: "/haircuts/scalp_treatment.jpg",
-  },
-  {
-    name: "Deep Conditioning",
+    name: "Balayage",
     description:
-      "Restore moisture and strength to your hair with a deep conditioning treatment.",
-    imageSrc: "/haircuts/deep_conditioning.jpg",
+      "A freehand hair coloring technique for natural-looking highlights.",
+    imageSrc: "/hair_coloring/balayage.jpg",
   },
   {
-    name: "Scalp Massage",
+    name: "Highlights",
     description:
-      "Relax and stimulate blood flow to your scalp with a soothing massage.",
-    imageSrc: "/haircuts/scalp_massage.jpg",
+      "Add brightness and dimension to your hair with strategically placed highlights.",
+    imageSrc: "/hair_coloring/highlights.jpg",
   },
   {
-    name: "Hot Oil Treatment",
+    name: "Lowlights",
     description:
-      "Intensely hydrate and nourish your hair with a hot oil treatment.",
-    imageSrc: "/haircuts/hot_oil_treatment.jpg",
+      "Create depth and richness to your hair color with darker shades.",
+    imageSrc: "/hair_coloring/lowlights.jpg",
   },
   {
-    name: "Hair Coloring",
-    description: "Transform your hair color with our expert colorists.",
-    imageSrc: "/haircuts/hair_coloring.jpg",
+    name: "Ombre",
+    description:
+      "Achieve a gradient effect from dark to light hair color for a striking look.",
+    imageSrc: "/hair_coloring/ombre.jpg",
+  },
+  {
+    name: "Babylights",
+    description:
+      "Subtle and delicate highlights that mimic the sun-kissed hair of children.",
+    imageSrc: "/hair_coloring/babylights.jpg",
+  },
+  {
+    name: "Root Touch-Up",
+    description:
+      "Cover up regrowth and maintain the consistency of your hair color.",
+    imageSrc: "/hair_coloring/root_touch_up.jpg",
   },
 ];
 
@@ -98,48 +101,20 @@ const Layout3 = ({ service }) => (
   </div>
 );
 
-export default function HairGroomingPage() {
+export default function HairColoringPage() {
   return (
     <div className="container mx-auto px-4 py-8">
       <header className="mb-8 text-center">
         <h1 className="text-4xl font-bold text-pink-800">
-          Hair Grooming Services
+          Hair Coloring Services
         </h1>
         <p className="text-lg text-gray-600">
-          Discover our exclusive hair grooming services
+          Discover our exclusive hair coloring services
         </p>
       </header>
 
-      <div className="flex h-[260px] w-full flex-col  p-1">
-        <span className="mb-4 text-2xl font-medium text-blue-500">
-          Explore hair grooming with us
-        </span>
-        <div className="flex w-full flex-row gap-4 overflow-x-auto">
-          {hairGroomingServices.map((service, index) => (
-            <div
-              key={index}
-              className="flex w-1/3 flex-col items-center gap-2 rounded-lg  p-1 shadow-lg transition-transform hover:scale-105"
-            >
-              <div className="relative h-28 w-28  rounded-full">
-                <Image
-                  src={service.imageSrc}
-                  alt={service.name}
-                  className="rounded-full"
-                  width={112}
-                  height={112}
-                />
-              </div>
-
-              <span className="text-center text-base font-semibold text-gray-800">
-                {service.name}
-              </span>
-            </div>
-          ))}
-        </div>
-      </div>
-
       <div className="grid grid-cols-1 gap-6 overflow-x-auto sm:grid-cols-2 lg:grid-cols-3">
-        {hairGroomingServices.map((service, index) => (
+        {hairColoringServices.map((service, index) => (
           <div key={index}>
             {index % 3 === 0 && <Layout1 service={service} />}
             {index % 3 === 1 && <Layout2 service={service} />}

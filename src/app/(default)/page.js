@@ -17,8 +17,8 @@ export default function Home() {
       <CitySection />
       <ManCat />
       <TatooSection />
-      <BeautySection />
       <MassageSpa />
+      <BeautySection />
       <Footer />
     </main>
   );

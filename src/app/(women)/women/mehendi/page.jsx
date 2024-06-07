@@ -102,16 +102,16 @@ const mehendiTypes = [
 
 const MehendiPage = () => {
   return (
-    <div className="container flex flex-col items-center gap-3 py-12 ">
+    <div className="container flex flex-col items-center gap-3 py-12">
       <h1 className="mb-8 bg-gradient-to-r from-rose-600 to-blue-600 bg-clip-text text-center text-4xl font-bold text-transparent">
         Mehendi - A Timeless Art Form
       </h1>
       <div className="grid h-52 w-[95%] grid-cols-3 grid-rows-2 gap-0 rounded-xl p-4 ring-1 ring-red-500">
-        <div className="relative   flex flex-col items-center justify-center overflow-hidden  p-1">
+        <div className="relative flex flex-col items-center justify-center overflow-hidden p-1">
           <div className="z-10 p-1">
             <Image
               src="/mehendi/m4.png"
-              alt=""
+              alt="Traditional"
               className="w-16"
               width={500}
               height={500}
@@ -121,72 +121,67 @@ const MehendiPage = () => {
           <div className="absolute right-2 top-2 h-10 w-10 rounded-full bg-rose-400/50"></div>
         </div>
         {/* Column 2, Row 1 */}
-        <div className="relative flex flex-col items-center justify-center overflow-hidden   border-l-2 border-r-2  border-red-500 p-1 ">
-          {" "}
+        <div className="relative flex flex-col items-center justify-center overflow-hidden border-l-2 border-r-2 border-red-500 p-1">
           <div className="z-10 p-1">
             <Image
               src="/mehendi/m5.png"
-              alt=""
+              alt="Arabic"
               className="w-16"
               width={500}
               height={500}
             />
           </div>
-          <span className="">Arabic</span>
+          <span>Arabic</span>
           <div className="absolute bottom-4 left-3 h-10 w-10 rounded-full bg-rose-400/50"></div>
         </div>
         {/* Column 3, Row 1 */}
-        <div className=" relative flex flex-col items-center justify-center overflow-hidden   p-1  ">
-          {" "}
+        <div className="relative flex flex-col items-center justify-center overflow-hidden p-1">
           <div className="z-10 p-1">
             <Image
               src="/mehendi/m6.png"
-              alt=""
+              alt="Floral"
               className="w-16"
               width={500}
               height={500}
             />
           </div>
-          <span className="">Floral</span>
-          <div className="absolute  h-10 w-10 rounded-full bg-rose-400/50"></div>
+          <span>Floral</span>
+          <div className="absolute h-10 w-10 rounded-full bg-rose-400/50"></div>
         </div>
         {/* Column 1, Row 2 */}
-        <div className="relative flex flex-col items-center justify-center overflow-hidden  border-t-2  border-red-500  p-1  ">
-          {" "}
+        <div className="relative flex flex-col items-center justify-center overflow-hidden border-t-2 border-red-500 p-1">
           <div className="z-10 p-1">
             <Image
               src="/mehendi/m1.png"
-              alt=""
+              alt="Moroccan"
               className="w-16"
               width={500}
               height={500}
             />
           </div>
-          <span className="">Moroccan</span>
+          <span>Moroccan</span>
           <div className="absolute right-2 top-2 h-10 w-10 rounded-full bg-rose-400/50"></div>
         </div>
         {/* Column 2, Row 2 */}
-        <div className="relative flex flex-col items-center justify-center overflow-hidden  border-l-2 border-r-2 border-t-2  border-red-500 p-1 ">
-          {" "}
+        <div className="relative flex flex-col items-center justify-center overflow-hidden border-l-2 border-r-2 border-t-2 border-red-500 p-1">
           <div className="z-10 p-1">
             <Image
               src="/mehendi/m2.png"
-              alt=""
+              alt="Rajasthan"
               className="w-16"
               width={500}
               height={500}
             />
           </div>
-          <span className="-mt-6 ">Rajasthan</span>
+          <span className="-mt-6">Rajasthan</span>
           <div className="absolute right-4 top-4 h-10 w-10 rounded-full bg-rose-400/50"></div>
         </div>
         {/* Column 3, Row 2 */}
-        <div className="relative flex flex-col items-center  justify-center overflow-hidden  border-t-2  border-red-500 p-1 ">
-          {" "}
+        <div className="relative flex flex-col items-center justify-center overflow-hidden border-t-2 border-red-500 p-1">
           <div className="z-10 w-12">
             <Image
               src="/mehendi/m3.png"
-              alt=""
+              alt="Mandala"
               className="w-14"
               width={500}
               height={500}
@@ -201,13 +196,16 @@ const MehendiPage = () => {
         {mehendiTypes.map((type, index) => (
           <div
             key={index}
-            className={`rounded-lg p-6 shadow-md shadow-black/30 ${type.bgColor}`}
+            className={`transform rounded-lg p-6 shadow-md shadow-black/30 transition-transform duration-300 hover:scale-105 ${type.bgColor}`}
           >
             {type.icon}
             <h2 className={`mb-2 text-xl font-bold ${type.textColor}`}>
               {type.name}
             </h2>
             <p className="text-gray-600">{type.description}</p>
+            <button className="mt-4 w-full rounded-lg bg-red-500 px-4 py-2 text-white hover:bg-red-600">
+              Search Now
+            </button>
           </div>
         ))}
       </div>

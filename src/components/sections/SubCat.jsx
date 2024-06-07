@@ -21,7 +21,7 @@ const images = [
   {
     src: "/category/haircolour.png",
     name: "Hair Coloring",
-    url: "category/wedding",
+    url: "/women/haircolor",
   },
   {
     src: "/category/waxing.png",
