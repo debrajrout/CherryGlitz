@@ -4,11 +4,12 @@ import { PlaceholdersAndVanishInput } from "../ui/placeholders-input";
 
 export function PlaceholdersAndVanishInputDemo() {
   const placeholders = [
-    "What's the first rule of Fight Club?",
-    "Who is Tyler Durden?",
-    "Where is Andrew Laeddis Hiding?",
-    "Write a Javascript method to reverse a string",
-    "How to assemble your own PC?",
+    "Express Yourself with Stunning Tattoos!",
+    "Find Your Perfect Piercing Style!",
+    "Unleash Your Beauty at Our Parlour!",
+    "Elevate Your Look at Our Unisex Salon!",
+    "Relax and Rejuvenate with Our Massages!",
+    "Escape to Tranquility at Our Spa Centre!",
   ];
 
   const handleChange = (e) => {
@@ -19,7 +20,7 @@ export function PlaceholdersAndVanishInputDemo() {
     console.log("submitted");
   };
   return (
-    <div className="w-full">
+    <div className="w-[90%]">
       <PlaceholdersAndVanishInput
         placeholders={placeholders}
         onChange={handleChange}

@@ -17,6 +17,7 @@ import { Input } from "./ui/input";
 import Searchtext from "./gsap/Searchtext";
 import { PlaceholdersAndVanishInputDemo } from "./sections/SearchDiv";
 import { ComboboxDemo } from "./search/searchCity";
+import { IoMdArrowRoundForward } from "react-icons/io";
 
 const cities = [
   "Delhi",
@@ -35,17 +36,141 @@ const cities = [
   "Nagpur",
 ];
 
+const category = [
+  "Tattoo and Piercing",
+  "beauty-parlour",
+  "mens-unisex-salon",
+  "massage-parlour",
+  "spa-centre",
+];
+
+const Subcategory = [
+  "Radiant Makeup",
+
+  "Haircuts styling",
+
+  "Hair Grooming",
+
+  "Waxing Threading",
+
+  "SkinCare BodyCare",
+
+  "Manicure Padicure",
+
+  "Mehendi BodyArt",
+
+  "EyeCare Eyelash",
+];
+
+const Subcategory2 = [
+  "Haircutting styling",
+
+  "Hair Grooming",
+
+  "Beard Mustache",
+
+  "Kids Haircut",
+
+  "Manicure Padicure",
+
+  "SkinCare BodyCare",
+
+  "Waxing Threading",
+
+  "Piercing",
+
+  "Spa",
+
+  "Wedding Functions",
+];
+
 const CityDisplay = () => {
   return (
-    <div className="flex flex-wrap gap-4 justify-center mt-6">
-      {cities.map((city, index) => (
-        <div
-          key={index}
-          className="flex justify-center items-center bg-gradient-to-r from-green-400 to-blue-500 text-white rounded-full w-24 h-24 shadow-lg transform transition-transform hover:scale-110 hover:bg-gradient-to-r hover:from-blue-500 hover:to-green-400"
-        >
-          <span className="text-center font-semibold">{city}</span>
+    <div className="flex flex-col items-center justify-center  ">
+      <div className="mt-6 flex flex-col gap-3 bg-white/50  py-4 ">
+        <div className=" flex flex-row items-center  gap-2">
+          <h1 className="mb-1 ml-4 text-xl font-medium text-black/50">
+            Top category
+          </h1>{" "}
+          <IoMdArrowRoundForward className="text-xl text-black/50" />{" "}
         </div>
-      ))}
+
+        <div className="flex flex-wrap py-1  px-2  gap-2">
+          {category.map((city, index) => (
+            <div
+              key={index}
+              className="flex h-10 w-[125px] flex-wrap items-center justify-center rounded-full bg-white/70  ring-1 ring-black/30 hover:scale-110 hover:shadow-md hover:shadow-sky-300/60"
+            >
+              <span className="text-center text-sm font-normal text-black/70">
+                {city}
+              </span>
+            </div>
+          ))}
+        </div>
+      </div>{" "}
+      {/* <div className=" flex flex-col gap-3 bg-white/50  py-4 ">
+        <div className=" flex flex-row items-center  gap-2">
+          <h1 className="mb-1 ml-4 text-xl font-medium text-black/50">
+            Other services (Women)
+          </h1>{" "}
+          <IoMdArrowRoundForward className="text-xl text-black/50" />{" "}
+        </div>
+
+        <div className="flex flex-wrap  justify-center  gap-2">
+          {Subcategory2.map((city, index) => (
+            <div
+              key={index}
+              className="flex h-10 w-[125px] flex-wrap items-center justify-center rounded-full bg-white/70 ring-1 ring-black/30 hover:scale-110 hover:shadow-md hover:shadow-sky-300/60"
+            >
+              <span className="text-center text-sm font-normal text-black/70">
+                {city}
+              </span>
+            </div>
+          ))}
+        </div>
+      </div>{" "}
+      <div className=" flex flex-col gap-3 bg-white/50  py-4 ">
+        <div className=" flex flex-row items-center  gap-2">
+          <h1 className="mb-1 ml-4 text-xl font-medium text-black/50">
+            Other services (Men)
+          </h1>{" "}
+          <IoMdArrowRoundForward className="text-xl text-black/50" />{" "}
+        </div>
+
+        <div className="flex flex-wrap  justify-center  gap-2">
+          {Subcategory.map((city, index) => (
+            <div
+              key={index}
+              className="flex h-10 w-[125px] flex-wrap items-center justify-center rounded-full bg-white/75 ring-1 ring-black/30 hover:scale-110 hover:shadow-md hover:shadow-sky-300/60"
+            >
+              <span className="text-center text-sm font-normal text-black/70">
+                {city}
+              </span>
+            </div>
+          ))}
+        </div>
+      </div>{" "} */}
+      <div className="flex flex-col gap-3 bg-white/50  py-4 ">
+        <div className=" flex flex-row items-center  gap-2">
+          <h1 className="mb-1 ml-4 text-xl font-medium text-black/50">
+            Explore top citys
+          </h1>{" "}
+          <IoMdArrowRoundForward className="text-xl text-black/50" />{" "}
+        </div>
+
+        <div className="flex flex-wrap  px-1   gap-2">
+          {cities.map((city, index) => (
+            <div
+              key={index}
+              className="flex h-8 w-[90px]  items-center justify-center rounded-full bg-white/75 ring-1 ring-black/30 hover:scale-110 hover:shadow-md hover:shadow-sky-300/60"
+            >
+              <span className="text-center text-sm font-normal text-black/60">
+                {city}
+              </span>
+            </div>
+          ))}
+        </div>
+      </div>
     </div>
   );
 };
@@ -57,20 +182,22 @@ export default function Searchbar() {
         <DrawerTrigger className="w-full">
           <Searchtext />
         </DrawerTrigger>
-        <DrawerContent className="flex flex-col items-center bg-gradient-to-b from-gray-200 to-gray-400 px-4 py-4 rounded-lg shadow-xl">
-          <div className="flex h-16 w-full flex-row items-center justify-between px-3 mb-4">
-            <span className="ml-1 text-2xl font-semibold text-gray-800">Explore ultimate fession</span>
+        <DrawerContent className="flex flex-col  items-center rounded-lg bg-gradient-to-b from-gray-200 to-gray-400  py-4 shadow-xl">
+          <div className="mb-4 flex h-16 w-full flex-row items-center justify-between px-3 ">
+            <span className="ml-1 text-2xl font-semibold text-gray-800">
+              Explore ultimate fession
+            </span>
             <DrawerClose>
-              <div className="flex h-6 w-6 items-center justify-center rounded-full bg-white ring-2 ring-gray-800">
+              <div className="flex h-6 w-6 items-center justify-center rounded-full bg-white ring-1 ring-gray-800/50">
                 <RxCross1 className="h-4 w-4 text-gray-800" />
               </div>
             </DrawerClose>
           </div>
           <PlaceholdersAndVanishInputDemo />
-          <div className="w-full mt-4"><ComboboxDemo /></div>
-          <div className="w-full mt-4 px-5">
-            <CityDisplay />
-          </div>
+          {/* <div className="mt-4 w-full">
+            <ComboboxDemo />
+          </div> */}
+          <CityDisplay />
         </DrawerContent>
       </Drawer>
     </div>
