@@ -4,6 +4,7 @@ import Image from "next/image"
 import React, { useState } from "react"
 import { Check, ChevronsUpDown } from "lucide-react"
 import { Button } from "@/components/ui/button"
+import { IoSearchOutline } from "react-icons/io5";
 import {
   Command,
   CommandEmpty,
@@ -18,37 +19,199 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover"
 import { cn } from "@/lib/utils"
+import { Input } from "@/components/ui/input"
 
-// Define the categories
+const cities = [
+  {
+    value: "delhi",
+    label: "Delhi",
+    subCities: [
+      "Connaught Place",
+      "Karol Bagh",
+      "Chandni Chowk",
+      "Lajpat Nagar",
+      "Hauz Khas",
+      "Saket",
+      "Dwarka",
+      "Rohini",
+      "Vasant Kunj",
+      "Nehru Place",
+      "Mayur Vihar",
+      "Pitampura",
+      "Rajouri Garden",
+      "Greater Kailash",
+      "Defence Colony",
+      "Paharganj",
+      "South Extension",
+      "Janakpuri",
+      "Noida",
+      "Gurgaon",
+      "Ghaziabad",
+      "Faridabad",
+      "Okhla",
+      "Shahdara",
+      "Patel Nagar",
+      "Malviya Nagar",
+      "Paschim Vihar",
+      "Green Park",
+      "Indirapuram",
+      "Vasundhara",
+      "Uttam Nagar",
+      "Vasant Vihar",
+      "New Friends Colony",
+      "Narela",
+      "Sarita Vihar",
+      "Kalkaji",
+      "Tilak Nagar",
+      "Punjabi Bagh",
+      "Kirti Nagar",
+      "Ashok Vihar",
+      "Dilshad Garden",
+      "Jamia Nagar",
+      "Sarojini Nagar",
+      "Model Town",
+      "Mehrauli",
+      "Jangpura",
+      "Dwarka",
+    ],
+  },
+  {
+    value: "mumbai",
+    label: "Mumbai",
+    subCities: [
+      "Andheri",
+      "Bandra",
+      "Borivali",
+      "Chembur",
+      "Colaba",
+      "Dadar",
+      "Dahisar",
+      "Dharavi",
+      "Goregaon",
+      "Jogeshwari",
+      "Juhu",
+      "Kandivali",
+      "Khar",
+      "Malad",
+      "Matunga",
+      "Mulund",
+      "Powai",
+      "Santacruz",
+      "Sion",
+      "Versova",
+      "Vile Parle",
+      "Wadala",
+      "Worli",
+      "Lower Parel",
+      "Mahim",
+      "Marine Lines",
+      "Ghatkopar",
+      "Byculla",
+      "Panvel",
+      "Navi Mumbai",
+      "Tardeo",
+      "Parel",
+      "Kurla",
+      "Kalbadevi",
+      "Fort",
+      "Grant Road",
+      "Churchgate",
+      "Vikhroli",
+      "Malabar Hill",
+      "Kanjurmarg",
+      "Bhayandar",
+      "Mira Road",
+      "Thane",
+      "Vashi",
+      "Airoli",
+      "Ghodbunder Road",
+      "Sanpada",
+      "Nerul",
+      "Belapur",
+      "Kalyan",
+    ],
+  },
+  {
+    value: "kolkata",
+    label: "Kolkata",
+    subCities: [
+      "Salt Lake City",
+      "Park Street",
+      "Howrah",
+      "Ballygunge",
+      "Alipore",
+      "Esplanade",
+      "New Town",
+      "Dum Dum",
+      "Behala",
+      "Tollygunge",
+      "Rajarhat",
+      "Garia",
+      "Jadavpur",
+      "Sealdah",
+      "Barrackpore",
+      "Shyambazar",
+      "Barasat",
+      "Lake Town",
+      "Kalighat",
+      "Kasba",
+      "Dharmatala",
+      "Beliaghata",
+      "Ultadanga",
+      "Jodhpur Park",
+      "Baguiati",
+      "Santoshpur",
+      "Kestopur",
+      "Sonarpur",
+      "Rajpur-Sonarpur",
+      "Narendrapur",
+      "Gariahat",
+      "Kankurgachi",
+      "Maniktala",
+      "Salt Lake Sector V",
+      "Hatibagan",
+      "Baranagar",
+      "Park Circus",
+      "Metiabruz",
+      "Topsia",
+      "Haltu",
+      "Jadavgarh",
+      "Parnasree Pally",
+      "Shibpur",
+      "Bansdroni",
+      "Phoolbagan",
+      "Belgachia",
+      "Joka",
+      "Madhyamgram",
+      "Kalikapur",
+      "Barisha",
+    ],
+  },
+];
+
 const categories = [
   { value: "tattoo-piercing", label: "Tattoo and Piercing" },
   { value: "beauty-parlour", label: "Beauty Parlour" },
   { value: "mens-unisex-salon", label: "Men’s and Unisex Salon" },
   { value: "massage-parlour", label: "Massage Parlour" },
   { value: "spa-centre", label: "Spa Centre" },
-]
+];
 
 export default function Page() {
   const [categoryOpen, setCategoryOpen] = useState(false)
   const [category, setCategory] = useState("")
 
   return (
-    <div className="mt-[65px] flex w-full gap-3 flex-col items-center">
+    <div className="mt-[65px] flex w-full gap-2 flex-col items-center">
 
-
-      <div className="relative mt-2 w-[90%]">
-        <div className="absolute inset-y-0  left-0 flex items-center bg-slate-300 px-3 pointer-events-none">
-          <svg className="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
-            <path d="M19.71 18.29l-3.4-3.39A8 8 0 1 0 15 16l3.39 3.39a1 1 0 0 0 1.42-1.42zM2 10a6 6 0 1 1 6 6 6 6 0 0 1-6-6z" />
-          </svg>
-        </div>
-        <input
-          type="text"
-          id="input-group-1"
-          className="bg-gray-50 border px-4 border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-          placeholder="Search wuth CherryGlitz"
+      <div className="w-[95%] mt-3">
+        <Input
+          placeholder="Search for services"
+          className="w-full"
+          icon={<IoSearchOutline />}
         />
       </div>
+
 
 
       <div>

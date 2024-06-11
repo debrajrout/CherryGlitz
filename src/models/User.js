@@ -7,6 +7,10 @@ const UserSchema = new Schema({
   emailVerified: Date,
   location: String,
   liked: Array,
+  isAdmin: Boolean,
+  isCostomer: Boolean,
+  onedShop: Array,
+  cart: Array,
 });
 
 export const User = models?.User || model("User", UserSchema);
