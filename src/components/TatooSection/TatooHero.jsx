@@ -4,7 +4,7 @@ import { LayoutGrid } from "../ui/layout-grid";
 
 export function TatooSection() {
   return (
-    <div className="mb-4 mt-2 flex w-full flex-col gap-2 bg-violet-900/20 shadow-md shadow-black/30 ">
+    <div className="mb-4 mt-2 flex w-full flex-col gap-2  shadow-md shadow-black/30 ">
       <span className=" text-xl font-bold text-black">
         Explore Tatoo with <span className=" text-pink-500">CherryGlitz</span>
       </span>

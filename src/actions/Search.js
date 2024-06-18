@@ -44,7 +44,7 @@ export async function grabShop(query) {
       ].filter(Boolean)
     }).sort({ Rating: -1, Reviews: -1 }).limit(10).exec();
 
-    console.log("results :", suggestions);
+
     return suggestions;
   } catch (error) {
     console.error("Error fetching shop suggestions:", error);

@@ -208,140 +208,136 @@ export function ComboboxDemo() {
     const selectedCity = cities.find((c) => c.value === city);
 
     return (
-        <div className="flex w-full  flex-col  items-center ">
-            <div className="flex flex-row gap-2">
-                {" "}
-                {/* <Popover open={categoryOpen} onOpenChange={setCategoryOpen}>
-                    <PopoverTrigger asChild className="mb-4">
-                        <Button
-                            variant="outline"
-                            role="combobox"
-                            aria-expanded={categoryOpen}
-                            className="justify-between"
-                        >
-                            {category
-                                ? categories.find((c) => c.value === category)?.label
-                                : "Category"}
-                            <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
-                        </Button>
-                    </PopoverTrigger>
-                    <PopoverContent className="z-[1001] w-[200px] p-0 ">
-                        <Command>
-                            <CommandInput placeholder="Search category..." />
-                            <CommandList>
-                                <CommandEmpty>No category found.</CommandEmpty>
-                                <CommandGroup>
-                                    {categories.map((categoryObj) => (
-                                        <CommandItem
-                                            key={categoryObj.value}
-                                            value={categoryObj.value}
-                                            onSelect={(currentValue) => {
-                                                setCategory(currentValue);
-                                                setCategoryOpen(false);
-                                            }}
-                                        >
-                                            <Check
-                                                className={cn(
-                                                    "mr-2 h-4 w-4",
-                                                    category === categoryObj.value
-                                                        ? "opacity-100"
-                                                        : "opacity-0",
-                                                )}
-                                            />
-                                            {categoryObj.label}
-                                        </CommandItem>
-                                    ))}
-                                </CommandGroup>
-                            </CommandList>
-                        </Command>
-                    </PopoverContent>
-                </Popover> */}
-                {/* <Popover open={open} onOpenChange={setOpen}>
-                    <PopoverTrigger asChild>
-                        <Button
-                            variant="outline"
-                            role="combobox"
-                            aria-expanded={open}
-                            className="justify-between "
-                        >
-                            {city ? selectedCity.label : "Select City"}
-                            <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
-                        </Button>
-                    </PopoverTrigger>
-                    <PopoverContent className="z-[1001] w-[200px] p-0">
-                        <Command>
-                            <CommandInput placeholder="Search city..." />
-                            <CommandList>
-                                <CommandEmpty>No city found.</CommandEmpty>
-                                <CommandGroup>
-                                    {cities.map((cityObj) => (
-                                        <CommandItem
-                                            key={cityObj.value}
-                                            value={cityObj.value}
-                                            onSelect={(currentValue) => {
-                                                setCity(currentValue);
-                                                setOpen(false);
-                                                setSubCity(""); // Reset sub-city when city changes
-                                            }}
-                                        >
-                                            <Check
-                                                className={cn(
-                                                    "mr-2 h-4 w-4",
-                                                    city === cityObj.value ? "opacity-100" : "opacity-0",
-                                                )}
-                                            />
-                                            {cityObj.label}
-                                        </CommandItem>
-                                    ))}
-                                </CommandGroup>
-                            </CommandList>
-                        </Command>
-                    </PopoverContent>
-                </Popover>
-                <Popover open={subCityOpen} onOpenChange={setSubCityOpen}>
-                    <PopoverTrigger asChild>
-                        <Button
-                            variant="outline"
-                            role="combobox"
-                            aria-expanded={subCityOpen}
-                            className="justify-between  "
-                        >
-                            {subCity ? subCity : "Select Area"}
-                            <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
-                        </Button>
-                    </PopoverTrigger>
-                    <PopoverContent className="z-[1001] max-h-60 w-[200px] overflow-y-auto p-0">
-                        <Command>
-                            <CommandInput placeholder="Search sub-city..." />
-                            <CommandList>
-                                <CommandEmpty>No area found.</CommandEmpty>
-                                <CommandGroup>
-                                    {selectedCity?.subCities.map((subCityName) => (
-                                        <CommandItem
-                                            key={subCityName}
-                                            value={subCityName}
-                                            onSelect={() => {
-                                                setSubCity(subCityName);
-                                                setSubCityOpen(false);
-                                            }}
-                                        >
-                                            <Check
-                                                className={cn(
-                                                    "mr-2 h-4 w-4",
-                                                    subCity === subCityName ? "opacity-100" : "opacity-0",
-                                                )}
-                                            />
-                                            {subCityName}
-                                        </CommandItem>
-                                    ))}
-                                </CommandGroup>
-                            </CommandList>
-                        </Command>
-                    </PopoverContent>
-                </Popover> */}
-            </div>
-
-
+        <div className="flex flex-row gap-2 p-1">
+            {" "}
+            <Popover open={categoryOpen} onOpenChange={setCategoryOpen}>
+                <PopoverTrigger asChild >
+                    <Button
+                        variant="outline"
+                        role="combobox"
+                        aria-expanded={categoryOpen}
+                        className="justify-between"
+                    >
+                        {category
+                            ? categories.find((c) => c.value === category)?.label
+                            : "Category"}
+                        <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                    </Button>
+                </PopoverTrigger>
+                <PopoverContent className="z-[1001] w-[200px] p-0 ">
+                    <Command>
+                        <CommandInput placeholder="Search category..." />
+                        <CommandList>
+                            <CommandEmpty>No category found.</CommandEmpty>
+                            <CommandGroup>
+                                {categories.map((categoryObj) => (
+                                    <CommandItem
+                                        key={categoryObj.value}
+                                        value={categoryObj.value}
+                                        onSelect={(currentValue) => {
+                                            setCategory(currentValue);
+                                            setCategoryOpen(false);
+                                        }}
+                                    >
+                                        <Check
+                                            className={cn(
+                                                "mr-2 h-4 w-4",
+                                                category === categoryObj.value
+                                                    ? "opacity-100"
+                                                    : "opacity-0",
+                                            )}
+                                        />
+                                        {categoryObj.label}
+                                    </CommandItem>
+                                ))}
+                            </CommandGroup>
+                        </CommandList>
+                    </Command>
+                </PopoverContent>
+            </Popover>
+            <Popover open={open} onOpenChange={setOpen}>
+                <PopoverTrigger asChild>
+                    <Button
+                        variant="outline"
+                        role="combobox"
+                        aria-expanded={open}
+                        className="justify-between"
+                    >
+                        {city ? selectedCity.label : "Select City"}
+                        <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                    </Button>
+                </PopoverTrigger>
+                <PopoverContent className="z-[1001] w-[200px] p-0">
+                    <Command>
+                        <CommandInput placeholder="Search city..." />
+                        <CommandList>
+                            <CommandEmpty>No city found.</CommandEmpty>
+                            <CommandGroup>
+                                {cities.map((cityObj) => (
+                                    <CommandItem
+                                        key={cityObj.value}
+                                        value={cityObj.value}
+                                        onSelect={(currentValue) => {
+                                            setCity(currentValue);
+                                            setOpen(false);
+                                            setSubCity(""); // Reset sub-city when city changes
+                                        }}
+                                    >
+                                        <Check
+                                            className={cn(
+                                                "mr-2 h-4 w-4",
+                                                city === cityObj.value ? "opacity-100" : "opacity-0",
+                                            )}
+                                        />
+                                        {cityObj.label}
+                                    </CommandItem>
+                                ))}
+                            </CommandGroup>
+                        </CommandList>
+                    </Command>
+                </PopoverContent>
+            </Popover>
+            <Popover open={subCityOpen} onOpenChange={setSubCityOpen}>
+                <PopoverTrigger asChild>
+                    <Button
+                        variant="outline"
+                        role="combobox"
+                        aria-expanded={subCityOpen}
+                        className="justify-between  "
+                    >
+                        {subCity ? subCity : "Select Area"}
+                        <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                    </Button>
+                </PopoverTrigger>
+                <PopoverContent className="z-[1001] max-h-60 w-[200px] overflow-y-auto p-0">
+                    <Command>
+                        <CommandInput placeholder="Search sub-city..." />
+                        <CommandList>
+                            <CommandEmpty>No area found.</CommandEmpty>
+                            <CommandGroup>
+                                {selectedCity?.subCities.map((subCityName) => (
+                                    <CommandItem
+                                        key={subCityName}
+                                        value={subCityName}
+                                        onSelect={() => {
+                                            setSubCity(subCityName);
+                                            setSubCityOpen(false);
+                                        }}
+                                    >
+                                        <Check
+                                            className={cn(
+                                                "mr-2 h-4 w-4",
+                                                subCity === subCityName ? "opacity-100" : "opacity-0",
+                                            )}
+                                        />
+                                        {subCityName}
+                                    </CommandItem>
+                                ))}
+                            </CommandGroup>
+                        </CommandList>
+                    </Command>
+                </PopoverContent>
+            </Popover>
         </div>
     );
 }

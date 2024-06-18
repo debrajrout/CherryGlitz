@@ -95,7 +95,7 @@ const CityDisplay = () => {
           <IoMdArrowRoundForward className="text-xl text-black/50" />{" "}
         </div>
 
-        <div className="flex flex-wrap py-1  px-2  gap-2">
+        <div className="flex flex-wrap gap-2  px-2  py-1">
           {category.map((city, index) => (
             <div
               key={index}
@@ -158,7 +158,7 @@ const CityDisplay = () => {
           <IoMdArrowRoundForward className="text-xl text-black/50" />{" "}
         </div>
 
-        <div className="flex flex-wrap  px-1   gap-2">
+        <div className="flex flex-wrap  gap-2   px-1">
           {cities.map((city, index) => (
             <div
               key={index}
@@ -177,12 +177,12 @@ const CityDisplay = () => {
 
 export default function Searchbar() {
   return (
-    <div className="mt-[65px] w-full">
+    <div className="mt-[65px] w-[80%]">
       <Drawer>
-        <DrawerTrigger className="w-full">
+        <DrawerTrigger className="w-80">
           <Searchtext />
         </DrawerTrigger>
-        <DrawerContent className="flex flex-col  items-center rounded-lg bg-gradient-to-b from-gray-200 to-gray-400  py-4 shadow-xl">
+        <DrawerContent className="flex flex-col  items-center rounded-t-lg bg-gradient-to-b from-gray-200 to-gray-400  py-4 shadow-xl">
           <div className="mb-4 flex h-16 w-full flex-row items-center justify-between px-3 ">
             <span className="ml-1 text-2xl font-semibold text-gray-800">
               Explore ultimate fession
@@ -194,9 +194,7 @@ export default function Searchbar() {
             </DrawerClose>
           </div>
           <PlaceholdersAndVanishInputDemo />
-          {/* <div className="mt-4 w-full">
-            <ComboboxDemo />
-          </div> */}
+
           <CityDisplay />
         </DrawerContent>
       </Drawer>

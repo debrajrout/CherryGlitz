@@ -4,7 +4,7 @@ import City from "../city/city";
 
 export default function CitySection() {
   return (
-    <div className="bg-slate-300/70">
+    <div >
       <FlipWordsDemo />
       <City />
     </div>

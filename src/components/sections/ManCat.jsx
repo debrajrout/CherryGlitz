@@ -3,7 +3,7 @@ import { LayoutGridDemo } from "../special-components/LayoutSection";
 import { MdKeyboardDoubleArrowRight } from "react-icons/md";
 export default function ManCat() {
   return (
-    <div className="mt-4 flex flex-col bg-rose-400/20 px-2">
+    <div className="mt-4 flex flex-col  px-2">
       <span className="px-1 text-xl font-semibold text-black">
         Explore our category
       </span>

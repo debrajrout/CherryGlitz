@@ -4,12 +4,11 @@ import { IoSearch } from "react-icons/io5";
 import { useGSAP } from "@gsap/react";
 import { gsap } from "gsap";
 import { TextPlugin } from "gsap/all";
-import Image from "next/image";
 import { FaSpa } from "react-icons/fa";
 import { FaShop } from "react-icons/fa6";
 import { MdOutlineGirl } from "react-icons/md";
 import { AiOutlineDingding } from "react-icons/ai";
-import { MdOutlineAddLocationAlt } from "react-icons/md";
+
 
 gsap.registerPlugin(TextPlugin);
 export default function Searchtext() {
@@ -130,7 +129,7 @@ export default function Searchtext() {
             </div>
           </div>
         </div>
-        <MdOutlineAddLocationAlt className="mr-2 h-6 w-6 text-blue-700" />
+
       </div>
     </div>
   );

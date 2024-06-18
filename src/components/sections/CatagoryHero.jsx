@@ -26,7 +26,7 @@ const ImageSlider = () => {
   }, []);
 
   return (
-    <div className="relative  mb-2 h-60 w-full overflow-hidden bg-white py-1">
+    <div className="relative  mb-2 h-60 w-full overflow-hidden  py-1">
       <div className="absolute bottom-0 left-0 right-0 z-[2] mx-[15%] mb-4 flex list-none justify-center gap-3 overflow-hidden   p-0">
         {images.map((_, index) => (
           <button
