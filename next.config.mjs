@@ -14,6 +14,9 @@ const nextConfig = {
       {
         hostname: "images.unsplash.com",
       },
+      {
+        hostname: "cherryglitz.s3.ap-south-1.amazonaws.com"
+      },
     ],
   },
 };

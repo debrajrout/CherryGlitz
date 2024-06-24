@@ -1,5 +1,4 @@
 const defaultTheme = require("tailwindcss/defaultTheme");
-
 const colors = require("tailwindcss/colors");
 const {
   default: flattenColorPalette,
@@ -73,14 +72,6 @@ module.exports = {
           from: { height: "var(--radix-accordion-content-height)" },
           to: { height: "0" },
         },
-        "accordion-down": {
-          from: { height: "0" },
-          to: { height: "var(--radix-accordion-content-height)" },
-        },
-        "accordion-up": {
-          from: { height: "var(--radix-accordion-content-height)" },
-          to: { height: "0" },
-        },
         bounceLeft: {
           "0%, 100%": { transform: "translateX(0)" },
           "50%": { transform: "translateX(-6px)" },
@@ -95,12 +86,10 @@ module.exports = {
         },
       },
       animation: {
-        "bounce-left": "bounceLeft 1s infinite",
-        "accordion-down": "accordion-down 0.2s ease-out",
-        "accordion-up": "accordion-up 0.2s ease-out",
-        shimmer: "shimmer 2s linear infinite",
-        "accordion-down": "accordion-down 0.2s ease-out",
-        "accordion-up": "accordion-up 0.2s ease-out",
+        "bounce-left": "bounceLeft 2s infinite", // Slow down the bounce animation
+        "accordion-down": "accordion-down 0.5s ease-out", // Slow down accordion animations
+        "accordion-up": "accordion-up 0.5s ease-out",
+        shimmer: "shimmer 4s linear infinite", // Slow down the shimmer animation
       },
     },
   },
@@ -110,7 +99,7 @@ module.exports = {
 function addVariablesForColors({ addBase, theme }) {
   let allColors = flattenColorPalette(theme("colors"));
   let newVars = Object.fromEntries(
-    Object.entries(allColors).map(([key, val]) => [`--${key}`, val]),
+    Object.entries(allColors).map(([key, val]) => [`--${key}`, val])
   );
 
   addBase({

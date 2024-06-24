@@ -1,7 +1,7 @@
-"use client";
-import { useEffect, useState } from "react";
+"use client"
 import Image from "next/image";
-import { FaAnglesLeft, FaAnglesRight } from "react-icons/fa6";
+import { Carousel } from 'react-responsive-carousel';
+import 'react-responsive-carousel/lib/styles/carousel.min.css';
 
 const images = [
   "/images/f1.jpg",
@@ -11,55 +11,33 @@ const images = [
 ];
 
 const ImageSlider = () => {
-  const [currentIndex, setCurrentIndex] = useState(0);
-  let slideInterval;
 
-  const slideNext = () => {
-    setCurrentIndex((prevIndex) =>
-      prevIndex === images.length - 1 ? 0 : prevIndex + 1,
-    );
-  };
-
-  useEffect(() => {
-    slideInterval = setInterval(slideNext, 4000);
-    return () => clearInterval(slideInterval);
-  }, []);
 
   return (
-    <div className="relative  mb-2 h-60 w-full overflow-hidden  py-1">
-      <div className="absolute bottom-0 left-0 right-0 z-[2] mx-[15%] mb-4 flex list-none justify-center gap-3 overflow-hidden   p-0">
-        {images.map((_, index) => (
-          <button
-            key={index}
-            type="button"
-            className="mx-[1px] box-content h-2 w-2  cursor-pointer rounded-full   border-transparent bg-white"
-            onClick={() => setCurrentIndex(index)}
-            aria-label={`Slide ${index + 1}`}
-          />
-        ))}
-      </div>
-
-      <div className="relative h-full w-full overflow-hidden after:clear-both after:block after:content-['']">
-        <div
-          className="flex transition-transform ease-in-out"
-          style={{ transform: `translateX(-${currentIndex * 100}%)` }}
+    <div className="relative mb-2 h-60 w-full overflow-hidden py-1">
+      <div className="relative h-full w-full overflow-hidden">
+        <Carousel
+          autoPlay={true}
+          interval={3000} // Change interval to 3000 milliseconds (3 seconds)
+          showArrows={false}
+          showStatus={true}
+          showIndicators={true}
+          showThumbs={false}
+          dynamicHeight={true}
+          infiniteLoop={true}
         >
           {images.map((image, index) => (
-            <div key={index} className="w-full flex-shrink-0 overflow-hidden ">
+            <div key={index}>
               <Image
                 src={image}
                 alt={`Slide ${index + 1}`}
-                className="block h-full w-full object-cover"
-                width={450}
-                height={250}
+                className="block w-full object-cover"
+
+                width={3556} height={2000}
               />
-              <div className="absolute inset-x-[15%] bottom-5 hidden py-5 text-center text-white md:block">
-                <h5 className="text-xl">{`Slide ${index + 1} label`}</h5>
-                <p>{`Some representative placeholder content for slide ${index + 1}.`}</p>
-              </div>
             </div>
           ))}
-        </div>
+        </Carousel>
       </div>
     </div>
   );

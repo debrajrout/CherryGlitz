@@ -29,6 +29,10 @@ import {
   LuCode,
 } from "react-icons/lu";
 
+export const metadata = {
+  title: "Massage",
+}
+
 const massages = [
   {
     name: "Swedish Massage",

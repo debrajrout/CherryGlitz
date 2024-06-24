@@ -3,8 +3,6 @@ import Image from "next/image";
 import {
   FaHeart,
   FaGem,
-  FaEye,
-  FaCrown,
   FaMoon,
   FaTheaterMasks,
   FaPaintBrush,
@@ -14,15 +12,16 @@ import {
   FaStar,
   FaFire,
   FaHeartbeat,
-  FaTrophy,
   FaEyeDropper,
-  FaGrinBeam,
   FaGlobe,
   FaTint,
-  FaPaintRoller,
   FaThumbsUp,
   FaArrowRight,
 } from "react-icons/fa";
+
+export const metadata = {
+  title: "Function",
+}
 
 const brideServices = [
   {

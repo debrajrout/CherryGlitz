@@ -5,6 +5,9 @@ import React from "react";
 import { GiModernCity } from "react-icons/gi";
 import { GrBraille } from "react-icons/gr";
 import { GrFormNext } from "react-icons/gr";
+export const metadata = {
+  title: "Tattoo",
+}
 
 const TreatmentItem = ({ imageUrl, name, description }) => {
   return (
@@ -31,6 +34,7 @@ const TreatmentItem = ({ imageUrl, name, description }) => {
     </div>
   );
 };
+
 
 const TattooItem = ({
   imageUrl,

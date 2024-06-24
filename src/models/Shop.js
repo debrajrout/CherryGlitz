@@ -1,38 +1,39 @@
 import { model, models, Schema } from "mongoose";
 
-
 const ShopSchema = new Schema({
-  Id: Number,
-  Uid: String,
+  Uid: { type: String, unique: true }, // Assuming this is a unique identifier for each shop
   Map: String,
-  Area: String,
-  Name: String,
-  City: String,
+  Area: { type: String, index: true },
+  Name: { type: String, required: true, index: true },
+  City: { type: String, required: true, index: true },
   Phone: String,
-  Reviews: Number,
+  Reviews: { type: Number, default: 0, index: true },
   Time: String,
   Service: String,
+  Category: { type: String, required: true, index: true },
   Category2: String,
-  Rating: Number,
-  Category: String,
-  Phone: String,
+  Category3: String,
+  Rating: { type: Number, default: 0, index: true },
   Longitude: Number,
   Latitude: Number,
   Address: String,
   Website: String,
+  Liked: { type: Boolean, default: false }
 });
 
-ShopSchema.index(
-  {
-    Name: 'text',
-    Category: 'text',
-    Category2: 'text',
-    Area: 'text',
-    City: 'text',
-    Rating: -1,
-    Reviews: -1
-  },
-  { name: "compoundIndex" } // Optional index name
-);
+// Compound index for optimized querying
+ShopSchema.index({
+  Name: 'text',
+  Category: 'text',
+  Area: 'text',
+  City: 'text',
+  Rating: -1,
+  Reviews: -1
+}, { name: "compoundTextIndex" });
+
+// Ensure indexes are created
+ShopSchema.on('index', error => {
+  if (error) console.error('Index creation error:', error);
+});
 
 export const Shop = models?.Shop || model("Shop", ShopSchema);

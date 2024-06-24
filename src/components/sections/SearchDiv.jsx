@@ -3,7 +3,6 @@ import { useRouter } from "next/navigation";
 import { useDebounce } from "use-debounce";
 import { PlaceholdersAndVanishInput } from "../ui/placeholders-input";
 import { useEffect, useState, useRef, useMemo } from "react";
-import { grabShop } from "@/actions/Search";
 import { PiFlowArrow } from "react-icons/pi";
 import { Separator } from "../ui/separator";
 
@@ -16,8 +15,6 @@ export function PlaceholdersAndVanishInputDemo() {
     "Relax and Rejuvenate with Our Massages!",
     "Escape to Tranquility at Our Spa Centre!",
   ];
-
-
 
   const categorizedPhrases = useMemo(() => ({
     "Tattoo": [
@@ -138,7 +135,6 @@ export function PlaceholdersAndVanishInputDemo() {
   }), []);
 
   const [text, setText] = useState("");
-  const [results, setResults] = useState([]);
   const [suggestions, setSuggestions] = useState([]);
 
   const router = useRouter();
@@ -151,30 +147,17 @@ export function PlaceholdersAndVanishInputDemo() {
       return;
     }
 
-    const fetchData = async () => {
-      if (!query) {
-        setSuggestions([]);
-        setResults([]);
-        return;
-      }
+    if (!query) {
+      setSuggestions([]);
+      return;
+    }
 
-      // Filter and limit suggestions
-      const allPhrases = Object.values(categorizedPhrases).flat();
-      const filteredPhrases = allPhrases
-        .filter((phrase) => phrase.toLowerCase().includes(query.toLowerCase()))
-        .slice(0, 10);
-      setSuggestions(filteredPhrases);
-
-      try {
-        const result = await grabShop(query);
-        setResults(result);
-        console.log("Results:", result);
-      } catch (error) {
-        console.error("Error fetching shops:", error);
-      }
-    };
-
-    fetchData();
+    // Filter and limit suggestions
+    const allPhrases = Object.values(categorizedPhrases).flat();
+    const filteredPhrases = allPhrases
+      .filter((phrase) => phrase.toLowerCase().includes(query.toLowerCase()))
+      .slice(0, 10);
+    setSuggestions(filteredPhrases);
   }, [query, categorizedPhrases]);
 
   const handleChange = (e) => {
@@ -196,11 +179,6 @@ export function PlaceholdersAndVanishInputDemo() {
     } else {
       router.push(`/search?search=${phrase}`);
     }
-  };
-
-  const handleShopClick = (shop) => {
-    const { _id, City, Area, Category, Category2 } = shop;
-    router.push(`/search?uid=${_id}&city=${City}&area=${Area}&category=${Category}`);
   };
 
   const onSubmit = (e) => {
@@ -227,23 +205,6 @@ export function PlaceholdersAndVanishInputDemo() {
     </div>
   );
 
-  const ShopList = ({ results }) => (
-    <div className="p-2">
-      {results.map((shop) => (
-        <div
-          key={shop._id}
-          className="p-4 mb-2 border rounded shadow-sm bg-white cursor-pointer"
-          onClick={() => handleShopClick(shop)}
-        >
-          <h3 className="text-sm font-medium text-black">{shop.Name}</h3>
-          <Separator className="bg-black/30" />
-          <p className="text-gray-600">{shop.Category} - {shop.Category2}</p>
-          <p className="text-gray-500">{shop.Area} - {shop.City}</p>
-        </div>
-      ))}
-    </div>
-  );
-
   return (
     <div className="w-[95%]">
       <PlaceholdersAndVanishInput
@@ -253,7 +214,6 @@ export function PlaceholdersAndVanishInputDemo() {
         value={text}
       />
       {suggestions.length > 0 && <SuggestionList suggestions={suggestions} />}
-      {results.length > 0 && <ShopList results={results} />}
     </div>
   );
 }

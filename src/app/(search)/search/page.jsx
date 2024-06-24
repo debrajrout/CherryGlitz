@@ -1,11 +1,12 @@
 "use client";
-import Image from "next/image";
 import React, { useState, useEffect } from "react";
-import { Check, ChevronsUpDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
+import { filterShops } from "@/actions/fetchAll";
+import ShopListing from "@/components/ShopListing";
+import { Input } from "@/components/ui/input";
 import { IoSearchOutline } from "react-icons/io5";
 import { cn } from "@/lib/utils";
-import { Input } from "@/components/ui/input";
 import {
   Command,
   CommandEmpty,
@@ -20,11 +21,15 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { useRouter } from "next/navigation";
-import { filterShops } from "@/actions/filterShop"; // Adjust this import path as necessary
 import { Separator } from "@/components/ui/separator";
 import { matchSorter } from "match-sorter";
-import FetchCity from "@/actions/fetchCity";
-import { fetchCategoriesFromServer } from "@/actions/fetchCategory";
+import { fetchCitiesAndAreas, fetchCategories } from "@/actions/fetchAll";
+import Footer from "@/components/footer/Footer";
+import { Check, ChevronsUpDown } from "lucide-react";
+import { HairCut } from "@/components/special-components/Scroll";
+import { Spa } from "@/components/special-components/Scroll";
+import { Tattoo } from "@/components/special-components/Scroll";
+import { Beauty } from "@/components/special-components/Scroll";
 
 export default function Page() {
   const [categoryOpen, setCategoryOpen] = useState(false);
@@ -34,21 +39,21 @@ export default function Page() {
   const [subCityOpen, setSubCityOpen] = useState(false);
   const [subCity, setSubCity] = useState("");
   const [searchText, setSearchText] = useState("");
-  const [shopResults, setShopResults] = useState([]);
   const [tag, setTag] = useState("");
   const [cities, setCities] = useState([]);
   const [categories, setCategories] = useState([]);
-  const [selectedCity, setSelectedCity] = useState(null);
+  const [shops, setShops] = useState([]);
+  const [page, setPage] = useState(1);
 
   const router = useRouter();
 
   useEffect(() => {
     const fetchInitialData = async () => {
       try {
-        const citiesResponse = await FetchCity();
+        const citiesResponse = await fetchCitiesAndAreas();
         setCities(citiesResponse);
 
-        const categoriesResponse = await fetchCategoriesFromServer();
+        const categoriesResponse = await fetchCategories();
         setCategories(categoriesResponse);
 
         const { category, city, subCity, search } = parseQueryString();
@@ -56,8 +61,9 @@ export default function Page() {
         setCity(city);
         setSubCity(subCity);
         setSearchText(search);
-        setTag(search)
-        filterShopData(category, city, subCity);
+        setTag(search);
+
+        fetchShopsData(category, city, subCity, 1);
       } catch (error) {
         console.error("Error fetching initial data:", error);
       }
@@ -65,15 +71,6 @@ export default function Page() {
 
     fetchInitialData();
   }, []);
-
-  const filterShopData = async (category, city, subCity) => {
-    try {
-      const results = await filterShops(category, city, subCity);
-      setShopResults(results);
-    } catch (error) {
-      console.error("Error filtering shop data:", error);
-    }
-  };
 
   const parseQueryString = () => {
     const params = new URLSearchParams(window.location.search);
@@ -85,34 +82,62 @@ export default function Page() {
     };
   };
 
+  const fetchShopsData = async (category, city, subCity, page) => {
+    try {
+      const results = await filterShops(category, city, subCity, page);
+      setShops(results);
+      console.log("Shops fetched:", results);
+    } catch (error) {
+      console.error("Error fetching shops:", error);
+    }
+  };
+
+  const handleNext = () => {
+    const nextPage = page + 1;
+    setPage(nextPage);
+    fetchShopsData(category, city, subCity, nextPage);
+  };
+
+  const handlePrevious = () => {
+    if (page > 1) {
+      const prevPage = page - 1;
+      setPage(prevPage);
+      fetchShopsData(category, city, subCity, prevPage);
+    }
+  };
+
   const handleCategoryChange = (value) => {
     setCategory(value);
-    filterShopData(value, city, subCity);
+    fetchShopsData(value, city, subCity, 1);
   };
 
   const handleCityChange = (value) => {
     setCity(value);
     setSubCity(""); // Reset subCity when city changes
-    filterShopData(category, value, "");
+    fetchShopsData(category, value, "", 1);
   };
 
   const handleSubCityChange = (value) => {
     setSubCity(value);
-    filterShopData(category, city, value);
+    fetchShopsData(category, city, value, 1);
   };
 
   const handleSearchTextChange = (value) => {
     setSearchText(value);
-    // Since the searchText is not used in filterShops, we do not call filterShopData here.
+    // Since the searchText is not used in filterShops, we do not call fetchShopsData here.
   };
 
   const filteredSubCities = city
-    ? matchSorter(cities.find(c => c.name === city)?.areas || [], subCity, { threshold: matchSorter.rankings.CONTAINS })
+    ? matchSorter(
+      cities.find((c) => c.name === city)?.areas || [],
+      subCity,
+      { threshold: matchSorter.rankings.CONTAINS }
+    )
     : [];
 
   return (
-    <div className="mt-[65px] flex w-full gap-2 flex-col items-center">
-      <div className="w-full px-2 mt-1">
+    <div className="mt-[65px] flex w-full  flex-col items-center">
+      <div className="w-full px-2 my-2">
         <Input
           placeholder="Search for services"
           className="bg-slate-400 shadow-md shadow-blue-200/30"
@@ -122,19 +147,21 @@ export default function Page() {
         />
       </div>
 
-      <Image
-        src="/search/sear.png"
-        alt=""
-        className="shadow-md shadow-black/30"
-        width={2400}
-        height={800}
-      />
+      {category === "Beauty Parlour" && <Beauty />}
+      {category === "Spa" && <Spa />}
+      {category === "Tattoo" && <Tattoo />}
+      {category === "Men’s Salon" && <HairCut />}
+      {category === "Massage" && <Spa />}
 
       <div className="flex overflow-x-auto gap-2 w-full bg-slate-100 p-2">
-        {/* Category Popover */}
         <Popover open={categoryOpen} onOpenChange={setCategoryOpen}>
           <PopoverTrigger asChild>
-            <Button variant="outline" role="combobox" aria-expanded={categoryOpen} className="justify-between">
+            <Button
+              variant="outline"
+              role="combobox"
+              aria-expanded={categoryOpen}
+              className="justify-between"
+            >
               {category ? category : "Category"}
               <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
             </Button>
@@ -155,7 +182,12 @@ export default function Page() {
                       }}
                     >
                       <Check
-                        className={cn("mr-2 h-4 w-4", category === categoryName ? "opacity-100" : "opacity-0")}
+                        className={cn(
+                          "mr-2 h-4 w-4",
+                          category === categoryName
+                            ? "opacity-100"
+                            : "opacity-0"
+                        )}
                       />
                       {categoryName}
                     </CommandItem>
@@ -166,10 +198,14 @@ export default function Page() {
           </PopoverContent>
         </Popover>
 
-        {/* City Popover */}
         <Popover open={open} onOpenChange={setOpen}>
           <PopoverTrigger asChild>
-            <Button variant="outline" role="combobox" aria-expanded={open} className="justify-between">
+            <Button
+              variant="outline"
+              role="combobox"
+              aria-expanded={open}
+              className="justify-between"
+            >
               {city ? city : "Select City"}
               <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
             </Button>
@@ -190,7 +226,10 @@ export default function Page() {
                       }}
                     >
                       <Check
-                        className={cn("mr-2 h-4 w-4", city === cityObj.name ? "opacity-100" : "opacity-0")}
+                        className={cn(
+                          "mr-2 h-4 w-4",
+                          city === cityObj.name ? "opacity-100" : "opacity-0"
+                        )}
                       />
                       {cityObj.name}
                     </CommandItem>
@@ -201,10 +240,14 @@ export default function Page() {
           </PopoverContent>
         </Popover>
 
-        {/* SubCity Popover */}
         <Popover open={subCityOpen} onOpenChange={setSubCityOpen}>
           <PopoverTrigger asChild>
-            <Button variant="outline" role="combobox" aria-expanded={subCityOpen} className="justify-between">
+            <Button
+              variant="outline"
+              role="combobox"
+              aria-expanded={subCityOpen}
+              className="justify-between"
+            >
               {subCity ? subCity : "Select Area"}
               <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
             </Button>
@@ -225,7 +268,10 @@ export default function Page() {
                       }}
                     >
                       <Check
-                        className={cn("mr-2 h-4 w-4", subCity === subCityName ? "opacity-100 " : "opacity-0")}
+                        className={cn(
+                          "mr-2 h-4 w-4",
+                          subCity === subCityName ? "opacity-100 " : "opacity-0"
+                        )}
                       />
                       {subCityName}
                     </CommandItem>
@@ -236,36 +282,29 @@ export default function Page() {
           </PopoverContent>
         </Popover>
       </div>
-      <span className="bg-gradient-to-r from-blue-700 to-lime-600 bg-clip-text text-transparent text-lg font-medium w-full px-3 -mt-1">
+
+      <Separator className="mt-1 bg-blue-500/40" />
+      <span className="bg-gradient-to-r from-blue-700 to-lime-600 bg-clip-text text-transparent text-lg font-medium w-full px-2 -mb-3">
         {tag.toLowerCase()}
       </span>
-      <Separator className="-mt-1 bg-blue-500/40 " />
-      {/* Display shop results */}
-      <div className="w-full mt-4">
-        {shopResults.length > 0 ? (
-          shopResults.map((shop) => (
-            <div key={shop._id} className="p-2 mb-4 shadow-black/15 shadow-md flex flex-col gap-2">
-              <div className="flex flex-row gap-2">
-                <div className="w-32 h-40 p-2">
-                  <Image alt="" src="/city/agra.png" width={200} height={200} className="rounded-md shadow-md" />
-                </div>
-                <div>
-                  <p>
-                    {shop.Area}, {shop.City}
-                  </p>
-                  <p>Rating: {shop.Rating}</p>
-                  <p>Reviews: {shop.Reviews}</p>
-                  <p>category: {shop.Category}</p>
-                  <span>{shop.Name}</span>
-                </div>
-              </div>
-              <div className="bg-green-200 w-full h-10">button</div>
-            </div>
-          ))
-        ) : (
-          <p>No results found.</p>
-        )}
+
+
+
+
+      <ShopListing shopResults={shops} />
+
+      <div className=" mb-1 flex w-full flex-row items-center justify-end gap-6">
+        <Button variant="outline" onClick={handlePrevious} disabled={page === 1}>
+          <IoIosArrowBack className="mr-2" />
+          Previous
+        </Button>
+        <Button variant="ghost" onClick={handleNext}>
+          Next
+          <IoIosArrowForward className="ml-2" />
+        </Button>
       </div>
+
+      <Footer />
     </div>
   );
 }

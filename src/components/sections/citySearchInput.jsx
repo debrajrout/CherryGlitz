@@ -4,7 +4,7 @@ import { useDebounce } from "use-debounce";
 import { useEffect, useState, useRef } from "react";
 import { PiFlowArrow } from "react-icons/pi";
 import { Input } from "../ui/input";
-import FetchCity from "@/actions/fetchCity";
+import { fetchCitiesAndAreas } from "@/actions/fetchAll";
 
 export function LocationSearchComponent() {
     const [text, setText] = useState("");
@@ -18,7 +18,7 @@ export function LocationSearchComponent() {
     useEffect(() => {
         const fetchCities = async () => {
             try {
-                const response = await FetchCity();
+                const response = await fetchCitiesAndAreas();
 
                 setCities(response);
                 console.log("Cities:", response);

@@ -1,20 +1,12 @@
 import React from "react";
-
 import Login from "../buttons/Login";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import Logout from "../buttons/Logout";
-import Image from "next/image";
-import { Pacifico } from "next/font/google";
 import { LuDownloadCloud } from "react-icons/lu";
 import CartSection from "./CartSection";
 import MenuSection from "./MenuSection";
 import Link from "next/link";
-
-const pacifico = Pacifico({
-  weight: ["400"],
-  subsets: ["latin"],
-});
 
 export default async function Header() {
   const session = await getServerSession(authOptions);

@@ -29,6 +29,10 @@ import {
   LuCode,
 } from "react-icons/lu";
 
+export const metadata = {
+  title: "Spa",
+}
+
 const treatments = [
   {
     name: "Hydrafacial",
