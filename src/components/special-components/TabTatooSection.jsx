@@ -103,7 +103,7 @@ export function AccordionDemo() {
             <AccordionTrigger>Portrait Tattoos</AccordionTrigger>
             <AccordionContent>
               Portrait tattoos are a subgenre of realism tattoos, focusing
-              specifically on replicating the likeness of a person's face. This
+              specifically on replicating the likeness of a persons face. This
               style is often used to commemorate loved ones or celebrities,
               requiring precise detail and shading.
             </AccordionContent>
@@ -140,7 +140,7 @@ export function AccordionDemo() {
             <AccordionContent>
               Maori tattoos, or Ta Moko, are traditional tattoos from the Maori
               people of New Zealand. They feature intricate, curvilinear
-              patterns and designs that convey the wearer's genealogy, social
+              patterns and designs that convey the wearers genealogy, social
               status, and personal history.
             </AccordionContent>
           </AccordionItem>
