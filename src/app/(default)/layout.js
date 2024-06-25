@@ -115,12 +115,12 @@ export const metadata = {
     description: "Explore top-rated beauty parlors, hair salons, massage centers, spas, and tattoo shops across India. Find the best places for bridal makeup, haircuts, full body massages, luxury spa treatments, and unique tattoo designs near you.",
 
   },
-  // openGraph: {
-  //   title: "Cherry Glitz - Discover the Best Beauty Parlors, Hair Salons, Massage Centers, Spas, and Tattoo Shops in India",
-  //   description: "Explore top-rated beauty parlors, hair salons, massage centers, spas, and tattoo shops across India. Find the best places for bridal makeup, haircuts, full body massages, luxury spa treatments, and unique tattoo designs near you.",
-  //   url: "https://www.cherryglitz.com",
-  //   type: "website",
-  // },
+  openGraph: {
+    title: "Cherry Glitz - Discover the Best Beauty Parlors, Hair Salons, Massage Centers, Spas, and Tattoo Shops in India",
+    description: "Explore top-rated beauty parlors, hair salons, massage centers, spas, and tattoo shops across India. Find the best places for bridal makeup, haircuts, full body massages, luxury spa treatments, and unique tattoo designs near you.",
+    url: "https://www.cherryglitz.com",
+    type: "website",
+  },
   facebook: {
     app_id: "your-facebook-app-id",  // Optional, if you have a Facebook App ID
 
