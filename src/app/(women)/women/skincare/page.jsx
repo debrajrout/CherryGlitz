@@ -1,3 +1,4 @@
+import Image from "next/image";
 import React from "react";
 import { FaArrowRight } from "react-icons/fa";
 
@@ -131,11 +132,12 @@ const SkinCareTreatmentsPage = () => {
             key={index}
             className="transform rounded-lg p-6 shadow-md shadow-black/30 transition-transform duration-300 hover:scale-105"
           >
-            <img
+            {/* <Image
               src={treatment.image}
               alt={treatment.name}
+              w
               className="w-full rounded-t-lg"
-            />
+            /> */}
             <h2 className="mb-2 text-2xl font-bold text-gray-800">
               {treatment.name}
             </h2>
