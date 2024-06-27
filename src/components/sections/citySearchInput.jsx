@@ -1,12 +1,14 @@
-"use client";
 import { useRouter } from "next/navigation";
 import { useDebounce } from "use-debounce";
 import { useEffect, useState, useRef } from "react";
 import { PiFlowArrow } from "react-icons/pi";
 import { Input } from "../ui/input";
 import { fetchCitiesAndAreas } from "@/actions/fetchAll";
+import {
+    DrawerClose,
+} from "@/components/ui/drawer";
 
-export function LocationSearchComponent() {
+export function LocationSearchComponent({ onLocationSelect }) {
     const [text, setText] = useState("");
     const [suggestions, setSuggestions] = useState([]);
     const [loading, setLoading] = useState(false);
@@ -67,11 +69,9 @@ export function LocationSearchComponent() {
             ? location.split(", ")
             : [null, location];
 
-        router.push(
-            area
-                ? `/search?city=${city}&area=${area}`
-                : `/search?city=${location}`
-        );
+        onLocationSelect(city, area);
+        // Close the drawer
+        // document.querySelector('[data-drawer-overlay]').click();
     };
 
     const handleLocationDetection = () => {
@@ -93,10 +93,12 @@ export function LocationSearchComponent() {
                     console.log("City:", city, "Area:", area, "Location:", location);
 
                     if (city && area) {
-                        router.push(`/search?city=${city}&area=${area}`);
+                        onLocationSelect(city, area);
                     } else if (city) {
-                        router.push(`/search?city=${city}`);
+                        onLocationSelect(city, null);
                     }
+                    // Close the drawer
+                    document.querySelector('[data-drawer-overlay]').click();
                 },
                 (error) => {
                     setLoading(false);
@@ -112,14 +114,17 @@ export function LocationSearchComponent() {
     const SuggestionList = ({ suggestions }) => (
         <div className="mt-2 p-2 flex flex-col gap-1 border rounded shadow-lg bg-white">
             {suggestions.map((location, index) => (
-                <div
-                    key={index}
-                    className="px-2 py-1 cursor-pointer hover:bg-gray-100 rounded-md flex flex-row items-center justify-between"
-                    onClick={() => handleSuggestionClick(location)}
-                >
-                    <span className="text-sm text-gray-700">{location}</span>
-                    <PiFlowArrow className="mr-3 mt-1 text-2xl text-blue-500" />
-                </div>
+                <DrawerClose key={index}>
+
+
+                    <div
+
+                        className="px-2 py-1 cursor-pointer hover:bg-gray-100 rounded-md flex flex-row items-center justify-between"
+                        onClick={() => handleSuggestionClick(location)}
+                    >
+                        <span className="text-sm text-gray-700">{location}</span>
+                        <PiFlowArrow className="mr-3 mt-1 text-2xl text-blue-500" />
+                    </div>  </DrawerClose>
             ))}
         </div>
     );

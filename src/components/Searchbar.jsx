@@ -179,7 +179,7 @@ export default function Searchbar() {
   return (
     <div className="mt-[65px] w-[80%]">
       <Drawer>
-        <DrawerTrigger className="w-80">
+        <DrawerTrigger className="w-72">
           <Searchtext />
         </DrawerTrigger>
         <DrawerContent className="flex flex-col  items-center rounded-t-lg bg-gradient-to-b from-gray-200 to-gray-400  py-4 shadow-xl">

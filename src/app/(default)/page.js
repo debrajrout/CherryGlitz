@@ -9,11 +9,10 @@ import ManCat from "@/components/sections/ManCat";
 import MassageSpa from "@/components/sections/MassageSpa";
 import CitySearchBar from "@/components/citySearch";
 
-
 export default function Home() {
   return (
     <main>
-      <div className="flex  flex-row items-center  ">
+      <div className="flex w-full flex-row items-center  justify-between  px-3">
         <Searchbar />
         <CitySearchBar />
       </div>

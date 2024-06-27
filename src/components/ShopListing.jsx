@@ -34,7 +34,7 @@ const ShopListing = ({ shopResults }) => {
 
     if (shopResults.length === 0) {
         return (
-            <div className="flex w-full flex-col space-y-3">
+            <div className="flex w-full flex-col space-y-3 mt-5">
                 {[...Array(5)].map((_, idx) => (
                     <div
                         key={idx}

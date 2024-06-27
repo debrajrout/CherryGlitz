@@ -99,9 +99,10 @@ export default function ShopPage({ params }) {
     };
 
     const handleWhatsAppClick = () => {
-        const url = window.location.href;
-        navigator.clipboard.writeText(url);
-        window.open(`https://wa.me/?text=${encodeURIComponent(url)}`, '_blank');
+
+
+        window.open(`https://wa.me/${shop.Phone}?text=Hello`, '_blank');
+
     };
 
     const handleShareClick = () => {
