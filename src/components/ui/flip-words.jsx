@@ -1,34 +1,33 @@
 "use client";
-import React, { useEffect, useRef, useState } from "react";
-import { AnimatePresence, motion, LayoutGroup } from "framer-motion";
+import React, { useCallback, useEffect, useState } from "react";
+import { AnimatePresence, motion } from "framer-motion";
 import { cn } from "@/utils/cn";
-let interval;
 
 export const FlipWords = ({ words, duration = 3000, className }) => {
   const [currentWord, setCurrentWord] = useState(words[0]);
+  const [isAnimating, setIsAnimating] = useState(false);
+
+  const startAnimation = useCallback(() => {
+    const word = words[words.indexOf(currentWord) + 1] || words[0];
+    setCurrentWord(word);
+    setIsAnimating(true);
+  }, [currentWord, words]);
 
   useEffect(() => {
-    startAnimation();
-
-    return () => {
-      clearInterval(interval);
-    };
-  }, []);
-
-  const startAnimation = () => {
-    let i = 0;
-    interval = setInterval(() => {
-      i++;
-      if (i === words.length) {
-        i = 0;
-      }
-      const word = words[i];
-      setCurrentWord(word);
-    }, duration);
-  };
+    if (!isAnimating) {
+      const timer = setTimeout(() => {
+        startAnimation();
+      }, duration);
+      return () => clearTimeout(timer);
+    }
+  }, [isAnimating, duration, startAnimation]);
 
   return (
-    <AnimatePresence>
+    <AnimatePresence
+      onExitComplete={() => {
+        setIsAnimating(false);
+      }}
+    >
       <motion.div
         initial={{
           opacity: 0,
@@ -54,8 +53,8 @@ export const FlipWords = ({ words, duration = 3000, className }) => {
           position: "absolute",
         }}
         className={cn(
-          "relative z-10 inline-block px-2 text-left  font-semibold text-black/80",
-          className,
+          "z-10 inline-block relative text-left text-neutral-900 dark:text-neutral-100 px-2",
+          className
         )}
         key={currentWord}
       >
@@ -68,7 +67,7 @@ export const FlipWords = ({ words, duration = 3000, className }) => {
               delay: index * 0.08,
               duration: 0.4,
             }}
-            className="inline-block text-2xl"
+            className="inline-block"
           >
             {letter}
           </motion.span>

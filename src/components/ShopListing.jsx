@@ -7,9 +7,11 @@ import { FcShop } from "react-icons/fc";
 import { CiLocationOn } from "react-icons/ci";
 import { IoIosStar } from "react-icons/io";
 import { HiArrowTrendingUp } from "react-icons/hi2";
-import { PiHeartStraightBold } from "react-icons/pi";
+import { PiHeartStraightBold, PiPlusLight } from "react-icons/pi";
 import { fetchFirstImage } from "@/actions/aws";
 import Link from "next/link";
+import { LuPhoneCall } from "react-icons/lu";
+import { GrLocation } from "react-icons/gr";
 
 const ShopListing = ({ shopResults }) => {
     const [shopImages, setShopImages] = useState({});
@@ -64,7 +66,7 @@ const ShopListing = ({ shopResults }) => {
             {shopResults.map((shop) => (
                 <div
                     key={shop._id}
-                    className="mb-4 flex w-full flex-col justify-between rounded-lg bg-blue-50/10 p-2 shadow-lg"
+                    className="mb-2 flex w-full flex-col justify-between rounded-lg bg-blue-50/10 p-2 shadow-lg"
                 >
                     {/* Image Section */}
                     <Link href={`/search/${shop._id}`} className="flex ">
@@ -118,9 +120,27 @@ const ShopListing = ({ shopResults }) => {
                         </div>
                     </Link>
                     {/* Action Buttons */}
-                    <div className="w-full mt-1 flex-row items-center">
-                        <button onClick={() => likeShop(shop.Uid)}>
-                            <PiHeartStraightBold className="text-2xl text-black/50 " />
+                    <div className="w-full flex flex-row gap-3 mt-3 ">
+
+                        <button className=" flex flex-row h-9  w-44 animate-shimmer items-center justify-center gap-1 rounded-md border border-slate-300 bg-[linear-gradient(110deg,#6366f1,45%,#818cf8,55%,#6366f1)] bg-[length:200%_100%] px-6 transition-colors focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 focus:ring-offset-indigo-600">
+                            <GrLocation className="text-white text-lg" />
+                            <span className="text-sm font-medium text-white">
+                                Visite Now
+                            </span>
+                        </button>
+
+                        <button className="gap-2 shadow-[inset_0_0_0_2px_#616467] flex flex-row justify-center items-center text-black  h-9  w-44 rounded-lg tracking-widest uppercase font-bold bg-transparent hover:bg-[#616467] hover:text-white dark:text-neutral-200 transition duration-200">
+
+                            <LuPhoneCall className="text-xl" />
+                            <span className="text-xs">
+                                Contact Now
+                            </span>
+                        </button>
+
+
+
+                        <button onClick={() => likeShop(shop.Uid)} className="w-9 h-9 ring-black ring-1  flex items-center justify-center rounded-md">
+                            <PiHeartStraightBold className="text-xl text-black/50 " />
                         </button>
                     </div>
                 </div>

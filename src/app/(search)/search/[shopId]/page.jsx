@@ -98,11 +98,13 @@ export default function ShopPage({ params }) {
         window.location.href = `tel:${shop.Phone}`;
     };
 
-    const handleWhatsAppClick = () => {
-
-
-        window.open(`https://wa.me/${shop.Phone}?text=Hello`, '_blank');
-
+    const handleWhatsAppClick = async () => {
+        const phoneNumber = shop.Phone.replace(/[^\d]/g, '');
+        try {
+            window.open(`https://wa.me/${phoneNumber}?text=${encodeURIComponent("Hello")}`, '_blank');
+        } catch (error) {
+            toast.error("Whatsapp not found")
+        }
     };
 
     const handleShareClick = () => {
@@ -234,14 +236,19 @@ export default function ShopPage({ params }) {
             <div className="flex flex-row gap-8 px-3 py-1 mt-4 items-center">
                 <div className="flex flex-col items-center justify-center rounded-xl ring-1 p-3 cursor-pointer" onClick={handlePhoneClick}>
                     <FiPhoneCall className="text-3xl text-blue-600 hover:text-blue-800" />
-                    <span className='text-xs mt-1 font-semibold'>Call Now</span>
+                    <span className='text-xs mt-1 font-semibold'>CallNow</span>
                 </div>
                 <div className="flex flex-col justify-center items-center cursor-pointer rounded-xl ring-1 p-3" onClick={handleWhatsAppClick}>
                     <FaWhatsapp className="text-3xl text-green-600 hover:text-green-800" />
                     <span className='text-xs mt-1 font-semibold'>Whatsapp</span>
                 </div>
 
-                <div className="flex flex-col justify-center  items-center cursor-pointer rounded-xl ring-1 p-3" onClick={handleShareClick}>
+
+                <div className="flex flex-col justify-center items-center cursor-pointer rounded-xl ring-1 p-3" onClick={handleWhatsAppClick}>
+                    <FaWhatsapp className="text-3xl text-green-600 hover:text-green-800" />
+                    <span className='text-xs mt-1 font-semibold'>Whatsapp</span>
+                </div>
+                <div className="flex flex-col w-[70px] justify-center  items-center cursor-pointer rounded-xl ring-1 p-3" onClick={handleShareClick}>
                     <FaShareAlt className="text-3xl text-yellow-600 hover:text-yellow-800" />
                     <span className='text-xs mt-1 font-semibold'>Share</span>
                 </div>

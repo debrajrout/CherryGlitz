@@ -84,11 +84,20 @@ module.exports = {
             backgroundPosition: "-200% 0",
           },
         },
+        meteor: {
+          "0%": { transform: "rotate(215deg) translateX(0)", opacity: "1" },
+          "70%": { opacity: "1" },
+          "100%": {
+            transform: "rotate(215deg) translateX(-500px)",
+            opacity: "0",
+          },
+        },
       },
       animation: {
         "bounce-left": "bounceLeft 2s infinite", // Slow down the bounce animation
         "accordion-down": "accordion-down 0.5s ease-out", // Slow down accordion animations
         "accordion-up": "accordion-up 0.5s ease-out",
+        "meteor-effect": "meteor 5s linear infinite",
         shimmer: "shimmer 4s linear infinite", // Slow down the shimmer animation
       },
     },
