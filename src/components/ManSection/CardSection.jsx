@@ -7,49 +7,113 @@ import Link from "next/link";
 
 export default function ThreeDCardDemo() {
     return (
-        <CardContainer className="inter-var">
-            <CardBody className="bg-gray-50 relative group/card  dark:hover:shadow-2xl dark:hover:shadow-emerald-500/[0.1] dark:bg-black dark:border-white/[0.2] border-black/[0.1] w-auto sm:w-[30rem] h-auto rounded-xl p-6 border  ">
-                <CardItem
-                    translateZ="50"
-                    className="text-xl font-bold text-neutral-600 dark:text-white"
-                >
-                    Make things float in air
-                </CardItem>
-                <CardItem
-                    as="p"
-                    translateZ="60"
-                    className="text-neutral-500 text-sm max-w-sm mt-2 dark:text-neutral-300"
-                >
-                    Hover over this card to unleash the power of CSS perspective
-                </CardItem>
-                <CardItem translateZ="100" className="w-full mt-4">
-                    <Image
-                        src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?q=80&w=2560&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-                        height="1000"
-                        width="1000"
-                        className="h-60 w-full object-cover rounded-xl group-hover/card:shadow-xl"
-                        alt="thumbnail"
-                    />
-                </CardItem>
-                <div className="flex justify-between items-center mt-20">
-                    <CardItem
-                        translateZ={20}
-                        as={Link}
-                        href="https://twitter.com/mannupaaji"
-                        target="__blank"
-                        className="px-4 py-2 rounded-xl text-xs font-normal dark:text-white"
-                    >
-                        Try now →
+        <div className="flex gap-7 flex-col px-2 items-center justify-center ">
+            {" "}
+            <CardContainer className="inter-var">
+                <CardBody className=" group/card relative  h-auto w-auto rounded-xl border  border-white/[0.2]  bg-black p-6 hover:shadow-2xl hover:shadow-emerald-500/[0.1]  ">
+                    <CardItem translateZ="50" className="text-xl font-bold  text-white">
+                        Beard Trim
                     </CardItem>
                     <CardItem
-                        translateZ={20}
-                        as="button"
-                        className="px-4 py-2 rounded-xl bg-black dark:bg-white dark:text-black text-white text-xs font-bold"
+                        as="p"
+                        translateZ="60"
+                        className=" mt-2 max-w-sm text-sm   text-neutral-300"
                     >
-                        Sign up
+                        Achieve a perfectly groomed beard with our precise trimming service. Whether you prefer a full beard or a stylish stubble, we will shape it to perfection.
                     </CardItem>
-                </div>
-            </CardBody>
-        </CardContainer>
+                    <CardItem translateZ="100" className="mt-4 w-full">
+                        <Image
+                            src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?q=80&w=2560&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                            height="1000"
+                            width="1000"
+                            className="h-60 w-full rounded-xl object-cover group-hover/card:shadow-xl"
+                            alt="thumbnail"
+                        />
+                    </CardItem>
+                    <div className="mt-10 flex items-center justify-between">
+                        <CardItem
+                            translateZ={20}
+                            as={Link}
+                            href="https://twitter.com/mannupaaji"
+                            target="__blank"
+                            className="rounded-xl px-4 py-2 text-xs font-normal text-white"
+                        >
+                            Try now →
+                        </CardItem>
+
+                    </div>
+                </CardBody>
+            </CardContainer>
+            <CardContainer className="inter-var">
+                <CardBody className=" group/card relative  h-auto w-auto rounded-xl border  border-white/[0.2]  bg-black p-6 hover:shadow-2xl hover:shadow-emerald-500/[0.1]  ">
+                    <CardItem translateZ="50" className="text-xl font-bold  text-white">
+                        Mustache Trim
+                    </CardItem>
+                    <CardItem
+                        as="p"
+                        translateZ="60"
+                        className=" mt-2 max-w-sm text-sm   text-neutral-300"
+                    >
+                        Keep your mustache neat and defined with our expert trimming. We ensure your mustache complements your overall look with precise shaping.
+                    </CardItem>
+                    <CardItem translateZ="100" className="mt-4 w-full">
+                        <Image
+                            src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?q=80&w=2560&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                            height="1000"
+                            width="1000"
+                            className="h-60 w-full rounded-xl object-cover group-hover/card:shadow-xl"
+                            alt="thumbnail"
+                        />
+                    </CardItem>
+                    <div className="mt-10 flex items-center justify-between">
+                        <CardItem
+                            translateZ={20}
+                            as={Link}
+                            href="https://twitter.com/mannupaaji"
+                            target="__blank"
+                            className="rounded-xl px-4 py-2 text-xs font-normal text-white"
+                        >
+                            Try now →
+                        </CardItem>
+
+                    </div>
+                </CardBody>
+            </CardContainer>
+            <CardContainer className="inter-var">
+                <CardBody className=" group/card relative  h-auto w-auto rounded-xl border  border-white/[0.2]  bg-black p-6 hover:shadow-2xl hover:shadow-emerald-500/[0.1]  ">
+                    <CardItem translateZ="50" className="text-xl font-bold  text-white">
+                        Neck Shave
+                    </CardItem>
+                    <CardItem
+                        as="p"
+                        translateZ="60"
+                        className=" mt-2 max-w-sm text-sm   text-neutral-300"
+                    >
+                        Experience a clean and smooth finish with our neck shave service. We remove unwanted neck hair to maintain a sharp and polished appearance.
+                    </CardItem>
+                    <CardItem translateZ="100" className="mt-4 w-full">
+                        <Image
+                            src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?q=80&w=2560&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                            height="1000"
+                            width="1000"
+                            className="h-60 w-full rounded-xl object-cover group-hover/card:shadow-xl"
+                            alt="thumbnail"
+                        />
+                    </CardItem>
+                    <div className="mt-10 flex items-center justify-between">
+                        <CardItem
+                            translateZ={20}
+                            as={Link}
+                            href="https://twitter.com/mannupaaji"
+                            target="__blank"
+                            className="rounded-xl px-4 py-2 text-xs font-normal text-white"
+                        >
+                            Try now →
+                        </CardItem>
+
+                    </div>
+                </CardBody>
+            </CardContainer>
+        </div>
     );
 }

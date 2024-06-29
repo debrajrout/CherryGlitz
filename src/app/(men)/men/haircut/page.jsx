@@ -1,11 +1,7 @@
 import { CardHoverEffectDemo } from "@/components/ManSection/CardBgSEction";
-
-
 import { HeroHighlightDemo } from "@/components/ManSection/HeroText";
 import { TracingBeamDemo } from "@/components/ManSection/LineTraker";
 import { MeteorsDemo } from "@/components/ManSection/StyleCard";
-
-
 import React from "react";
 
 export default function page() {
