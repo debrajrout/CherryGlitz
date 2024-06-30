@@ -12,6 +12,7 @@ import CitySearchBar from "@/components/citySearch";
 export default function Home() {
   return (
     <main>
+
       <div className="flex w-full flex-row items-center  justify-between  px-3">
         <Searchbar />
         <CitySearchBar />

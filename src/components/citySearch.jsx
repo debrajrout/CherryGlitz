@@ -20,9 +20,9 @@ export default function CitySearchBar() {
     };
 
     return (
-        <div className="mt-[65px] w-[80%]">
+        <div className="mt-[65px] ">
             <Drawer>
-                <DrawerTrigger className=" ml-8 flex   flex-col items-center justify-center">
+                <DrawerTrigger className="flex   flex-col items-center justify-center">
                     <LiaSearchLocationSolid className="text-3xl text-blue-500" />
                     <span className="w-20 truncate text-xs font-semibold">
                         {selectedLocation ? selectedLocation : "City"}

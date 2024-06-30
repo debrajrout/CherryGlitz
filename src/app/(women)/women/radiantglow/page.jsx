@@ -192,16 +192,56 @@ const Layout3 = ({ service }) => (
 
 export default function RadiantMakeupPage() {
   return (
-    <div className="container mx-auto px-4 py-8">
-      <header className="mb-8 text-center">
-        <h1 className="text-4xl font-bold text-pink-800">Radiant Makeup</h1>
-        <p className="text-lg text-gray-600">
-          Transform your look with our exclusive makeup services
-        </p>
-      </header>
+    <div className=" ">
 
-      <div className="flex h-[260px] w-full flex-col  p-1">
-        <span className="mb-4 text-2xl font-medium text-blue-500">
+      <div className="bg-indigo-600 px-4 py-2 text-white">
+        <p className="text-center text-sm font-medium">
+          Looking for best tattoo artists?
+          <a href="#" className="inline-block underline ml-2 text-xs">Check out near you</a>
+        </p>
+      </div>
+      <section
+        className="relative w-full h-[20rem]  bg-[url(https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?q=80&w=1787&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D)] bg-cover bg-center bg-no-repeat"
+      >
+        <div
+          className="absolute inset-0 bg-gray-900/75 sm:bg-transparent sm:from-gray-900/95 sm:to-gray-900/25 ltr:sm:bg-gradient-to-r rtl:sm:bg-gradient-to-l"
+        >
+
+        </div>
+
+        <div
+          className="relative mx-auto max-w-screen-xl px-4 py-10 sm:px-6 lg:flex lg:h-screen lg:items-center lg:px-8"
+        >
+          <div className="max-w-xl px-4 text-center ltr:sm:text-left rtl:sm:text-right">
+            <h1 className="text-3xl font-extrabold text-white sm:text-5xl">
+              Exclusive Radiant Makeup
+
+              <strong className="block text-2xl font-extrabold text-rose-500"> With Cherry Glitz </strong>
+            </h1>
+
+            <p className="mt-4 px-4 max-w-lg text-white sm:text-xl/relaxed">
+              Transform your look with our exclusive makeup services
+            </p>
+
+            <div className="mt-8 flex flex-wrap gap-4 text-center">
+              <a
+                href="#"
+                className="block w-full rounded bg-rose-600 px-12 py-3 text-sm font-medium text-white shadow hover:bg-rose-700 focus:outline-none focus:ring active:bg-rose-500 sm:w-auto"
+              >
+                Explore more
+              </a>
+
+
+            </div>
+          </div>
+        </div>
+      </section>
+
+
+
+
+      <div className="flex h-[260px] w-full flex-col mt-3 px-4">
+        <span className="mb-4 text-xl font-medium text-blue-500">
           Explore makeup with us
         </span>
         <div className="flex w-full flex-row gap-4 overflow-x-auto">
@@ -228,7 +268,7 @@ export default function RadiantMakeupPage() {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 gap-6 overflow-x-auto sm:grid-cols-2 lg:grid-cols-3">
+      <div className="grid grid-cols-1 mb-4 gap-6 overflow-x-auto sm:grid-cols-2 px-7 lg:grid-cols-3">
         {makeupServices.map((service, index) => (
           <div key={index}>
             {index % 3 === 0 && <Layout1 service={service} />}

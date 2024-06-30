@@ -15,7 +15,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className={inter.className}>
-        {/* <WomenHeading /> */}
+        <WomenHeading />
         {children}
         <Footer />
         <Toaster position="top-right" theme="light" richColors />
