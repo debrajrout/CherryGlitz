@@ -5,7 +5,7 @@ import { motion } from "framer-motion";
 export function LayoutGridDemo() {
   return (
     <div className="flex h-56 items-end overflow-x-scroll">
-      <div className="flex flex-row gap-3">
+      <div className="flex flex-row gap-7">
         <div className=" mb-2 flex h-[175px] w-40 flex-col gap-1 rounded-md bg-white  shadow-md shadow-black/50 ">
           <motion.div
             whileHover={{ scale: 1.1 }}

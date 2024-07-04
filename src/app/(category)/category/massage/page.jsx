@@ -128,7 +128,7 @@ const MassageItem = ({ name, icon }) => {
 
 export default function page() {
   return (
-    <main className="flex w-full flex-col items-center ">
+    <main className="flex w-full flex-col gap-5 items-center ">
       <div className="mt-4 flex h-16 w-[95%] flex-row items-center gap-2 rounded-full bg-white  px-3 py-2 shadow-md shadow-black/20 ring-1 ring-black/20 hover:ring-1 hover:ring-rose-500/50">
         <div className="flex h-11 w-11 items-center justify-center rounded-full  p-1">
           <FcSearch className="h-full w-full" />
@@ -174,7 +174,7 @@ export default function page() {
             <span className=" text-xl font-medium text-green-500">
               Swedish Massage{" "}
             </span>
-            <span className="text-xs font-medium">. By- CherryGlitz</span>
+            <span className="text-xs font-bold">. By- CherryGlitz</span>
           </div>
           <span className="w-4/5 text-xs font-normal">
             Swedish massage is a classic massage technique aimed at promoting
@@ -205,7 +205,7 @@ export default function page() {
             <span className=" text-xl font-medium text-green-500">
               Deep Tissue
             </span>
-            <span className="text-xs font-medium">. By- CherryGlitz</span>
+            <span className="text-xs font-bold">. By- CherryGlitz</span>
           </div>
           <span className="w-4/5 text-xs font-normal">
             Deep tissue massage targets the deeper layers of muscles and
@@ -236,7 +236,7 @@ export default function page() {
             <span className=" text-xl font-medium text-green-500">
               Thai Massage
             </span>
-            <span className="text-xs font-medium">. By- CherryGlitz</span>
+            <span className="text-xs font-bold text-black">. By- CherryGlitz</span>
           </div>
           <span className="w-4/5 text-xs font-normal">
             Thai massage combines acupressure, assisted yoga postures, and deep

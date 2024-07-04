@@ -14,7 +14,7 @@ const ImageSlider = () => {
 
 
   return (
-    <div className="relative mb-2 h-60 w-full overflow-hidden py-1">
+    <div className="relative mb-2 mt-3   h-60 w-full overflow-hidden py-1">
       <div className="relative h-full w-full overflow-hidden">
         <Carousel
           autoPlay={true}

@@ -19,7 +19,7 @@ export const LayoutGrid = ({ cards }) => {
   };
 
   return (
-    <div className="relative  grid h-72 w-full grid-cols-2 gap-2 px-1 py-4   ">
+    <div className="relative  grid h-72 w-full grid-cols-2 gap-2 px-1 py-2   ">
       {cards.map((card, i) => (
         <div key={i} className={cn(card.className, "")}>
           <motion.div
@@ -38,7 +38,7 @@ export const LayoutGrid = ({ cards }) => {
             {selected?.id === card.id && <SelectedCard selected={selected} />}
             <BlurImage card={card} />
             <div className="absolute top-0 mt-2  h-14 w-full  px-3">
-              <span className="text-2xl font-semibold text-white">
+              <span className="text-lg font-medium text-white">
                 {card.Tagline}
               </span>
             </div>

@@ -257,7 +257,7 @@ export default function ShopPage({ params }) {
 
             {/* Add the Tab Section here */}
             <Tabs defaultValue="overview" className="mt-6">
-                <TabsList className="flex justify-around w-full border-b bg-white">
+                <TabsList className="flex  justify-around w-full border-b bg-white">
                     <TabsTrigger value="overview" className="py-2">Details</TabsTrigger>
                     <TabsTrigger value="reviews" className="py-2">Reviews</TabsTrigger>
                     <TabsTrigger value="services" className="py-2">Services</TabsTrigger>
@@ -267,7 +267,7 @@ export default function ShopPage({ params }) {
                 <TabsContent value="overview">
                     <div className='w-full flex flex-col gap-2'>
                         <div className='flex flex-col'>
-                            <span className='text-base font-bold'>
+                            <span className='text-lg font-bold'>
                                 Full address
                             </span>
                             <div className='flex flex-col items-start gap-2'>
@@ -283,6 +283,42 @@ export default function ShopPage({ params }) {
                                     <span className='ml-1'>{copied ? 'Copied!' : 'Copy'}</span>
                                 </button>
                             </div>
+                        </div>
+                        <Separator className="bg-black/60" />
+                        <div className='flex flex-col'>
+                            <span className='text-lg font-bold'>
+                                Ratings and Reviews
+                            </span>
+                            <div >
+                                <span className='text-base font-bold text-blue-800'>
+                                    {shop.Reviews}+ reviews with{" "}
+                                </span>
+
+                                <span className='text-base font-bold text-pink-700'>
+                                    {shop.Rating} star ratting
+                                </span>
+                            </div>
+
+
+
+                        </div>
+                        <Separator className="bg-black/30" />
+                        <div className='flex flex-col'>
+                            <span className='text-lg font-bold'>
+                                Ratings and Reviews
+                            </span>
+                            <div >
+                                <span className='text-base font-bold text-blue-800'>
+                                    {shop.Reviews}+ reviews with{" "}
+                                </span>
+
+                                <span className='text-base font-bold text-pink-700'>
+                                    {shop.Rating} star ratting
+                                </span>
+                            </div>
+
+
+
                         </div>
                         <Separator className="bg-black/30" />
                     </div>

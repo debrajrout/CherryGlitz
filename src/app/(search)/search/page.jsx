@@ -30,6 +30,7 @@ import { HairCut } from "@/components/special-components/Scroll";
 import { Spa } from "@/components/special-components/Scroll";
 import { Tattoo } from "@/components/special-components/Scroll";
 import { Beauty } from "@/components/special-components/Scroll";
+import SelectSection from "@/components/sections/SelectSection";
 
 export default function Page() {
   const [categoryOpen, setCategoryOpen] = useState(false);
@@ -155,7 +156,7 @@ export default function Page() {
     : [];
 
   return (
-    <div className=" mt-[65px] flex w-full  flex-col items-center">
+    <div className="mt-[65px] flex w-full  flex-col items-center">
 
       <div
         className={cn(
@@ -163,7 +164,7 @@ export default function Page() {
           showSearch ? "translate-y-0" : "-translate-y-full"
         )}
       >
-        <div className="w-full px-2 my-2">
+        <div className="w-full px-2 mt-2">
           <Input
             placeholder="Search for services"
             className="bg-slate-400 shadow-md shadow-blue-200/30"
@@ -173,6 +174,7 @@ export default function Page() {
           />
         </div>
       </div>
+      <SelectSection />
       <div className={cn(
         "transition-transform duration-300 w-full z-10 bg-white",
         shopFixed ? "fixed " : ""

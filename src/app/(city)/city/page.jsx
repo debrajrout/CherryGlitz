@@ -5,7 +5,7 @@ import { AiOutlineHome } from "react-icons/ai";
 import { GiModernCity } from "react-icons/gi";
 import Link from "next/link";
 import Image from "next/image";
-import CityRound from "@/components/sections/CityRound";
+
 
 export default function page() {
   return (
@@ -43,108 +43,140 @@ export default function page() {
           <span className="text-lg font-semibold">Explore top citys</span>
         </div>
         <div className="scrollbar-hide row-span-2 flex w-full flex-row justify-normal gap-x-3 gap-y-5 overflow-x-auto  py-3">
-          <div className="h-20 w-16 flex-shrink-0 shadow-md shadow-yellow-400">
+          <div className=" w-24 flex-shrink-0 shadow-md ">
             <Image
               src="/city/agra.png"
               alt="City 1"
               className="rounded-lg object-cover"
-              width={160}
-              height={160}
+              width={768}
+              height={1200}
             />
           </div>
-          <div className="h-20 w-16 flex-shrink-0 shadow-md shadow-sky-400">
+          <div className="w-24 flex-shrink-0 shadow-md ">
             <Image
               src="/city/bengaluru.png"
               alt="City 2"
               className="rounded-lg object-cover"
-              width={160}
-              height={160}
+              width={768}
+              height={1200}
             />
           </div>
-          <div className="h-20 w-16 flex-shrink-0 shadow-md shadow-lime-400">
+          <div className="w-24 flex-shrink-0 shadow-md ">
             <Image
               src="/city/chennai.png"
               alt="City 3"
               className="rounded-lg object-cover"
-              width={160}
-              height={160}
+              width={768}
+              height={1200}
             />
           </div>
-          <div className="h-20 w-16 flex-shrink-0 shadow-md shadow-lime-400">
+          <div className="w-24 flex-shrink-0 shadow-md ">
             <Image
               src="/city/delhi.png"
               alt="City 3"
               className="rounded-lg object-cover"
-              width={160}
-              height={160}
+              width={768}
+              height={1200}
             />
           </div>
-          <div className="h-20 w-16 flex-shrink-0 shadow-md shadow-pink-500">
+          <div className="w-24 flex-shrink-0 shadow-md ">
             <Image
               src="/city/hyderabad.png"
               alt="City 4"
               className="rounded-lg object-cover"
-              width={160}
-              height={160}
+              width={768}
+              height={1200}
             />
           </div>
-          <div className="h-20 w-16 flex-shrink-0 shadow-md shadow-blue-500">
+          <div className="w-24 flex-shrink-0 shadow-md ">
             <Image
               src="/city/jaipur.png"
               alt="City 5"
               className="rounded-lg object-cover"
-              width={160}
-              height={160}
+              width={768}
+              height={1200}
             />
           </div>
-          <div className="h-20 w-16 flex-shrink-0 shadow-md shadow-yellow-400">
+          <div className="w-24 flex-shrink-0 shadow-md ">
             <Image
               src="/city/kolkata.png"
               alt="City 6"
               className="rounded-lg object-cover"
-              width={160}
-              height={160}
+              width={768}
+              height={1200}
             />
           </div>
-          <div className="h-20 w-16 flex-shrink-0 shadow-md shadow-green-400">
+          <div className="w-24 flex-shrink-0 shadow-md ">
             <Image
               src="/city/lucknow.png"
               alt="City 7"
               className="rounded-lg object-cover"
-              width={160}
-              height={160}
+              width={768}
+              height={1200}
             />
           </div>
-          <div className="h-20 w-16 flex-shrink-0 shadow-md shadow-yellow-400">
+          <div className="w-24 flex-shrink-0 shadow-md ">
             <Image
               src="/city/mumbai.png"
               alt="City 8"
               className="rounded-lg object-cover"
-              width={160}
-              height={160}
+              width={768}
+              height={1200}
             />
           </div>
-          <div className="h-20 w-16 flex-shrink-0 shadow-md shadow-yellow-400">
+          <div className="w-24 flex-shrink-0 shadow-md ">
             <Image
               src="/city/pune.png"
               alt="City 9"
               className="rounded-lg object-cover"
-              width={160}
-              height={160}
+              width={768}
+              height={1200}
             />
           </div>
-          <div className="h-20 w-16 flex-shrink-0 shadow-md shadow-yellow-400">
+          <div className="w-24 flex-shrink-0 shadow-md ">
             <Image
               src="/city/ahemdabad.png"
               alt="City 10"
               className="rounded-lg object-cover"
-              width={160}
-              height={160}
+              width={768}
+              height={1200}
             />
           </div>
         </div>
       </div>
-      <CityRound />
+      <div className="w-full mt-6 px-4 gap-8 flex flex-wrap justify-between">
+        <button className="shadow-[inset_0_0_0_2px_#616467] text-black px-5 w-40 py-4 rounded-full tracking-widest uppercase font-bold bg-transparent hover:bg-[#616467] hover:text-white dark:text-neutral-200 transition duration-200">
+          Mumbai
+        </button>
+        <button className="shadow-[inset_0_0_0_2px_#616467] text-black px-5 w-40 py-4 rounded-full tracking-widest uppercase font-bold bg-transparent hover:bg-[#616467] hover:text-white dark:text-neutral-200 transition duration-200">
+          Delhi
+        </button>
+        <button className="shadow-[inset_0_0_0_2px_#616467] text-black px-5 w-40 py-4 rounded-full tracking-widest uppercase font-bold bg-transparent hover:bg-[#616467] hover:text-white dark:text-neutral-200 transition duration-200">
+          Bangalore
+        </button>
+        <button className="shadow-[inset_0_0_0_2px_#616467] text-black px-5 w-40 py-4 rounded-full tracking-widest uppercase font-bold bg-transparent hover:bg-[#616467] hover:text-white dark:text-neutral-200 transition duration-200">
+          Pune
+        </button>
+        <button className="shadow-[inset_0_0_0_2px_#616467] text-black px-5 w-40 py-4 rounded-full tracking-widest uppercase font-bold bg-transparent hover:bg-[#616467] hover:text-white dark:text-neutral-200 transition duration-200">
+          Ahmedabad
+        </button>
+        <button className="shadow-[inset_0_0_0_2px_#616467] text-black px-5 w-40 py-4 rounded-full tracking-widest uppercase font-bold bg-transparent hover:bg-[#616467] hover:text-white dark:text-neutral-200 transition duration-200">
+          Jaipur
+        </button>
+        <button className="shadow-[inset_0_0_0_2px_#616467] text-black px-5 w-40 py-4 rounded-full tracking-widest uppercase font-bold bg-transparent hover:bg-[#616467] hover:text-white dark:text-neutral-200 transition duration-200">
+          Kolkata
+
+        </button>
+        <button className="shadow-[inset_0_0_0_2px_#616467] text-black px-5 w-40 py-4 rounded-full tracking-widest uppercase font-bold bg-transparent hover:bg-[#616467] hover:text-white dark:text-neutral-200 transition duration-200">
+          Chennai
+        </button>
+        <button className="shadow-[inset_0_0_0_2px_#616467] text-black px-5 w-40 py-4 rounded-full tracking-widest uppercase font-bold bg-transparent hover:bg-[#616467] hover:text-white dark:text-neutral-200 transition duration-200">
+          Surat
+        </button>
+        <button className="shadow-[inset_0_0_0_2px_#616467] text-black px-5 w-40 py-4 rounded-full tracking-widest uppercase font-bold bg-transparent hover:bg-[#616467] hover:text-white dark:text-neutral-200 transition duration-200">
+          Surat
+        </button>
+      </div>
     </main>
   );
 }
