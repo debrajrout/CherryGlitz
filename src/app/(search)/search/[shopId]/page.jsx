@@ -31,6 +31,7 @@ import {
 import Link from 'next/link';
 import { Separator } from '@/components/ui/separator';
 import { toast } from "sonner";
+import { DialogDemo } from '@/components/Reviews/ReviewPopover';
 
 export default function ShopPage({ params }) {
     const id = params.shopId;
@@ -164,7 +165,7 @@ export default function ShopPage({ params }) {
                 </div>
                 <div className='-mt-2'>
                     <span className="text-xl font-bold text-black/80">{shop.Name}</span>
-                    <div className="flex flex-row items-center gap-2">
+                    <div className="flex flex-row  items-center gap-2">
                         <div className="mt-1 flex h-6 w-14 flex-row items-center justify-center gap-[3px] rounded-md bg-gradient-to-r from-primary via-slate-500 to-blue-950 bg-[length:200%_200%] animate-shimmer shadow-md hover:shadow-lg transition-shadow duration-2000 ease-in-out transform hover:scale-105">
                             <IoIosStar className="text-lg text-white animate-pulse" />
                             <span className="mt-[2px] text-sm text-white font-bold">
@@ -176,6 +177,7 @@ export default function ShopPage({ params }) {
                                 {shop.Reviews} + Reviews
                             </span>
                         )}
+                        <DialogDemo uid={id} />
                     </div>
                     <div className="flex flex-row items-center justify-start">
                         <CiLocationOn className="text-sm mt-1" />
@@ -321,6 +323,7 @@ export default function ShopPage({ params }) {
 
                         </div>
                         <Separator className="bg-black/30" />
+
                     </div>
                 </TabsContent>
                 <TabsContent value="reviews">
