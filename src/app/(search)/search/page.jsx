@@ -31,6 +31,7 @@ import { Spa } from "@/components/special-components/Scroll";
 import { Tattoo } from "@/components/special-components/Scroll";
 import { Beauty } from "@/components/special-components/Scroll";
 import SelectSection from "@/components/sections/SelectSection";
+// import { fetchCategoriess, fetchCitiesAndAreass } from "@/actions/down";
 
 export default function Page() {
   const [categoryOpen, setCategoryOpen] = useState(false);
@@ -55,7 +56,8 @@ export default function Page() {
       try {
         const citiesResponse = await fetchCitiesAndAreas();
         setCities(citiesResponse);
-
+        // fetchCitiesAndAreass();
+        // fetchCategoriess();
         const categoriesResponse = await fetchCategories();
         setCategories(categoriesResponse);
 

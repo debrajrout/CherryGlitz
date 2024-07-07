@@ -41,8 +41,8 @@ export function DialogDemo({ uid }) {
     return (
         <Dialog open={isOpen} onOpenChange={setIsOpen}>
             <DialogTrigger asChild>
-                <span onClick={() => setIsOpen(true)} className="font-bold w-full h-full text-yellow-600 text-sm ml-2">
-                    Add your Review +
+                <span onClick={() => setIsOpen(true)} className="font-bold  text-yellow-600 text-sm ml-2">
+                    Share your Review +
                 </span>
             </DialogTrigger>
             <DialogContent className="sm:max-w-[425px]">

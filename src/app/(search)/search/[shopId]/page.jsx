@@ -16,7 +16,7 @@ import {
     GiHealing,
 } from "react-icons/gi";
 import { FiCopy, FiPhoneCall } from "react-icons/fi";
-import { FaWhatsapp, FaDirections, FaShareAlt, FaPen } from "react-icons/fa";
+import { FaWhatsapp, FaDirections, FaShareAlt, FaPen, FaRegStar } from "react-icons/fa";
 import {
     Drawer,
     DrawerClose,
@@ -35,6 +35,12 @@ import { toast } from "sonner";
 import { DialogDemo } from "@/components/Reviews/ReviewPopover";
 import { getShopReviews } from "@/actions/fetchReviews";
 import ReviewCard from "@/components/Reviews/ReviewCard";
+import BeautyParlourInfo from "@/components/categoryInfoPage/BeautyParlourInfo";
+import MensSalonInfo from "@/components/categoryInfoPage/MensSalonInfo";
+import MassageParlourInfo from "@/components/categoryInfoPage/MassageParlourInfo";
+import TattooParlourInfo from "@/components/categoryInfoPage/TattooParlourInfo";
+import SpaInfo from "@/components/categoryInfoPage/SpaInfo";
+import { FaStar, FaRegSmile, FaRegMeh, FaRegFrown } from 'react-icons/fa';
 
 export default function ShopPage({ params }) {
     const id = params.shopId;
@@ -44,6 +50,8 @@ export default function ShopPage({ params }) {
     const [mainImage, setMainImage] = useState("");
     const [copied, setCopied] = useState(false);
     const [reviews, setReviews] = useState([]);
+    const [totalreview, setTotalreview] = useState()
+    const [averageRating, setAverageRating] = useState()
     const categoryIcons = {
         "Beauty Parlour": <GiCutDiamond className="text-base text-red-600" />,
         "Men's Salon": <GiHairStrands className="text-base text-blue-600" />,
@@ -67,6 +75,8 @@ export default function ShopPage({ params }) {
                     setMainImage(imageUrls[0]); // Set the first image as the main image initially
                     setReviews(reviewsData.reviews);
                     setLoading(false);
+                    setAverageRating(reviewsData.averageRating)
+                    setTotalreview(reviewsData.totalReviews)
                 } catch (error) {
                     console.error("Error fetching shop data:", error);
                     setLoading(false);
@@ -310,9 +320,7 @@ export default function ShopPage({ params }) {
                     <TabsTrigger value="services" className="py-2">
                         Services
                     </TabsTrigger>
-                    <TabsTrigger value="photos" className="py-2">
-                        Photos
-                    </TabsTrigger>
+
                 </TabsList>
                 <Separator className="bg-black/60" />
                 <TabsContent value="overview">
@@ -334,47 +342,43 @@ export default function ShopPage({ params }) {
                             </div>
                         </div>
                         <Separator className="bg-black/60" />
-                        <div className="flex flex-col">
-                            <span className="text-lg font-bold">Ratings and Reviews</span>
-                            <div>
-                                <span className="text-base font-bold text-blue-800">
-                                    {shop.Reviews}+ reviews with{" "}
-                                </span>
 
-                                <span className="text-base font-bold text-pink-700">
-                                    {shop.Rating} star ratting
-                                </span>
-                            </div>
-                        </div>
-                        <Separator className="bg-black/30" />
-                        <div className="flex flex-col">
-                            <span className="text-lg font-bold">Ratings and Reviews</span>
-                            <div>
-                                <span className="text-base font-bold text-blue-800">
-                                    {shop.Reviews}+ reviews with{" "}
-                                </span>
 
-                                <span className="text-base font-bold text-pink-700">
-                                    {shop.Rating} star ratting
-                                </span>
-                            </div>
-                        </div>
-                        <Separator className="bg-black/30" />
                     </div>
                 </TabsContent>
                 <TabsContent value="reviews">
                     <div className="w-full ">
                         <h2 className="text-xl font-bold text-black/80">
                             Reviews of -{" "}
-                            <span className="font-semibold text-slate-800">{shop.Name}</span>
+                            <span className="font-bold text-blue-700 text-2xl mb-2">{shop.Name}</span>
                         </h2>
 
                         <div className="mx-auto mt-2">
-                            <button className=" relative flex items-center gap-2 rounded-full border border-slate-600 bg-slate-800/90 px-8 py-2 text-sm text-white transition duration-200 hover:shadow-2xl hover:shadow-white/[0.1]">
-                                <div className="absolute inset-x-0 -top-px mx-auto h-px w-1/2 bg-gradient-to-r from-transparent via-teal-500 to-transparent shadow-2xl" />
-                                <FaPen className="relative z-20" />
-                                <DialogDemo uid={id} />
-                            </button>
+                            <section className="p-8 max-w-3xl mx-auto bg-gradient-to-r flex flex-col items-center from-pink-100 to-blue-100 rounded-lg shadow-lg text-gray-800">
+                                <h2 className="text-3xl font-bold text-center mb-4">We Value Your Feedback</h2>
+                                <p className="text-center mb-8 text-gray-600">Please share your experience with us</p>
+
+                                <div className="flex justify-center space-x-4 mb-6">
+                                    <FaRegSmile className="text-6xl cursor-pointer text-yellow-500 hover:text-yellow-600 transition duration-200" />
+                                    <FaRegMeh className="text-6xl cursor-pointer text-yellow-500 hover:text-yellow-600 transition duration-200" />
+                                    <FaRegFrown className="text-6xl cursor-pointer text-yellow-500 hover:text-yellow-600 transition duration-200" />
+                                </div>
+
+                                <div className="flex justify-center mb-8">
+                                    <FaStar className="text-4xl cursor-pointer text-yellow-400 hover:text-yellow-500 transition duration-200" />
+                                    <FaStar className="text-4xl cursor-pointer text-yellow-400 hover:text-yellow-500 transition duration-200" />
+                                    <FaStar className="text-4xl cursor-pointer text-yellow-400 hover:text-yellow-500 transition duration-200" />
+                                    <FaStar className="text-4xl cursor-pointer text-yellow-400 hover:text-yellow-500 transition duration-200" />
+                                    <FaStar className="text-4xl cursor-pointer text-yellow-400 hover:text-yellow-500 transition duration-200" />
+                                </div>
+
+                                <div className="text-center">
+                                    <button className="px-6 py-2 rounded-full bg-gradient-to-b from-green-300 to-green-400 focus:ring-2 focus:ring-green-200 hover:shadow-xl transition duration-200 flex items-center justify-center">
+                                        <FaPen className="relative z-20 mr-2" />
+                                        <DialogDemo uid={id} />
+                                    </button>
+                                </div>
+                            </section>
                         </div>
 
                         <section className="bg-white mt-6">
@@ -389,15 +393,15 @@ export default function ShopPage({ params }) {
                                 <div className="mt-8 sm:mt-12">
                                     <div className="flex flex-col sm:flex-row justify-center gap-8">
                                         <div className="flex flex-col items-center rounded-lg bg-blue-50 p-8 text-center shadow-lg">
-                                            <dt className="text-lg font-medium text-gray-500">{shop.Reviews} Google Reviews</dt>
-                                            <dd className="mt-2 text-4xl font-extrabold text-blue-600 md:text-5xl">{shop.GoogleRating}</dd>
-                                            <dd className="mt-1 text-lg text-gray-500">5-star average rating</dd>
+                                            <dt className="text-lg font-medium text-gray-500">Google Reviews</dt>
+                                            <dd className="mt-2 text-4xl font-extrabold text-blue-600 md:text-5xl">{shop.Reviews}</dd>
+                                            <dd className="mt-1 text-xl text-gray-500 flex flex-row items-center gap-1">{shop.Rating} <FaRegStar className="mr-1 text-red-600 text-base" /> Average rating</dd>
                                         </div>
 
                                         <div className="flex flex-col items-center rounded-lg bg-blue-50 p-8 text-center shadow-lg">
                                             <dt className="text-lg font-medium text-gray-500">Cherry Glitz Reviews</dt>
-                                            <dd className="mt-2 text-4xl font-extrabold text-blue-600 md:text-5xl">{shop.CherryGlitzRating}</dd>
-                                            <dd className="mt-1 text-lg text-gray-500">4.5-star average rating</dd>
+                                            <dd className="mt-2 text-4xl font-extrabold text-blue-600 md:text-5xl">{totalreview}</dd>
+                                            <dd className="mt-1 text-xl text-gray-500 flex flex-row items-center gap-1">{averageRating} <FaRegStar className="mr-1 text-red-600 text-base" /> Average rating</dd>
                                         </div>
                                     </div>
                                 </div>
@@ -419,11 +423,13 @@ export default function ShopPage({ params }) {
                 </TabsContent>
 
                 <TabsContent value="services">
-                    <div className="h-96 w-full bg-slate-400">hi</div>
+                    {shop.Category === "Beauty Parlour" && <BeautyParlourInfo />}
+                    {shop.Category === "Men’s Salon" && <MensSalonInfo />}
+                    {shop.Category === "Massage" && <MassageParlourInfo />}
+                    {shop.Category === "Tattoo" && <TattooParlourInfo />}
+                    {shop.Category === "Spa" && <SpaInfo />}
                 </TabsContent>
-                <TabsContent value="photos">
-                    <div className="h-96 w-full bg-slate-400">hi</div>
-                </TabsContent>
+
             </Tabs>
         </section>
     );

@@ -88,7 +88,7 @@ export async function populateCitiesCollection() {
 }
 
 // Function to fetch categories
-export async function fetchCategories() {
+export async function fetchCategoriess() {
     await connectToDatabase();
 
     try {
@@ -101,7 +101,7 @@ export async function fetchCategories() {
 }
 
 // Function to fetch cities and their areas
-export async function fetchCitiesAndAreas() {
+export async function fetchCitiesAndAreass() {
     await connectToDatabase();
 
     try {

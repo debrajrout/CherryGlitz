@@ -25,7 +25,7 @@ export async function getShopReviews(shop_id) {
         const shopReviews = await Review.findOne({ shop_id }).populate('reviews.user_id', 'name');
 
         if (!shopReviews) {
-            return { reviews: [] }; // Return an empty reviews array if no reviews found
+            return { reviews: [], totalReviews: 0, averageRating: 0 }; // Return default values if no reviews found
         }
 
         // Map the reviews to include user names
@@ -36,7 +36,17 @@ export async function getShopReviews(shop_id) {
             createdAt: review.created_at,
         }));
 
-        return { reviews: reviewsWithUserNames };
+        // Calculate total number of reviews
+        const totalReviews = shopReviews.reviews.length;
+
+        // Calculate average rating
+        const averageRating = (shopReviews.reviews.reduce((sum, review) => sum + review.rating, 0) / totalReviews).toFixed(1);
+
+        return {
+            reviews: reviewsWithUserNames,
+            totalReviews,
+            averageRating: parseFloat(averageRating),
+        };
     } catch (error) {
         console.error("Error fetching shop reviews:", error);
         throw new Error("Internal server error");
