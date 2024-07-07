@@ -1,19 +1,13 @@
 "use server";
-
 import { Shop } from "@/models/Shop";
 import mongoose from "mongoose";
-
-// Define the new collection schemas
-const CategorySchema = new mongoose.Schema({
-    categories: [String],
-});
 
 const CitySchema = new mongoose.Schema({
     name: String,
     areas: [String],
 });
 
-const Category = mongoose.models?.Category || mongoose.model("Category", CategorySchema);
+
 const City = mongoose.models?.City || mongoose.model("City", CitySchema);
 
 // Helper function to connect to MongoDB
@@ -23,35 +17,6 @@ async function connectToDatabase() {
             useNewUrlParser: true,
             useUnifiedTopology: true,
         });
-    }
-}
-
-// Function to populate the categories collection
-export async function populateCategoriesCollection() {
-    await connectToDatabase();
-
-    try {
-        const categoriesSet = new Set();
-
-        // Fetch all categories from the shops
-        const shops = await Shop.find({}, "Category").exec();
-        shops.forEach((shop) => {
-            if (shop.Category) {
-                categoriesSet.add(shop.Category);
-            }
-        });
-
-        const categories = Array.from(categoriesSet);
-
-        // Save to the categories collection
-        await Category.deleteMany({}); // Clear the collection before inserting
-        const categoryDoc = new Category({ categories });
-        await categoryDoc.save();
-
-        return categoryDoc;
-    } catch (error) {
-        console.error("Error populating categories collection:", error);
-        throw error;
     }
 }
 
@@ -87,21 +52,11 @@ export async function populateCitiesCollection() {
     }
 }
 
-// Function to fetch categories
-export async function fetchCategoriess() {
-    await connectToDatabase();
 
-    try {
-        const categoryDoc = await Category.findOne().exec();
-        return categoryDoc?.categories || [];
-    } catch (error) {
-        console.error("Error fetching categories:", error);
-        throw error;
-    }
-}
+
 
 // Function to fetch cities and their areas
-export async function fetchCitiesAndAreass() {
+export async function fetchCitiesAndAreas() {
     await connectToDatabase();
 
     try {
@@ -114,5 +69,4 @@ export async function fetchCitiesAndAreass() {
 }
 
 // Call these functions to initially populate the new collections
-populateCategoriesCollection();
 populateCitiesCollection();

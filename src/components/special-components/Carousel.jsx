@@ -8,8 +8,8 @@ const ImageCarousel = ({ images }) => {
     return (
         <Carousel showThumbs={false} autoPlay={true} infiniteLoop={true} interval={3000}>
             {images.map((image, index) => (
-                <div key={index}>
-                    <Image src={image.src} alt={image.alt} height={437} width={898} />
+                <div key={index} className='h-28'>
+                    <Image src={image.src} alt={image.alt} height={200} width={950} />
 
                 </div>
             ))}

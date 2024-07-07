@@ -14,9 +14,10 @@ const s3Client = new S3Client({
 // Create a cache using Map
 const cache = new Map();
 
-export async function fetchFirstImage(shopUid) {
+export async function fetchFirstImage(shopCity, shopUid) {
+    const cityLowercase = shopCity.toLowerCase();
     const bucketName = 'cherryglitz';
-    const prefix = `images/${shopUid}/`; // Folder path in the S3 bucket
+    const prefix = `${cityLowercase}/${shopUid}/`; // Folder path in the S3 bucket
 
     // Check cache first
     if (cache.has(shopUid)) {
@@ -45,9 +46,11 @@ export async function fetchFirstImage(shopUid) {
     }
 }
 
-export async function fetchAllImages(shopUid) {
+export async function fetchAllImages(shopCity, shopUid) {
+    const cityLowercase = shopCity.toLowerCase();
     const bucketName = 'cherryglitz';
-    const prefix = `images/${shopUid}/`; // Folder path in the S3 bucket
+    const prefix = `${cityLowercase}/${shopUid}/`;
+    // Folder path in the S3 bucket
 
     // Check cache first
     if (cache.has(`${shopUid}_all`)) {

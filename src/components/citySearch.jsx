@@ -7,9 +7,10 @@ import {
     DrawerTrigger,
 } from "@/components/ui/drawer";
 import { RxCross1 } from "react-icons/rx";
-import { Button } from "./ui/button";
+
 import { LiaSearchLocationSolid } from "react-icons/lia";
 import { LocationSearchComponent } from "./sections/citySearchInput";
+
 
 export default function CitySearchBar() {
     const [selectedLocation, setSelectedLocation] = useState("");

@@ -23,7 +23,7 @@ const ShopListing = ({ shopResults }) => {
             const loading = {};
             for (const shop of shopResults) {
                 loading[shop.Uid] = true;
-                const imageUrl = await fetchFirstImage(shop.Uid);
+                const imageUrl = await fetchFirstImage(shop.City, shop.Uid);
                 images[shop.Uid] = imageUrl || null; // Null if no image found
                 loading[shop.Uid] = false;
             }

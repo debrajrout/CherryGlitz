@@ -42,6 +42,7 @@ import TattooParlourInfo from "@/components/categoryInfoPage/TattooParlourInfo";
 import SpaInfo from "@/components/categoryInfoPage/SpaInfo";
 import { FaStar, FaRegSmile, FaRegMeh, FaRegFrown } from 'react-icons/fa';
 
+
 export default function ShopPage({ params }) {
     const id = params.shopId;
     const [shop, setShop] = useState(null);
@@ -65,7 +66,7 @@ export default function ShopPage({ params }) {
             const fetchData = async () => {
                 try {
                     const shopData = await fetchShopById(id);
-                    const imageUrls = await fetchAllImages(shopData.Uid);
+                    const imageUrls = await fetchAllImages(shopData.City, shopData.Uid);
                     const reviewsData = await getShopReviews(id);
                     console.log("Shop Data:", shopData);
                     console.log("Image URLs:", imageUrls);
@@ -77,6 +78,7 @@ export default function ShopPage({ params }) {
                     setLoading(false);
                     setAverageRating(reviewsData.averageRating)
                     setTotalreview(reviewsData.totalReviews)
+
                 } catch (error) {
                     console.error("Error fetching shop data:", error);
                     setLoading(false);
@@ -101,6 +103,7 @@ export default function ShopPage({ params }) {
             </div>
         );
     }
+
 
     const daysOfWeek = [
         "Sunday",
