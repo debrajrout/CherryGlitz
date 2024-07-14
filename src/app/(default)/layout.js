@@ -108,34 +108,34 @@ export const metadata = {
     "Top beauty services",
     "Customized beauty treatments"
   ],
-  twitter: {
-    card: "summary_large_image",
-    site: "@cherryglitz",
-    title: "Cherry Glitz - Discover the Best Beauty Parlors, Hair Salons, Massage Centers, Spas, and Tattoo Shops in India",
-    description: "Explore top-rated beauty parlors, hair salons, massage centers, spas, and tattoo shops across India. Find the best places for bridal makeup, haircuts, full body massages, luxury spa treatments, and unique tattoo designs near you.",
+  // twitter: {
+  //   card: "summary_large_image",
+  //   site: "@cherryglitz",
+  //   title: "Cherry Glitz - Discover the Best Beauty Parlors, Hair Salons, Massage Centers, Spas, and Tattoo Shops in India",
+  //   description: "Explore top-rated beauty parlors, hair salons, massage centers, spas, and tattoo shops across India. Find the best places for bridal makeup, haircuts, full body massages, luxury spa treatments, and unique tattoo designs near you.",
 
-  },
+  // },
   // openGraph: {
   //   title: "Cherry Glitz - Discover the Best Beauty Parlors, Hair Salons, Massage Centers, Spas, and Tattoo Shops in India",
   //   description: "Explore top-rated beauty parlors, hair salons, massage centers, spas, and tattoo shops across India. Find the best places for bridal makeup, haircuts, full body massages, luxury spa treatments, and unique tattoo designs near you.",
   //   url: "https://www.cherryglitz.com",
   //   type: "website",
   // },
-  facebook: {
-    app_id: "your-facebook-app-id",  // Optional, if you have a Facebook App ID
+  // facebook: {
+  //   app_id: "your-facebook-app-id",  // Optional, if you have a Facebook App ID
 
-  },
-  instagram: {
+  // },
+  // instagram: {
 
-    title: "Cherry Glitz on Instagram",
-    description: "Discover top beauty and wellness tips, trends, and services on Cherry Glitz's Instagram."
-  },
-  linkedIn: {
-    title: "Cherry Glitz - Top Beauty and Wellness Services in India",
-    description: "Connect with the best beauty parlors, hair salons, massage centers, spas, and tattoo shops in India. Professional and top-rated services for all your beauty and wellness needs.",
-    url: "https://www.cherryglitz.com",
+  //   title: "Cherry Glitz on Instagram",
+  //   description: "Discover top beauty and wellness tips, trends, and services on Cherry Glitz's Instagram."
+  // },
+  // linkedIn: {
+  //   title: "Cherry Glitz - Top Beauty and Wellness Services in India",
+  //   description: "Connect with the best beauty parlors, hair salons, massage centers, spas, and tattoo shops in India. Professional and top-rated services for all your beauty and wellness needs.",
+  //   url: "https://www.cherryglitz.com",
 
-  }
+  // }
 };
 
 export default function RootLayout({ children }) {

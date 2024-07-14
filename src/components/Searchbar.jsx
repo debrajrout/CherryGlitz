@@ -44,45 +44,7 @@ const category = [
   "spa-centre",
 ];
 
-const Subcategory = [
-  "Radiant Makeup",
 
-  "Haircuts styling",
-
-  "Hair Grooming",
-
-  "Waxing Threading",
-
-  "SkinCare BodyCare",
-
-  "Manicure Padicure",
-
-  "Mehendi BodyArt",
-
-  "EyeCare Eyelash",
-];
-
-const Subcategory2 = [
-  "Haircutting styling",
-
-  "Hair Grooming",
-
-  "Beard Mustache",
-
-  "Kids Haircut",
-
-  "Manicure Padicure",
-
-  "SkinCare BodyCare",
-
-  "Waxing Threading",
-
-  "Piercing",
-
-  "Spa",
-
-  "Wedding Functions",
-];
 
 const CityDisplay = () => {
   return (
@@ -108,48 +70,7 @@ const CityDisplay = () => {
           ))}
         </div>
       </div>{" "}
-      {/* <div className=" flex flex-col gap-3 bg-white/50  py-4 ">
-        <div className=" flex flex-row items-center  gap-2">
-          <h1 className="mb-1 ml-4 text-xl font-medium text-black/50">
-            Other services (Women)
-          </h1>{" "}
-          <IoMdArrowRoundForward className="text-xl text-black/50" />{" "}
-        </div>
 
-        <div className="flex flex-wrap  justify-center  gap-2">
-          {Subcategory2.map((city, index) => (
-            <div
-              key={index}
-              className="flex h-10 w-[125px] flex-wrap items-center justify-center rounded-full bg-white/70 ring-1 ring-black/30 hover:scale-110 hover:shadow-md hover:shadow-sky-300/60"
-            >
-              <span className="text-center text-sm font-normal text-black/70">
-                {city}
-              </span>
-            </div>
-          ))}
-        </div>
-      </div>{" "}
-      <div className=" flex flex-col gap-3 bg-white/50  py-4 ">
-        <div className=" flex flex-row items-center  gap-2">
-          <h1 className="mb-1 ml-4 text-xl font-medium text-black/50">
-            Other services (Men)
-          </h1>{" "}
-          <IoMdArrowRoundForward className="text-xl text-black/50" />{" "}
-        </div>
-
-        <div className="flex flex-wrap  justify-center  gap-2">
-          {Subcategory.map((city, index) => (
-            <div
-              key={index}
-              className="flex h-10 w-[125px] flex-wrap items-center justify-center rounded-full bg-white/75 ring-1 ring-black/30 hover:scale-110 hover:shadow-md hover:shadow-sky-300/60"
-            >
-              <span className="text-center text-sm font-normal text-black/70">
-                {city}
-              </span>
-            </div>
-          ))}
-        </div>
-      </div>{" "} */}
       <div className="flex flex-col gap-3 bg-white/50  py-4 ">
         <div className=" flex flex-row items-center  gap-2">
           <h1 className="mb-1 ml-4 text-xl font-medium text-black/50">
