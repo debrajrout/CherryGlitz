@@ -30,11 +30,12 @@ import { Tattoo } from "@/components/special-components/Scroll";
 import { Beauty } from "@/components/special-components/Scroll";
 import SelectSection from "@/components/sections/SelectSection";
 import { FaStar } from "react-icons/fa";
+import { LuClock } from "react-icons/lu";
+import { TbCheck, TbClockCheck, TbX } from "react-icons/tb";
 
 export default function Page() {
   const [categoryOpen, setCategoryOpen] = useState(false);
   const [category, setCategory] = useState("");
-  const [open, setOpen] = useState(false);
   const [city, setCity] = useState("");
   const [subCityOpen, setSubCityOpen] = useState(false);
   const [subCity, setSubCity] = useState("");
@@ -48,6 +49,13 @@ export default function Page() {
   const [shopFixed, setShopFixed] = useState(false);
   const [starRatingOpen, setStarRatingOpen] = useState(false);
   const [starRating, setStarRating] = useState(0);
+  const [openNow, setOpenNow] = useState(false);
+  const [verified, setVerified] = useState(false);
+
+
+  const handleVerifiedToggle = () => {
+    setVerified(!verified);
+  };
 
   useEffect(() => {
     const fetchInitialData = async () => {
@@ -146,6 +154,9 @@ export default function Page() {
     setStarRating(value);
     fetchShopsData(category, city, subCity, value, 1);
   };
+  const handleOpenNowToggle = () => {
+    setOpenNow(!openNow);
+  };
 
   const handleSearchTextChange = (value) => {
     setSearchText(value);
@@ -181,7 +192,7 @@ export default function Page() {
         {category === "Men’s Salon" && <HairCut />}
         {category === "Massage" && <Spa />}
 
-        <div className="flex overflow-x-auto gap-2 w-full bg-slate-100 p-2">
+        <div className="flex overflow-x-auto gap-2 w-full bg-slate-100 p-1">
           <Popover open={categoryOpen} onOpenChange={setCategoryOpen}>
             <PopoverTrigger asChild>
               <Button
@@ -277,6 +288,37 @@ export default function Page() {
               </Command>
             </PopoverContent>
           </Popover>
+
+          <Button
+            variant={openNow ? "solid" : "outline"}
+            onClick={handleOpenNowToggle}
+            className={`flex items-center space-x-2 ${openNow
+              ? 'bg-blue-200 text-blue-800 border-blue-400'
+              : 'bg-transparent text-blue-600'
+              } border-2 rounded-lg  transition-all duration-300`}
+          >
+            {openNow ? (
+              <TbClockCheck className="text-pink-700" />
+            ) : (
+              <LuClock className="text-black" />
+            )}
+            <span className="ml-1">{openNow ? 'Open Now' : 'Open'}</span>
+          </Button>
+          <Button
+            variant={verified ? "solid" : "outline"}
+            onClick={handleVerifiedToggle}
+            className={`flex items-center space-x-2 ${verified
+              ? 'bg-green-200 text-green-800 border-green-400'
+              : 'bg-transparent text-green-600 '
+              } border-2 rounded-lg transition-all duration-300`}
+          >
+            {verified ? (
+              <TbCheck className="text-green-800" />
+            ) : (
+              <TbCheck className="text-blue-500" />
+            )}
+            <span className="ml-1">{verified ? 'CZ Verified' : 'Verified'}</span>
+          </Button>
         </div>
       </div>
 
