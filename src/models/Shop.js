@@ -13,7 +13,7 @@ const ShopSchema = new Schema({
   Category: { type: String, required: true, index: true },
   Category2: String,
   Category3: String,
-  Rating: { type: String, default: 0, index: true },
+  Rating: { type: Number, default: 0, index: true },
   Longitude: Number,
   Latitude: Number,
   Address: String,
@@ -28,7 +28,7 @@ ShopSchema.index({
   Area: 'text',
   City: 'text',
   Rating: -1,
-  Reviews: -1
+
 }, { name: "compoundTextIndex" });
 
 // Ensure indexes are created

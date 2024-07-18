@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
-import { filterShops } from "@/actions/fetchAll";
+import { filterShops, fetchCitiesAndAreas, fetchCategories } from "@/actions/fetchAll";
 import ShopListing from "@/components/ShopListing";
 import { Input } from "@/components/ui/input";
 import { IoSearchOutline } from "react-icons/io5";
@@ -20,10 +20,8 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { useRouter } from "next/navigation";
 import { Separator } from "@/components/ui/separator";
 import { matchSorter } from "match-sorter";
-import { fetchCitiesAndAreas, fetchCategories } from "@/actions/fetchAll";
 import Footer from "@/components/footer/Footer";
 import { Check, ChevronsUpDown } from "lucide-react";
 import { HairCut } from "@/components/special-components/Scroll";
@@ -31,7 +29,7 @@ import { Spa } from "@/components/special-components/Scroll";
 import { Tattoo } from "@/components/special-components/Scroll";
 import { Beauty } from "@/components/special-components/Scroll";
 import SelectSection from "@/components/sections/SelectSection";
-
+import { FaStar } from "react-icons/fa";
 
 export default function Page() {
   const [categoryOpen, setCategoryOpen] = useState(false);
@@ -48,15 +46,14 @@ export default function Page() {
   const [page, setPage] = useState(1);
   const [showSearch, setShowSearch] = useState(true);
   const [shopFixed, setShopFixed] = useState(false);
-
-  const router = useRouter();
+  const [starRatingOpen, setStarRatingOpen] = useState(false);
+  const [starRating, setStarRating] = useState(0);
 
   useEffect(() => {
     const fetchInitialData = async () => {
       try {
         const citiesResponse = await fetchCitiesAndAreas();
         setCities(citiesResponse);
-
 
         const categoriesResponse = await fetchCategories();
         setCategories(categoriesResponse);
@@ -68,7 +65,7 @@ export default function Page() {
         setSearchText(search);
         setTag(search);
 
-        fetchShopsData(category, city, subCity, 1);
+        fetchShopsData(category, city, subCity, starRating, 1);
       } catch (error) {
         console.error("Error fetching initial data:", error);
       }
@@ -104,11 +101,12 @@ export default function Page() {
     };
   };
 
-  const fetchShopsData = async (category, city, subCity, page) => {
+  const fetchShopsData = async (category, city, subCity, starRating, page) => {
     try {
-      const results = await filterShops(category, city, subCity, page);
+      const results = await filterShops(category, city, subCity, starRating, page);
       setShops(results);
       console.log("Shops fetched:", results);
+      console.log("Star Rating:", starRating);
     } catch (error) {
       console.error("Error fetching shops:", error);
     }
@@ -117,31 +115,36 @@ export default function Page() {
   const handleNext = () => {
     const nextPage = page + 1;
     setPage(nextPage);
-    fetchShopsData(category, city, subCity, nextPage);
+    fetchShopsData(category, city, subCity, starRating, nextPage);
   };
 
   const handlePrevious = () => {
     if (page > 1) {
       const prevPage = page - 1;
       setPage(prevPage);
-      fetchShopsData(category, city, subCity, prevPage);
+      fetchShopsData(category, city, subCity, starRating, prevPage);
     }
   };
 
   const handleCategoryChange = (value) => {
     setCategory(value);
-    fetchShopsData(value, city, subCity, 1);
+    fetchShopsData(value, city, subCity, starRating, 1);
   };
 
   const handleCityChange = (value) => {
     setCity(value);
     setSubCity(""); // Reset subCity when city changes
-    fetchShopsData(category, value, "", 1);
+    fetchShopsData(category, value, "", starRating, 1);
   };
 
   const handleSubCityChange = (value) => {
     setSubCity(value);
-    fetchShopsData(category, city, value, 1);
+    fetchShopsData(category, city, value, starRating, 1);
+  };
+
+  const handleStarRatingChange = (value) => {
+    setStarRating(value);
+    fetchShopsData(category, city, subCity, value, 1);
   };
 
   const handleSearchTextChange = (value) => {
@@ -158,14 +161,8 @@ export default function Page() {
     : [];
 
   return (
-    <div className="mt-[65px] flex w-full  flex-col items-center">
-
-      <div
-        className={cn(
-          "transition-transform duration-300 w-full",
-          showSearch ? "translate-y-0" : "-translate-y-full"
-        )}
-      >
+    <div className="mt-[50px] flex w-full flex-col items-center">
+      <div className={cn("transition-transform duration-300 w-full", showSearch ? "translate-y-0" : "-translate-y-full")}>
         <div className="w-full px-2 mt-2">
           <Input
             placeholder="Search for services"
@@ -177,10 +174,7 @@ export default function Page() {
         </div>
       </div>
       <SelectSection />
-      <div className={cn(
-        "transition-transform duration-300 w-full z-10 bg-white",
-        shopFixed ? "fixed " : ""
-      )}>
+      <div className={cn("transition-transform duration-300 w-full z-10 bg-white", shopFixed ? "fixed " : "")}>
         {category === "Beauty Parlour" && <Beauty />}
         {category === "Spa" && <Spa />}
         {category === "Tattoo" && <Tattoo />}
@@ -232,82 +226,50 @@ export default function Page() {
             </PopoverContent>
           </Popover>
 
-          <Popover open={open} onOpenChange={setOpen}>
+          <Popover open={starRatingOpen} onOpenChange={setStarRatingOpen}>
             <PopoverTrigger asChild>
               <Button
                 variant="outline"
                 role="combobox"
-                aria-expanded={open}
+                aria-expanded={starRatingOpen}
                 className="justify-between"
               >
-                {city ? city : "Select City"}
+                {starRating > 0 ? (
+                  <>
+                    <FaStar className="text-yellow-400" /> {/* Adjust styles as needed */}
+                    <span className="ml-1">{`Above ${starRating} Star`}</span>
+                  </>
+                ) : (
+                  <>
+                    <FaStar className="text-blue-600" /> {/* Adjust styles as needed */}
+                    <span className="ml-1">Rating</span>
+                  </>
+                )}
                 <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
               </Button>
             </PopoverTrigger>
             <PopoverContent className="z-[1001] w-[200px] p-0">
               <Command>
-                <CommandInput placeholder="Search city..." />
+                <CommandInput placeholder="Search star rating..." />
                 <CommandList>
-                  <CommandEmpty>No city found.</CommandEmpty>
+                  <CommandEmpty>No star rating found.</CommandEmpty>
                   <CommandGroup>
-                    {cities.map((cityObj) => (
+                    {[1, 2, 3, 4, 5].map((rating) => (
                       <CommandItem
-                        key={cityObj.name}
-                        value={cityObj.name}
+                        key={rating}
+                        value={rating.toString()}
                         onSelect={(currentValue) => {
-                          handleCityChange(currentValue);
-                          setOpen(false);
+                          handleStarRatingChange(parseInt(currentValue));
+                          setStarRatingOpen(false);
                         }}
                       >
                         <Check
                           className={cn(
                             "mr-2 h-4 w-4",
-                            city === cityObj.name ? "opacity-100" : "opacity-0"
+                            starRating === rating ? "opacity-100" : "opacity-0"
                           )}
                         />
-                        {cityObj.name}
-                      </CommandItem>
-                    ))}
-                  </CommandGroup>
-                </CommandList>
-              </Command>
-            </PopoverContent>
-          </Popover>
-
-          <Popover open={subCityOpen} onOpenChange={setSubCityOpen}>
-            <PopoverTrigger asChild>
-              <Button
-                variant="outline"
-                role="combobox"
-                aria-expanded={subCityOpen}
-                className="justify-between"
-              >
-                {subCity ? subCity : "Select Area"}
-                <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
-              </Button>
-            </PopoverTrigger>
-            <PopoverContent className="z-[1001] max-h-60 w-[200px] overflow-y-auto p-0">
-              <Command>
-                <CommandInput placeholder="Search sub-city..." />
-                <CommandList>
-                  <CommandEmpty>No area found.</CommandEmpty>
-                  <CommandGroup>
-                    {filteredSubCities.map((subCityName) => (
-                      <CommandItem
-                        key={subCityName}
-                        value={subCityName}
-                        onSelect={() => {
-                          handleSubCityChange(subCityName);
-                          setSubCityOpen(false);
-                        }}
-                      >
-                        <Check
-                          className={cn(
-                            "mr-2 h-4 w-4",
-                            subCity === subCityName ? "opacity-100 " : "opacity-0"
-                          )}
-                        />
-                        {subCityName}
+                        {`Above ${rating} Star`}
                       </CommandItem>
                     ))}
                   </CommandGroup>
@@ -318,19 +280,14 @@ export default function Page() {
         </div>
       </div>
 
-
-
       <Separator className="mt-1 bg-blue-500/40" />
       <span className="bg-gradient-to-r from-blue-700 to-lime-600 bg-clip-text text-transparent text-lg font-medium w-full px-2 -mb-3">
         {tag.toLowerCase()}
       </span>
 
-
-
-
       <ShopListing shopResults={shops} />
 
-      <div className=" mb-1 flex w-full flex-row items-center justify-end gap-6">
+      <div className="mb-1 flex w-full flex-row items-center justify-end gap-6">
         <Button variant="outline" onClick={handlePrevious} disabled={page === 1}>
           <IoIosArrowBack className="mr-2" />
           Previous

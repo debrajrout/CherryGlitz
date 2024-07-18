@@ -105,18 +105,20 @@ const ShopListing = ({ shopResults }) => {
                                         {shop.Rating}
                                     </span>
                                 </div>
-                                {shop.Reviews > 0 && (
-                                    <span className="mt-1 text-xs font-semibold text-black/80">
-                                        {shop.Reviews} + Reviews
-                                    </span>
-                                )}
-                            </div>
-                            <div className="flex flex-row items-center gap-1 mt-1 justify-start ">
-                                <HiArrowTrendingUp className="text-base text-red-600" />
-                                <span className=" text-sm font-semibold text-blue-600/60">
-                                    {shop.Service} years of service
+
+                                <span className="mt-1 text-xs font-semibold text-black/80">
+                                    {shop.Reviews} + Reviews
                                 </span>
+
                             </div>
+                            {shop.Service && (
+                                <div className="flex flex-row items-center gap-1 mt-1 justify-start ">
+                                    <HiArrowTrendingUp className="text-base text-red-600" />
+                                    <span className="text-sm font-semibold text-blue-600/60">
+                                        {shop.Service} years of service
+                                    </span>
+                                </div>
+                            )}
                         </div>
                     </Link>
                     {/* Action Buttons */}

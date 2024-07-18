@@ -236,12 +236,12 @@ export default function ShopPage({ params }) {
                     {shop.Time && (
                         <div className="mt-1">
                             <div className="flex flex-row gap-2">
-                                <p className="font-semibold text-cyan-600">
-                                    Opens at: {todayOpeningTime}
+                                <p className="font-medium text-slate-800/95 text-sm">
+                                    <span className="text-green-500 text-lg font-bold">Timing</span> {todayOpeningTime}
                                 </p>
                                 <Drawer>
-                                    <DrawerTrigger className="flex flex-row items-center font-bold text-black/50">
-                                        <span className="text-xs">openings</span>{" "}
+                                    <DrawerTrigger className="flex mt-1 flex-row items-center font-bold text-black/50">
+                                        <span className="text-xs text-pink-500">all openings</span>{" "}
                                         <MdOutlineKeyboardArrowDown />
                                     </DrawerTrigger>
                                     <DrawerContent>
@@ -345,9 +345,85 @@ export default function ShopPage({ params }) {
                             </div>
                         </div>
                         <Separator className="bg-black/60" />
-
-
                     </div>
+                    <div className="w-full my-4">
+                        <h2 className="text-xl font-bold text-black/80">
+                            Reviews of -{" "}
+                            <span className="font-bold text-blue-700 text-2xl mb-2">{shop.Name}</span>
+                        </h2>
+
+                        <div className="mx-auto mt-2">
+                            <section className="p-8 max-w-3xl mx-auto bg-gradient-to-r flex flex-col items-center from-pink-100 to-blue-100 rounded-lg shadow-lg text-gray-800">
+                                <h2 className="text-3xl font-bold text-center mb-4">We Value Your Feedback</h2>
+                                <p className="text-center mb-8 text-gray-600">Please share your experience with us</p>
+
+                                <div className="flex justify-center space-x-4 mb-6">
+                                    <FaRegSmile className="text-6xl cursor-pointer text-yellow-500 hover:text-yellow-600 transition duration-200" />
+                                    <FaRegMeh className="text-6xl cursor-pointer text-yellow-500 hover:text-yellow-600 transition duration-200" />
+                                    <FaRegFrown className="text-6xl cursor-pointer text-yellow-500 hover:text-yellow-600 transition duration-200" />
+                                </div>
+
+                                <div className="flex justify-center mb-8">
+                                    <FaStar className="text-4xl cursor-pointer text-yellow-400 hover:text-yellow-500 transition duration-200" />
+                                    <FaStar className="text-4xl cursor-pointer text-yellow-400 hover:text-yellow-500 transition duration-200" />
+                                    <FaStar className="text-4xl cursor-pointer text-yellow-400 hover:text-yellow-500 transition duration-200" />
+                                    <FaStar className="text-4xl cursor-pointer text-yellow-400 hover:text-yellow-500 transition duration-200" />
+                                    <FaStar className="text-4xl cursor-pointer text-yellow-400 hover:text-yellow-500 transition duration-200" />
+                                </div>
+
+                                <div className="text-center">
+                                    <button className="px-6 py-2 rounded-full bg-gradient-to-b from-green-300 to-green-400 focus:ring-2 focus:ring-green-200 hover:shadow-xl transition duration-200 flex items-center justify-center">
+                                        <FaPen className="relative z-20 mr-2" />
+                                        <DialogDemo uid={id} />
+                                    </button>
+                                </div>
+                            </section>
+                        </div>
+
+                        <section className="bg-white mt-6">
+                            <div className="mx-auto max-w-screen-xl px-4 sm:px-6 md:py-16 lg:px-8">
+                                <div className="mx-auto max-w-3xl text-center">
+                                    <h2 className="text-3xl font-bold text-gray-900">What Our Customers Are Saying</h2>
+                                    <p className="mt-4 text-gray-500 sm:text-xl">
+                                        Read the reviews from our satisfied customers. Your feedback helps us improve and provide better service.
+                                    </p>
+                                </div>
+
+                                <div className="mt-8 sm:mt-12">
+                                    <div className="flex flex-col sm:flex-row justify-center gap-8">
+                                        <div className="flex flex-col items-center rounded-lg bg-blue-50 p-8 text-center shadow-lg">
+                                            <dt className="text-lg font-medium text-gray-500">Google Reviews</dt>
+                                            <dd className="mt-2 text-4xl font-extrabold text-blue-600 md:text-5xl">{shop.Reviews}</dd>
+                                            <dd className="mt-1 text-xl text-gray-500 flex flex-row items-center gap-1">{shop.Rating} <FaRegStar className="mr-1 text-red-600 text-base" /> Average rating</dd>
+                                        </div>
+
+                                        <div className="flex flex-col items-center rounded-lg bg-blue-50 p-8 text-center shadow-lg">
+                                            <dt className="text-lg font-medium text-gray-500">Cherry Glitz Reviews</dt>
+                                            <dd className="mt-2 text-4xl font-extrabold text-blue-600 md:text-5xl">{totalreview}</dd>
+                                            <dd className="mt-1 text-xl text-gray-500 flex flex-row items-center gap-1">{averageRating} <FaRegStar className="mr-1 text-red-600 text-base" /> Average rating</dd>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+
+                        <Separator className="my-4" />
+
+                        <div>
+                            {reviews.length > 0 ? (
+                                reviews.map((review, index) => (
+                                    <ReviewCard key={index} review={review} />
+                                ))
+                            ) : (
+                                <p>No reviews yet. Be the first to add a review!</p>
+                            )}
+                        </div>
+                    </div>
+                    {shop.Category === "Beauty Parlour" && <BeautyParlourInfo />}
+                    {shop.Category === "Men’s Salon" && <MensSalonInfo />}
+                    {shop.Category === "Massage" && <MassageParlourInfo />}
+                    {shop.Category === "Tattoo" && <TattooParlourInfo />}
+                    {shop.Category === "Spa" && <SpaInfo />}
                 </TabsContent>
                 <TabsContent value="reviews">
                     <div className="w-full ">

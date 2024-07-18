@@ -98,7 +98,7 @@ const CityDisplay = () => {
 
 export default function Searchbar() {
   return (
-    <div className="mt-[65px] w-[80%]">
+    <div className="mt-[55px] w-[80%]">
       <Drawer>
         <DrawerTrigger className="w-72">
           <Searchtext />

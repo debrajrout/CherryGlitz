@@ -1,18 +1,18 @@
 "use server";
 
+import mongoose from "mongoose";
 import { Shop } from "@/models/Shop";
 import { Category } from "@/models/Category";
 import { City } from "@/models/City";
-import mongoose from "mongoose";
 
-// Caching results to improve performance
+// Cache for categories and cities
 let categoriesCache = null;
 let citiesCache = null;
 
-// Cache for shops
+// Cache for filtered shops
 let shopCache = {};
-let cacheClearTimeout = null;
 const CACHE_CLEAR_INTERVAL = 60 * 60 * 1000; // Clear cache every 1 hour
+let cacheClearTimeout = null;
 
 // Function to clear shopCache
 function clearShopCache() {
@@ -28,18 +28,19 @@ function initializeCacheClearing() {
     cacheClearTimeout = setTimeout(clearShopCache, CACHE_CLEAR_INTERVAL);
 }
 
-// Call this function to reset the cache clearing timer
-function resetCacheClearingTimer() {
-    if (cacheClearTimeout) {
-        clearTimeout(cacheClearTimeout);
-    }
-    cacheClearTimeout = setTimeout(clearShopCache, CACHE_CLEAR_INTERVAL);
-}
-
 // Helper function to connect to MongoDB
 async function connectToDatabase() {
     if (mongoose.connection.readyState === 0) {
-        await mongoose.connect(process.env.MONGO_URI);
+        try {
+            await mongoose.connect(process.env.MONGO_URI, {
+                useNewUrlParser: true,
+                useUnifiedTopology: true,
+            });
+            console.log("Connected to MongoDB");
+        } catch (error) {
+            console.error("Error connecting to MongoDB:", error);
+            throw new Error("Failed to connect to MongoDB");
+        }
     }
 }
 
@@ -53,12 +54,11 @@ export async function fetchCategories() {
 
     try {
         const categoriesDoc = await Category.findOne().lean().exec();
-        const categories = categoriesDoc?.categories || [];
-        categoriesCache = categories;
-        return categories;
+        categoriesCache = categoriesDoc?.categories || [];
+        return categoriesCache;
     } catch (error) {
         console.error("Error fetching categories:", error);
-        throw error;
+        throw new Error("Failed to fetch categories");
     }
 }
 
@@ -77,7 +77,7 @@ export async function fetchLiked(ids) {
         return shops;
     } catch (error) {
         console.error("Error fetching liked shops:", error);
-        throw new Error('Failed to fetch liked shops');
+        throw new Error("Failed to fetch liked shops");
     }
 }
 
@@ -92,19 +92,19 @@ export async function fetchCitiesAndAreas() {
     try {
         const cities = await City.find().lean().exec();
         citiesCache = cities;
-        return cities;
+        return citiesCache;
     } catch (error) {
         console.error("Error fetching cities and areas:", error);
-        throw error;
+        throw new Error("Failed to fetch cities and areas");
     }
 }
 
-// Filter shops based on category, city, and area with pagination
-export async function filterShops(category, city, area, page = 1, limit = 10) {
+// Function to filter shops based on category, city, area, starRating, page, and limit
+export async function filterShops(category, city, area, starRating, page = 1, limit = 10) {
     await connectToDatabase();
 
     try {
-        const cacheKey = `${category}-${city}-${area}-${page}-${limit}`;
+        const cacheKey = `${category}-${city}-${area}-${starRating}-${page}-${limit}`;
         if (shopCache[cacheKey]) {
             console.log("Returning from cache.");
             return shopCache[cacheKey];
@@ -112,13 +112,17 @@ export async function filterShops(category, city, area, page = 1, limit = 10) {
 
         const query = {};
         if (category) {
-            query.$or = [{ Category: new RegExp(category, 'i') }];
+            query.Category = new RegExp(category, 'i');
         }
         if (city) {
             query.City = new RegExp(city, 'i');
         }
         if (area) {
             query.Area = new RegExp(area, 'i');
+        }
+        if (starRating && !isNaN(starRating)) {
+            const rating = parseInt(starRating);
+            query.Rating = { $gte: rating };
         }
 
         const shops = await Shop.find(query)
@@ -131,16 +135,16 @@ export async function filterShops(category, city, area, page = 1, limit = 10) {
         shopCache[cacheKey] = shops;
 
         // Reset cache clearing timer
-        resetCacheClearingTimer();
+        initializeCacheClearing();
 
         return shops;
     } catch (error) {
         console.error("Error filtering shops:", error);
-        throw error;
+        throw new Error("Failed to filter shops");
     }
 }
 
-// Fetch all information of a shop by its ID
+// Function to fetch shop details by ID
 export async function fetchShopById(shopId) {
     await connectToDatabase();
 
@@ -152,10 +156,9 @@ export async function fetchShopById(shopId) {
         return shop;
     } catch (error) {
         console.error(`Error fetching shop with ID ${shopId}:`, error);
-        throw error;
+        throw new Error(`Failed to fetch shop with ID ${shopId}`);
     }
 }
-
 
 // Initialize cache clearing when the module is first loaded
 initializeCacheClearing();

@@ -11,7 +11,7 @@ import Link from "next/link";
 export default async function Header() {
   const session = await getServerSession(authOptions);
   return (
-    <div className="fixed px-5 left-0 right-0 top-0 z-[100] flex h-16 w-full flex-row items-center justify-between  bg-white py-3 shadow-sm shadow-black/50 ">
+    <div className="fixed px-5 left-0 right-0 top-0 z-[100] flex h-14 w-full flex-row items-center justify-between  bg-neutral-200/95 py-3  ">
       <div className="flex flex-row items-center justify-center ">
         <MenuSection />
         <div className=" flex flex-row items-center gap-1">
