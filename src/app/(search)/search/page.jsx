@@ -15,6 +15,19 @@ import {
   CommandItem,
   CommandList,
 } from "@/components/ui/command";
+
+import {
+  Drawer,
+  DrawerClose,
+  DrawerContent,
+  DrawerDescription,
+  DrawerFooter,
+  DrawerHeader,
+  DrawerTitle,
+  DrawerTrigger,
+} from "@/components/ui/drawer"
+
+
 import {
   Popover,
   PopoverContent,
@@ -31,7 +44,7 @@ import { Beauty } from "@/components/special-components/Scroll";
 import SelectSection from "@/components/sections/SelectSection";
 import { FaStar } from "react-icons/fa";
 import { LuClock } from "react-icons/lu";
-import { TbCheck, TbClockCheck, TbX } from "react-icons/tb";
+import { TbCheck, TbClockCheck, TbSortAscendingShapes, TbX } from "react-icons/tb";
 
 export default function Page() {
   const [categoryOpen, setCategoryOpen] = useState(false);
@@ -192,7 +205,23 @@ export default function Page() {
         {category === "Men’s Salon" && <HairCut />}
         {category === "Massage" && <Spa />}
 
-        <div className="flex overflow-x-auto gap-2 w-full bg-slate-100 p-1">
+        <div className="flex items-center  overflow-x-auto gap-2 w-full bg-slate-100 p-1">
+          <Drawer>
+            <DrawerTrigger className=" p-1.5  flex justify-center items-center bg-white rounded-md shadow-sm shadow-black/30"><TbSortAscendingShapes className="text-2xl text-blue-900" /></DrawerTrigger>
+            <DrawerContent className="bg-slate-200">
+              <DrawerHeader>
+                <DrawerTitle>Are you absolutely sure?</DrawerTitle>
+                <DrawerDescription>This action cannot be undone.</DrawerDescription>
+              </DrawerHeader>
+              <DrawerFooter>
+                <Button>Submit</Button>
+                <DrawerClose>
+                  <Button variant="outline">Cancel</Button>
+                </DrawerClose>
+              </DrawerFooter>
+            </DrawerContent>
+          </Drawer>
+
           <Popover open={categoryOpen} onOpenChange={setCategoryOpen}>
             <PopoverTrigger asChild>
               <Button
@@ -322,7 +351,7 @@ export default function Page() {
         </div>
       </div>
 
-      <Separator className="mt-1 bg-blue-500/40" />
+
       <span className="bg-gradient-to-r from-blue-700 to-lime-600 bg-clip-text text-transparent text-lg font-medium w-full px-2 -mb-3">
         {tag.toLowerCase()}
       </span>

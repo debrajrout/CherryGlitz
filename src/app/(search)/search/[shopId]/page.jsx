@@ -41,6 +41,16 @@ import MassageParlourInfo from "@/components/categoryInfoPage/MassageParlourInfo
 import TattooParlourInfo from "@/components/categoryInfoPage/TattooParlourInfo";
 import SpaInfo from "@/components/categoryInfoPage/SpaInfo";
 import { FaStar, FaRegSmile, FaRegMeh, FaRegFrown } from 'react-icons/fa';
+import {
+    Dialog,
+    DialogContent,
+    DialogDescription,
+    DialogHeader,
+    DialogTitle,
+    DialogTrigger,
+} from "@/components/ui/dialog"
+import ImageCarousel2 from "@/components/imageCarousul";
+
 
 
 export default function ShopPage({ params }) {
@@ -323,7 +333,9 @@ export default function ShopPage({ params }) {
                     <TabsTrigger value="services" className="py-2">
                         Services
                     </TabsTrigger>
-
+                    <TabsTrigger value="photos" className="py-2">
+                        All Photos
+                    </TabsTrigger>
                 </TabsList>
                 <Separator className="bg-black/60" />
                 <TabsContent value="overview">
@@ -362,7 +374,6 @@ export default function ShopPage({ params }) {
                                     <FaRegMeh className="text-6xl cursor-pointer text-yellow-500 hover:text-yellow-600 transition duration-200" />
                                     <FaRegFrown className="text-6xl cursor-pointer text-yellow-500 hover:text-yellow-600 transition duration-200" />
                                 </div>
-
                                 <div className="flex justify-center mb-8">
                                     <FaStar className="text-4xl cursor-pointer text-yellow-400 hover:text-yellow-500 transition duration-200" />
                                     <FaStar className="text-4xl cursor-pointer text-yellow-400 hover:text-yellow-500 transition duration-200" />
@@ -500,7 +511,6 @@ export default function ShopPage({ params }) {
                         </div>
                     </div>
                 </TabsContent>
-
                 <TabsContent value="services">
                     {shop.Category === "Beauty Parlour" && <BeautyParlourInfo />}
                     {shop.Category === "Men’s Salon" && <MensSalonInfo />}
@@ -508,7 +518,41 @@ export default function ShopPage({ params }) {
                     {shop.Category === "Tattoo" && <TattooParlourInfo />}
                     {shop.Category === "Spa" && <SpaInfo />}
                 </TabsContent>
+                <TabsContent value="photos">
+                    <Dialog>
+                        <DialogTrigger>
+                            <div className="flex flex-wrap justify-center mt-2 items-center gap-5">
+                                {allImages.map((imageUrl, index) => (
+                                    <div
+                                        key={index}
+                                        className="w-44 cursor-pointer hover:opacity-75 transition-opacity duration-300"
+                                        onClick={() => setMainImage(imageUrl)}
+                                    >
+                                        <Image
+                                            src={imageUrl}
+                                            alt={`Product Thumbnail ${index + 1}`}
+                                            width={100}
+                                            height={100}
+                                            className="w-full h-full aspect-square rounded-lg object-cover"
+                                        />
+                                    </div>
+                                ))}
+                            </div>
+                        </DialogTrigger>
+                        <DialogContent className="h-[60%] bg-slate-100">
+                            <DialogHeader>
+                                <DialogTitle className="text-blue-700">{shop.Name}</DialogTitle>
+                                <DialogDescription>
+                                    {shop.Category} in {shop.Area}, {shop.City}
+                                    <div className="mt-4">
+                                        <ImageCarousel2 images={allImages} />
+                                    </div>
+                                </DialogDescription>
+                            </DialogHeader>
+                        </DialogContent>
+                    </Dialog>
 
+                </TabsContent>
             </Tabs>
         </section>
     );
