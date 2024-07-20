@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
-import { fetchShopById } from "@/actions/fetchAll";
+import { fetchShopById, incrementVisitCount } from "@/actions/fetchAll";
 import { fetchAllImages } from "@/actions/aws";
 import Image from "next/image";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -78,7 +78,7 @@ export default function ShopPage({ params }) {
                     setLoading(false);
                     setAverageRating(reviewsData.averageRating)
                     setTotalreview(reviewsData.totalReviews)
-
+                    incrementVisitCount(id);
                 } catch (error) {
                     console.error("Error fetching shop data:", error);
                     setLoading(false);

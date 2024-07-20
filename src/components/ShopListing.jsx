@@ -12,6 +12,7 @@ import { fetchFirstImage } from "@/actions/aws";
 import Link from "next/link";
 import { LuPhoneCall } from "react-icons/lu";
 import { GrLocation } from "react-icons/gr";
+import { MdPeople } from "react-icons/md";
 
 const ShopListing = ({ shopResults }) => {
     const [shopImages, setShopImages] = useState({});
@@ -99,9 +100,9 @@ const ShopListing = ({ shopResults }) => {
                                 </span>
                             </div>
                             <div className="flex flex-row items-center gap-2">
-                                <div className="mt-1 flex h-5 w-10 flex-row items-center justify-center gap-[3px] rounded-md bg-green-700">
+                                <div className="mt-1 flex h-5 w-11 flex-row items-center justify-center gap-[2px] rounded-md bg-green-700">
                                     <IoIosStar className="text-sm text-white" />
-                                    <span className="mt-[2px] text-sm text-white">
+                                    <span className="mt-[1px] text-sm text-white">
                                         {shop.Rating}
                                     </span>
                                 </div>
@@ -116,6 +117,15 @@ const ShopListing = ({ shopResults }) => {
                                     <HiArrowTrendingUp className="text-base text-red-600" />
                                     <span className="text-sm font-semibold text-blue-600/60">
                                         {shop.Service} years of service
+                                    </span>
+                                </div>
+                            )}
+
+                            {shop.visitCount && (
+                                <div className="flex flex-row items-center gap-1 mt-1 justify-start ">
+                                    <MdPeople className="text-base text-blue-600" />
+                                    <span className="text-sm font-medium text-black">
+                                        {shop.visitCount} inquires from last month
                                     </span>
                                 </div>
                             )}

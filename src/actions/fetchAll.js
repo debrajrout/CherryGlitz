@@ -4,6 +4,8 @@ import mongoose from "mongoose";
 import { Shop } from "@/models/Shop";
 import { Category } from "@/models/Category";
 import { City } from "@/models/City";
+import { VisitIncrement } from "@/models/VisitIncrement";
+import cron from 'node-cron';
 
 // Cache for categories and cities
 let categoriesCache = null;
@@ -126,7 +128,7 @@ export async function filterShops(category, city, area, starRating, page = 1, li
         }
 
         const shops = await Shop.find(query)
-            .sort({ Rating: -1, Reviews: -1 })
+            // .sort({ Rating: -1, Reviews: -1 })
             .skip((page - 1) * limit)
             .limit(limit)
             .lean()
@@ -144,7 +146,7 @@ export async function filterShops(category, city, area, starRating, page = 1, li
     }
 }
 
-// Function to fetch shop details by ID
+// Function to fetch shop details by ID 
 export async function fetchShopById(shopId) {
     await connectToDatabase();
 
@@ -160,5 +162,51 @@ export async function fetchShopById(shopId) {
     }
 }
 
+export async function incrementVisitCount(shopId) {
+    await connectToDatabase();
+
+    try {
+        // Create a new visit increment document
+        const visitIncrement = new VisitIncrement({ shopId });
+        await visitIncrement.save();
+
+        // Increment the visit count in the Shop collection
+        const shop = await Shop.findByIdAndUpdate(
+            shopId,
+            { $inc: { visitCount: 1 } },
+            { new: true }
+        ).lean().exec();
+
+        if (!shop) {
+            throw new Error(`Shop with ID ${shopId} not found`);
+        }
+
+        return shop;
+    } catch (error) {
+        console.error(`Error incrementing visit count for shop with ID ${shopId}:`, error);
+        throw new Error(`Failed to increment visit count for shop with ID ${shopId}`);
+    }
+}
+
 // Initialize cache clearing when the module is first loaded
 initializeCacheClearing();
+
+// Set up background job to decrement visit count
+cron.schedule('0 0 * * *', async () => {
+    await connectToDatabase();
+
+    try {
+        const expiredIncrements = await VisitIncrement.find({ createdAt: { $lte: new Date(Date.now() - 30 * 24 * 60 * 60 * 1000) } });
+
+        for (const increment of expiredIncrements) {
+            await Shop.findByIdAndUpdate(
+                increment.shopId,
+                { $inc: { visitCount: -1 } }
+            ).exec();
+
+            await increment.remove();
+        }
+    } catch (error) {
+        console.error("Error decrementing visit count:", error);
+    }
+});
