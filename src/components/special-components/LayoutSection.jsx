@@ -2,6 +2,7 @@
 import Image from "next/image";
 import { RxDoubleArrowRight } from "react-icons/rx";
 import { motion } from "framer-motion";
+import Link from "next/link";
 export function LayoutGridDemo() {
   return (
     <div className="flex h-56 items-end overflow-x-scroll">
@@ -20,7 +21,7 @@ export function LayoutGridDemo() {
               className="rounded-lg object-cover shadow-md shadow-black"
             />
           </motion.div>
-          <div className="flex h-full  w-full flex-col justify-between  px-2 pb-1 ">
+          <Link href="/category/tatoos" className="flex h-full  w-full flex-col justify-between  px-2 pb-1 ">
             <span className="text-base font-bold leading-none text-black">
               Tattoo and Piercing
             </span>
@@ -31,7 +32,7 @@ export function LayoutGridDemo() {
               <RxDoubleArrowRight />{" "}
               <span className="text-xs text-violet-950">Explore More</span>
             </div>
-          </div>
+          </Link>
         </div>
         <div className=" mb-2 flex h-[175px] w-40 flex-col gap-1 rounded-md bg-rose-300  shadow-md shadow-black/50 ">
           <div className="-mt-10 h-48 w-full overflow-hidden  p-2 ">
@@ -43,7 +44,7 @@ export function LayoutGridDemo() {
               className="rounded-lg object-cover shadow-md shadow-black"
             />
           </div>
-          <div className="flex h-full w-full flex-col justify-between  px-2 pb-1 ">
+          <Link href="/women/radiantglow" className="flex h-full w-full flex-col justify-between  px-2 pb-1 ">
             <span className="text-base font-bold leading-none text-black">
               Beauty Parlour
             </span>
@@ -55,7 +56,7 @@ export function LayoutGridDemo() {
               <RxDoubleArrowRight />{" "}
               <span className="text-xs text-violet-950">Explore More</span>
             </div>
-          </div>
+          </Link>
         </div>
         <div className=" mb-2 flex h-[175px] w-40 flex-col gap-1 rounded-md bg-emerald-300  shadow-md shadow-black/50 ">
           <div className="-mt-10 h-48 w-full overflow-hidden  p-2 ">
@@ -67,7 +68,7 @@ export function LayoutGridDemo() {
               className="rounded-lg object-cover shadow-md shadow-black"
             />
           </div>
-          <div className="flex h-full w-full flex-col justify-between px-2 pb-1">
+          <Link href="/men/haircut" className="flex h-full w-full flex-col justify-between px-2 pb-1">
             <span className="text-base font-bold leading-none text-black">
               Men’s and Unisex salon
             </span>
@@ -78,7 +79,7 @@ export function LayoutGridDemo() {
               <RxDoubleArrowRight />{" "}
               <span className="text-xs text-violet-950">Explore More</span>
             </div>
-          </div>
+          </Link>
         </div>
         <div className=" mb-2 flex h-[175px] w-40 flex-col gap-1 rounded-md bg-violet-300  shadow-md shadow-black/50 ">
           <div className="-mt-10 h-48 w-full overflow-hidden  p-2 ">
@@ -90,7 +91,7 @@ export function LayoutGridDemo() {
               className="rounded-lg object-cover shadow-md shadow-black"
             />
           </div>
-          <div className="flex h-full w-full flex-col justify-between bg-slate-400/50 px-2 pb-1">
+          <Link href="/category/massage" className="flex h-full w-full flex-col justify-between bg-slate-400/50 px-2 pb-1">
             <span className="text-base font-bold leading-none text-black">
               Massage Parlour
             </span>
@@ -102,7 +103,7 @@ export function LayoutGridDemo() {
               <RxDoubleArrowRight />{" "}
               <span className="text-xs text-violet-950">Explore More</span>
             </div>
-          </div>
+          </Link>
         </div>
         <div className=" mb-2 flex h-[175px] w-40 flex-col gap-1 rounded-md bg-yellow-300/50  shadow-md shadow-black/50 ">
           <div className="-mt-10 h-48 w-full overflow-hidden  p-2 ">
@@ -114,7 +115,7 @@ export function LayoutGridDemo() {
               className="rounded-lg object-cover shadow-md shadow-black"
             />
           </div>
-          <div className="flex h-full w-full flex-col justify-between  px-2 pb-1">
+          <Link href="/category/spa" className="flex h-full w-full flex-col justify-between  px-2 pb-1">
             <span className="text-base font-bold leading-none text-black">
               Spa Centre
             </span>
@@ -126,7 +127,7 @@ export function LayoutGridDemo() {
               <RxDoubleArrowRight />{" "}
               <span className="text-xs text-violet-950">Explore More</span>
             </div>
-          </div>
+          </Link>
         </div>
       </div>
     </div>

@@ -32,7 +32,6 @@ const ImageSlider = () => {
                 src={image}
                 alt={`Slide ${index + 1}`}
                 className="block w-full object-cover"
-
                 width={3556} height={2000}
               />
             </div>

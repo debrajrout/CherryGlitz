@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import React from "react";
 import { RxDoubleArrowRight } from "react-icons/rx";
 export default function MassageSpa() {
@@ -6,7 +7,7 @@ export default function MassageSpa() {
     <div className="mb-10 flex w-full mt-10 flex-col px-2">
       <div className="flex flex-col">
         <span className="text-2xl font-bold">Ultimate <span className="text-blue-500">Massage & Spa</span> Escape</span>
-        <span className="mb-4 mt-1  text-base font-semibold text-gray-500/70">The Best Spots Near You for Relaxation</span>
+        <span className=" mt-1  text-base font-semibold text-gray-500/70">The Best Spots Near You for Relaxation</span>
       </div>
 
       <div className="flex h-60  items-end overflow-x-scroll">
@@ -15,7 +16,7 @@ export default function MassageSpa() {
             <div className="overflow-hidden rounded-t-md ">
               <Image src="/spamassage/mm1.jpg" alt="" width={7000} height={5000} />
             </div>
-            <div className="flex w-full flex-col justify-between gap-1">
+            <Link href="" className="flex w-full flex-col justify-between gap-1">
               <span className="px-2 text-base font-bold leading-none text-black">
                 Swedish Massage
               </span>
@@ -26,7 +27,7 @@ export default function MassageSpa() {
                 <RxDoubleArrowRight />{" "}
                 <span className="text-xs text-violet-950">Explore More</span>
               </div>
-            </div>
+            </Link>
           </div>
           <div className="shadow-md shadow-black/50 flex h-56 w-44 flex-col justify-between gap-1 bg-lime-100/70">
             <div className="overflow-hidden rounded-t-md ">
