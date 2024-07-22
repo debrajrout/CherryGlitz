@@ -105,9 +105,10 @@ export default function Searchbar() {
         </DrawerTrigger>
         <DrawerContent className="flex flex-col  items-center rounded-t-lg bg-gradient-to-b from-gray-200 to-gray-400  py-4 shadow-xl">
           <div className="mb-4 flex h-16 w-full flex-row items-center justify-between px-3 ">
-            <span className="ml-1 text-2xl font-semibold text-gray-800">
+            <DrawerTitle>  <span className="ml-1 text-2xl font-semibold text-gray-800">
               Explore ultimate fession
-            </span>
+            </span></DrawerTitle>
+
             <DrawerClose>
               <div className="flex h-6 w-6 items-center justify-center rounded-full bg-white ring-1 ring-gray-800/50">
                 <RxCross1 className="h-4 w-4 text-gray-800" />
@@ -115,7 +116,6 @@ export default function Searchbar() {
             </DrawerClose>
           </div>
           <PlaceholdersAndVanishInputDemo />
-
           <CityDisplay />
         </DrawerContent>
       </Drawer>
