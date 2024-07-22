@@ -1,10 +1,11 @@
 "use client";
 import React, { useState, useRef, useEffect } from "react";
 import { LayoutGrid } from "../ui/layout-grid";
+import Link from "next/link";
 
 export function BeautySection() {
   return (
-    <div className="mb-4 mt-8 flex  w-full flex-col gap-2 px-2 shadow-md shadow-black/30 ">
+    <div className="mb-4 mt-8 flex  w-full flex-col gap-2 px-2">
       <span className="text-2xl font-bold text-black">
         Explore <span className="text-blue-500">Saloons</span>  and <span className="text-orange-400">Parlours</span> {" "}
         {/* <span className=" text-pink-500">CherryGlitz</span> */}
@@ -22,9 +23,9 @@ const SkeletonOne = () => {
       <p className="my-1 max-w-lg text-sm font-normal text-neutral-200">
         Look Your Best for Any Occasion with Expert Makeup Artists
       </p>
-      <span className="rounded-2xl mt-1  text-base font-semibold  text-yellow-400">
+      <Link href="/women/radiantglow" className="rounded-2xl mt-1  text-base font-semibold  text-yellow-400">
         Try now →
-      </span>
+      </Link>
     </div>
   );
 };
@@ -36,9 +37,9 @@ const SkeletonTwo = () => {
 
       <p className="my-1 max-w-lg text-sm font-normal text-neutral-200">
         Revitalize Your Skin with Customized Facials
-      </p> <span className="rounded-2xl mt-1  text-base font-semibold  text-yellow-400">
+      </p> <Link href="/women/skincare" className="rounded-2xl mt-1  text-base font-semibold  text-yellow-400">
         Try now →
-      </span>
+      </Link>
     </div>
   );
 };
@@ -49,9 +50,9 @@ const SkeletonThree = () => {
 
       <p className="my-1 max-w-lg text-sm font-normal text-neutral-200">
         Get the Perfect Cut with Expert Stylists
-      </p> <span className="rounded-2xl mt-1  text-base font-semibold  text-yellow-400">
+      </p> <Link href="/men/haircut" className="rounded-2xl mt-1  text-base font-semibold  text-yellow-400">
         Try now →
-      </span>
+      </Link>
     </div>
   );
 };
@@ -62,9 +63,9 @@ const SkeletonFour = () => {
 
       <p className="my-1 max-w-lg text-sm font-normal text-neutral-200">
         Transform Your Look with Professional Hair Coloring Services
-      </p> <span className="rounded-2xl mt-1  text-base font-semibold  text-yellow-400">
+      </p> <Link href="/men/beard" className="rounded-2xl mt-1  text-base font-semibold  text-yellow-400">
         Try now →
-      </span>
+      </Link>
     </div>
   );
 };

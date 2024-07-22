@@ -16,18 +16,18 @@ export default function MassageSpa() {
             <div className="overflow-hidden rounded-t-md ">
               <Image src="/spamassage/mm1.jpg" alt="" width={7000} height={5000} />
             </div>
-            <Link href="" className="flex w-full flex-col justify-between gap-1">
+            <div className="flex w-full flex-col justify-between gap-1">
               <span className="px-2 text-base font-bold leading-none text-black">
                 Swedish Massage
               </span>
               <span className=" px-2 text-xs font-bold text-black/70">
                 Relax and Unwind with the Classic Swedish Massage
               </span>
-              <div className="flex h-6 w-full flex-row items-center  gap-1 bg-violet-500/30 px-2 ">
+              <Link href="/category/massage" className="flex h-6 w-full flex-row items-center  gap-1 bg-violet-500/30 px-2 ">
                 <RxDoubleArrowRight />{" "}
                 <span className="text-xs text-violet-950">Explore More</span>
-              </div>
-            </Link>
+              </Link>
+            </div>
           </div>
           <div className="shadow-md shadow-black/50 flex h-56 w-44 flex-col justify-between gap-1 bg-lime-100/70">
             <div className="overflow-hidden rounded-t-md ">
@@ -40,27 +40,27 @@ export default function MassageSpa() {
               <span className=" px-2 text-xs font-bold text-black/70">
                 Relieve Tension and Stress with Deep Tissue Techniques
               </span>
-              <div className="flex h-6 w-full flex-row items-center  gap-1 bg-violet-500/30 px-2 ">
+              <Link href="/category/massage" className="flex h-6 w-full flex-row items-center  gap-1 bg-violet-500/30 px-2 ">
                 <RxDoubleArrowRight />{" "}
                 <span className="text-xs text-violet-950">Explore More</span>
-              </div>
+              </Link>
             </div>
           </div>
           <div className="shadow-md shadow-black/50 flex h-56 w-44 flex-col justify-between gap-1 bg-lime-100/70">
             <div className="overflow-hidden rounded-t-md ">
               <Image src="/spamassage/ms1.jpg" alt="" width={1181} height={1200} />
             </div>
-            <div className="flex w-full flex-col justify-between gap-1">
+            <div href="/category/spa" className="flex w-full flex-col justify-between gap-1">
               <span className="px-2 text-base font-bold leading-none text-black">
                 Luxury Spa Treatments
               </span>
               <span className=" px-2 text-xs font-bold text-black/70">
                 Indulge in Premium Spa Services for a Pampering Experience
               </span>
-              <div className="flex h-6 w-full flex-row items-center  gap-1 bg-violet-500/30 px-2 ">
+              <Link href="/category/spa" className="flex h-6 w-full flex-row items-center  gap-1 bg-violet-500/30 px-2 ">
                 <RxDoubleArrowRight />{" "}
                 <span className="text-xs text-violet-950">Explore More</span>
-              </div>
+              </Link>
             </div>
           </div>
           <div className="shadow-md shadow-black/50 flex h-56 w-44 flex-col justify-between gap-1 bg-lime-100/70">
@@ -74,10 +74,10 @@ export default function MassageSpa() {
               <span className=" px-2 text-xs font-bold text-black/70">
                 Experience Complete Wellness with Our Holistic Spa Options
               </span>
-              <div className="flex h-6 w-full flex-row items-center  gap-1 bg-violet-500/30 px-2 ">
+              <Link href="/category/spa" className="flex h-6 w-full flex-row items-center  gap-1 bg-violet-500/30 px-2 ">
                 <RxDoubleArrowRight />{" "}
                 <span className="text-xs text-violet-950">Explore More</span>
-              </div>
+              </Link>
             </div>
           </div>
         </div>

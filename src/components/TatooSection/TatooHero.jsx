@@ -1,10 +1,11 @@
 "use client";
 import React, { useState, useRef, useEffect } from "react";
 import { LayoutGrid } from "../ui/layout-grid";
+import Link from "next/link";
 
 export function TatooSection() {
   return (
-    <div className="mb-4 mt-9 px-2 flex w-full flex-col gap-2  shadow-md shadow-black/30 ">
+    <div className="mb-4 mt-9 px-2 flex w-full flex-col gap-2  ">
       <span className=" text-2xl font-bold text-black">
         Explore Tatoo with <span className=" text-pink-500">CherryGlitz</span>
       </span>
@@ -21,9 +22,9 @@ const SkeletonOne = () => {
       <p className="my-1 max-w-lg text-sm font-normal text-neutral-200">
         vibrant colors, and iconic imagery such as anchors, eagles, pin-up
         girls, and roses.
-      </p> <span className="rounded-2xl mt-1  text-base font-semibold  text-yellow-400">
+      </p> <Link href="/category/tatoos" className="rounded-2xl mt-1  text-base font-semibold  text-yellow-400">
         Try now →
-      </span>
+      </Link>
     </div>
   );
 };
@@ -37,9 +38,9 @@ const SkeletonTwo = () => {
 
       <p className="my-1 max-w-lg text-sm font-normal text-neutral-200">
         a broader color palette, and elaborate shading.
-      </p> <span className="rounded-2xl mt-1  text-base font-semibold  text-yellow-400">
+      </p> <Link href="/category/tatoos" className="rounded-2xl mt-1  text-base font-semibold  text-yellow-400">
         Try now →
-      </span>
+      </Link>
     </div>
   );
 };
@@ -51,9 +52,9 @@ const SkeletonThree = () => {
       <p className="my-1 max-w-lg text-sm font-normal text-neutral-200">
         This style includes a range of motifs from tribal patterns to geometric
         shapes
-      </p> <span className="rounded-2xl mt-1  text-base font-semibold  text-yellow-400">
+      </p> <Link href="/category/tatoos" className="rounded-2xl mt-1  text-base font-semibold  text-yellow-400">
         Try now →
-      </span>
+      </Link>
     </div>
   );
 };
@@ -65,9 +66,9 @@ const SkeletonFour = () => {
       <p className="my-1 max-w-lg text-sm font-normal text-neutral-200">
         Fine line tattoos use thin, delicate lines to create detailed and
         intricate designs.
-      </p> <span className="rounded-2xl mt-1  text-base font-semibold  text-yellow-400">
+      </p> <Link href="/category/tatoos" className="rounded-2xl mt-1  text-base font-semibold  text-yellow-400">
         Try now →
-      </span>
+      </Link>
     </div>
   );
 };
