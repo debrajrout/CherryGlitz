@@ -164,7 +164,7 @@ export async function fetchShopById(shopId) {
 
 export async function incrementVisitCount(shopId) {
     await connectToDatabase();
-
+    console.log("shopId increment by 1", shopId)
     try {
         // Create a new visit increment document
         const visitIncrement = new VisitIncrement({ shopId });

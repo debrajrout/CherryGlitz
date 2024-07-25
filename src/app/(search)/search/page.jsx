@@ -45,6 +45,7 @@ import SelectSection from "@/components/sections/SelectSection";
 import { FaStar } from "react-icons/fa";
 import { LuClock } from "react-icons/lu";
 import { TbCheck, TbClockCheck, TbSortAscendingShapes, TbX } from "react-icons/tb";
+import { grabShop } from "@/actions/Search";
 
 export default function Page() {
   const [categoryOpen, setCategoryOpen] = useState(false);
@@ -173,7 +174,22 @@ export default function Page() {
 
   const handleSearchTextChange = (value) => {
     setSearchText(value);
-    // Since the searchText is not used in filterShops, we do not call fetchShopsData here.
+    fetchSuggestions(value);
+  };
+
+  const fetchSuggestions = async (query) => {
+    if (query.trim() === "") {
+      // setSuggestions([]);
+      return;
+    }
+
+    try {
+      const response = await grabShop(query);
+      setShops(response);
+
+    } catch (error) {
+      console.error("Error fetching suggestions:", error);
+    }
   };
 
   const filteredSubCities = city
