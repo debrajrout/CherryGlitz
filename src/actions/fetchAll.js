@@ -102,11 +102,11 @@ export async function fetchCitiesAndAreas() {
 }
 
 // Function to filter shops based on category, city, area, starRating, page, and limit
-export async function filterShops(category, city, area, starRating, page = 1, limit = 10) {
+export async function filterShops(category, city, area, starRating, responseTime, page = 1, limit = 10) {
     await connectToDatabase();
 
     try {
-        const cacheKey = `${category}-${city}-${area}-${starRating}-${page}-${limit}`;
+        const cacheKey = `${category}-${city}-${area}-${starRating}-${responseTime}-${page}-${limit}`;
         if (shopCache[cacheKey]) {
             console.log("Returning from cache.");
             return shopCache[cacheKey];
@@ -125,6 +125,10 @@ export async function filterShops(category, city, area, starRating, page = 1, li
         if (starRating && !isNaN(starRating)) {
             const rating = parseInt(starRating);
             query.Rating = { $gte: rating };
+        }
+        if (responseTime && !isNaN(responseTime)) {
+            const time = parseInt(responseTime);
+            query.responseTime = { $lte: time };
         }
 
         const shops = await Shop.find(query)

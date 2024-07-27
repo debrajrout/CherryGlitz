@@ -56,7 +56,7 @@ export async function populateCitiesCollection() {
 
 
 // Function to fetch cities and their areas
-export async function fetchCitiesAndAreas() {
+export async function fetchCitiesAnddAreas() {
     await connectToDatabase();
 
     try {

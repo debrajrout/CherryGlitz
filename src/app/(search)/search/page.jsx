@@ -33,7 +33,6 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { Separator } from "@/components/ui/separator";
 import { matchSorter } from "match-sorter";
 import Footer from "@/components/footer/Footer";
 import { Check, ChevronsUpDown } from "lucide-react";
@@ -44,7 +43,7 @@ import { Beauty } from "@/components/special-components/Scroll";
 import SelectSection from "@/components/sections/SelectSection";
 import { FaStar } from "react-icons/fa";
 import { LuClock } from "react-icons/lu";
-import { TbCheck, TbClockCheck, TbSortAscendingShapes, TbX } from "react-icons/tb";
+import { TbCheck, TbClockCheck, TbSortAscendingShapes, TbStar, TbX } from "react-icons/tb";
 import { grabShop } from "@/actions/Search";
 
 export default function Page() {
@@ -64,7 +63,10 @@ export default function Page() {
   const [starRatingOpen, setStarRatingOpen] = useState(false);
   const [starRating, setStarRating] = useState(0);
   const [openNow, setOpenNow] = useState(false);
+  const [todayDeal, setTodayDeal] = useState(false);
   const [verified, setVerified] = useState(false);
+  const [responseTimeOpen, setResponseTimeOpen] = useState(false);
+  const [responseTime, setResponseTime] = useState(0);
 
 
   const handleVerifiedToggle = () => {
@@ -76,7 +78,6 @@ export default function Page() {
       try {
         const citiesResponse = await fetchCitiesAndAreas();
         setCities(citiesResponse);
-
         const categoriesResponse = await fetchCategories();
         setCategories(categoriesResponse);
 
@@ -87,14 +88,15 @@ export default function Page() {
         setSearchText(search);
         setTag(search);
 
-        fetchShopsData(category, city, subCity, starRating, 1);
+        fetchShopsData(category, city, subCity, starRating, responseTime, 1);
       } catch (error) {
         console.error("Error fetching initial data:", error);
       }
     };
 
     fetchInitialData();
-  }, []);
+  }, []); // Ensure dependencies are set properly
+
 
   useEffect(() => {
     const handleScroll = () => {
@@ -123,12 +125,12 @@ export default function Page() {
     };
   };
 
-  const fetchShopsData = async (category, city, subCity, starRating, page) => {
+  const fetchShopsData = async (category, city, subCity, starRating, responseTime, page) => {
     try {
-      const results = await filterShops(category, city, subCity, starRating, page);
+      const results = await filterShops(category, city, subCity, starRating, responseTime, page);
       setShops(results);
       console.log("Shops fetched:", results);
-      console.log("Star Rating:", starRating);
+      console.log("Star Rating:", starRating, "Response Time:", responseTime);
     } catch (error) {
       console.error("Error fetching shops:", error);
     }
@@ -137,39 +139,49 @@ export default function Page() {
   const handleNext = () => {
     const nextPage = page + 1;
     setPage(nextPage);
-    fetchShopsData(category, city, subCity, starRating, nextPage);
+    fetchShopsData(category, city, subCity, starRating, responseTime, nextPage);
   };
 
   const handlePrevious = () => {
     if (page > 1) {
       const prevPage = page - 1;
       setPage(prevPage);
-      fetchShopsData(category, city, subCity, starRating, prevPage);
+      fetchShopsData(category, city, subCity, starRating, responseTime, prevPage);
     }
   };
 
   const handleCategoryChange = (value) => {
     setCategory(value);
-    fetchShopsData(value, city, subCity, starRating, 1);
+    fetchShopsData(value, city, subCity, starRating, responseTime, 1);
   };
 
   const handleCityChange = (value) => {
     setCity(value);
     setSubCity(""); // Reset subCity when city changes
-    fetchShopsData(category, value, "", starRating, 1);
+    fetchShopsData(category, value, "", starRating, responseTime, 1);
   };
 
   const handleSubCityChange = (value) => {
     setSubCity(value);
-    fetchShopsData(category, city, value, starRating, 1);
+    fetchShopsData(category, city, value, starRating, responseTime, 1);
   };
 
   const handleStarRatingChange = (value) => {
     setStarRating(value);
-    fetchShopsData(category, city, subCity, value, 1);
+    fetchShopsData(category, city, subCity, value, responseTime, 1);
   };
+
+  const handleResponseTimeChange = (value) => {
+    setResponseTime(value);
+    console.log("Response Time:", value);
+    fetchShopsData(category, city, subCity, starRating, value, 1);
+  };
+
   const handleOpenNowToggle = () => {
     setOpenNow(!openNow);
+  };
+  const handleTodayDealToggle = () => {
+    setTodayDeal(!todayDeal);
   };
 
   const handleSearchTextChange = (value) => {
@@ -223,20 +235,218 @@ export default function Page() {
 
         <div className="flex items-center  overflow-x-auto gap-2 w-full bg-slate-100 p-1">
           <Drawer>
-            <DrawerTrigger className=" p-1.5  flex justify-center items-center bg-white rounded-md shadow-sm shadow-black/30"><TbSortAscendingShapes className="text-2xl text-blue-900" /></DrawerTrigger>
-            <DrawerContent className="bg-slate-200">
+            <DrawerTrigger className="p-2 flex justify-center items-center bg-white rounded-lg shadow-md hover:bg-gray-100 transition duration-300">
+              <TbSortAscendingShapes className="text-2xl text-blue-800" />
+            </DrawerTrigger>
+            <DrawerContent className="bg-gray-50 p-4 rounded-lg shadow-lg">
               <DrawerHeader>
-                <DrawerTitle>Are you absolutely sure?</DrawerTitle>
-                <DrawerDescription>This action cannot be undone.</DrawerDescription>
+                <DrawerTitle className="text-lg font-semibold text-gray-900">Filter Options</DrawerTitle>
+                <DrawerDescription className="text-sm text-gray-600">Choose your preferences below.</DrawerDescription>
               </DrawerHeader>
-              <DrawerFooter>
-                <Button>Submit</Button>
-                <DrawerClose>
-                  <Button variant="outline">Cancel</Button>
-                </DrawerClose>
+
+              <div className="space-y-4">
+                {/* Category Popover */}
+                <Popover open={categoryOpen} onOpenChange={setCategoryOpen}>
+                  <PopoverTrigger asChild>
+                    <Button
+                      variant="outline"
+                      role="combobox"
+                      aria-expanded={categoryOpen}
+                      className="flex justify-between items-center w-full px-4 py-2 border rounded-lg bg-white text-gray-800 hover:bg-gray-100"
+                    >
+                      {category ? category : "Category"}
+                      <ChevronsUpDown className="ml-2 h-4 w-4 text-gray-500" />
+                    </Button>
+                  </PopoverTrigger>
+                  <PopoverContent className="w-[200px] z-[20000] p-2 bg-white rounded-lg shadow-lg border border-gray-200">
+                    <Command className="z-[20000]">
+                      <CommandInput placeholder="Search category..." className="border z-[20000] border-gray-300 rounded-md p-2 mb-2" />
+                      <CommandList className="z-[20000]">
+                        <CommandEmpty className="text-gray-500">No category found.</CommandEmpty>
+                        <CommandGroup>
+                          {categories.map((categoryName) => (
+                            <CommandItem
+                              key={categoryName}
+                              value={categoryName}
+                              onSelect={(currentValue) => {
+                                handleCategoryChange(currentValue);
+                                setCategoryOpen(false);
+                              }}
+                              className="flex items-center p-2 rounded-md hover:bg-gray-200"
+                            >
+                              <Check
+                                className={cn(
+                                  "mr-2 h-4 w-4",
+                                  category === categoryName ? "text-blue-600" : "text-gray-400"
+                                )}
+                              />
+                              {categoryName}
+                            </CommandItem>
+                          ))}
+                        </CommandGroup>
+                      </CommandList>
+                    </Command>
+                  </PopoverContent>
+                </Popover>
+
+                {/* Star Rating Popover */}
+                <Popover open={starRatingOpen} onOpenChange={setStarRatingOpen}>
+                  <PopoverTrigger asChild>
+                    <Button
+                      variant="outline"
+                      role="combobox"
+                      aria-expanded={starRatingOpen}
+                      className="flex justify-between items-center w-full px-4 py-2 border rounded-lg bg-white text-gray-800 hover:bg-gray-100"
+                    >
+                      {starRating > 0 ? (
+                        <>
+                          <FaStar className="text-yellow-500" />
+                          <span className="ml-1">{`Above ${starRating} Star`}</span>
+                        </>
+                      ) : (
+                        <>
+                          <FaStar className="text-gray-500" />
+                          <span className="ml-1">Rating</span>
+                        </>
+                      )}
+                      <ChevronsUpDown className="ml-2 h-4 w-4 text-gray-500" />
+                    </Button>
+                  </PopoverTrigger>
+                  <PopoverContent className="w-[200px] p-2 bg-white rounded-lg shadow-lg border border-gray-200">
+                    <Command>
+                      <CommandInput placeholder="Search star rating..." className="border border-gray-300 rounded-md p-2 mb-2" />
+                      <CommandList>
+                        <CommandEmpty className="text-gray-500">No star rating found.</CommandEmpty>
+                        <CommandGroup>
+                          {[1, 2, 3, 4, 5].map((rating) => (
+                            <CommandItem
+                              key={rating}
+                              value={rating.toString()}
+                              onSelect={(currentValue) => {
+                                handleStarRatingChange(parseInt(currentValue));
+                                setStarRatingOpen(false);
+                              }}
+                              className="flex items-center p-2 rounded-md hover:bg-gray-200"
+                            >
+                              <Check
+                                className={cn(
+                                  "mr-2 h-4 w-4",
+                                  starRating === rating ? "text-blue-600" : "text-gray-400"
+                                )}
+                              />
+                              {`Above ${rating} Star`}
+                            </CommandItem>
+                          ))}
+                        </CommandGroup>
+                      </CommandList>
+                    </Command>
+                  </PopoverContent>
+                </Popover>
+
+                {/* Response Time Popover */}
+                <Popover open={responseTimeOpen} onOpenChange={setResponseTimeOpen}>
+                  <PopoverTrigger asChild>
+                    <Button
+                      variant="outline"
+                      role="combobox"
+                      aria-expanded={responseTimeOpen}
+                      className="flex items-center justify-between w-full px-4 py-2 border rounded-lg bg-white text-gray-800 hover:bg-gray-100"
+                    >
+                      <div className="flex items-center">
+                        <LuClock className="text-blue-600 h-5 w-5" />
+                        <span className="ml-2 text-sm font-medium">
+                          {responseTime > 0 ? `Up to ${responseTime} min` : "Quick Response"}
+                        </span>
+                      </div>
+                      <ChevronsUpDown className="h-4 w-4 text-gray-500" />
+                    </Button>
+                  </PopoverTrigger>
+                  <PopoverContent className="w-[250px] p-2 bg-white rounded-lg shadow-lg border border-gray-200">
+                    <Command>
+                      <CommandInput placeholder="Search response time..." className="border border-gray-300 rounded-md p-2 mb-2" />
+                      <CommandList>
+                        <CommandEmpty className="text-gray-500">No response time found.</CommandEmpty>
+                        <CommandGroup>
+                          {[10, 15, 20, 25, 30, 35, 40, 60].map((time) => (
+                            <CommandItem
+                              key={time}
+                              value={time.toString()}
+                              onSelect={(currentValue) => {
+                                handleResponseTimeChange(parseInt(currentValue));
+                                setResponseTimeOpen(false);
+                              }}
+                              className="flex items-center p-2 rounded-md hover:bg-gray-200"
+                            >
+                              <Check
+                                className={cn(
+                                  "mr-2 h-4 w-4",
+                                  responseTime === time ? "text-blue-600" : "text-gray-400"
+                                )}
+                              />
+                              {`Up to ${time} min`}
+                            </CommandItem>
+                          ))}
+                        </CommandGroup>
+                      </CommandList>
+                    </Command>
+                  </PopoverContent>
+                </Popover>
+
+                {/* Open Now Button */}
+                <Button
+                  variant={openNow ? "solid" : "outline"}
+                  onClick={handleOpenNowToggle}
+                  className={`flex items-center space-x-2 w-full px-4 py-2 border rounded-lg transition duration-300 ${openNow ? 'bg-blue-100 text-blue-800 border-blue-400' : 'bg-transparent text-blue-600 border-blue-300'
+                    }`}
+                >
+                  {openNow ? (
+                    <TbClockCheck className="text-blue-700" />
+                  ) : (
+                    <LuClock className="text-gray-600" />
+                  )}
+                  <span>{openNow ? 'Open Now' : 'Open'}</span>
+                </Button>
+
+                {/* Verified Button */}
+                <Button
+                  variant={verified ? "solid" : "outline"}
+                  onClick={handleVerifiedToggle}
+                  className={`flex items-center space-x-2 w-full px-4 py-2 border rounded-lg transition duration-300 ${verified ? 'bg-green-100 text-green-800 border-green-400' : 'bg-transparent text-green-600 border-green-300'
+                    }`}
+                >
+                  {verified ? (
+                    <TbCheck className="text-green-800" />
+                  ) : (
+                    <TbCheck className="text-blue-500" />
+                  )}
+                  <span>{verified ? 'CZ Verified' : 'Verified'}</span>
+                </Button>
+
+                {/* Today's Deal Button */}
+                <Button
+                  variant={todayDeal ? "solid" : "outline"}
+                  onClick={handleTodayDealToggle}
+                  className={`flex items-center space-x-2 w-full px-4 py-2 border rounded-lg transition duration-300 ${todayDeal
+                    ? 'bg-gradient-to-r from-blue-500 to-purple-500 text-white border-transparent'
+                    : 'bg-transparent text-blue-600 border-blue-400'
+                    }`}
+                >
+                  {todayDeal ? (
+                    <TbStar className="text-white" />
+                  ) : (
+                    <TbStar className="text-blue-600" />
+                  )}
+                  <span>{todayDeal ? 'Today’s Deal' : 'Deal of the Day'}</span>
+                </Button>
+              </div>
+
+              <DrawerFooter className=" mt-4">
+                <DrawerClose>      <Button onClick={() => {/* Add logic to handle submit */ }}>Submit</Button></DrawerClose>
+
               </DrawerFooter>
             </DrawerContent>
           </Drawer>
+
 
           <Popover open={categoryOpen} onOpenChange={setCategoryOpen}>
             <PopoverTrigger asChild>
@@ -334,6 +544,55 @@ export default function Page() {
             </PopoverContent>
           </Popover>
 
+          <Popover open={responseTimeOpen} onOpenChange={setResponseTimeOpen}>
+            <PopoverTrigger asChild>
+              <Button
+                variant="outline"
+                role="combobox"
+                aria-expanded={responseTimeOpen}
+                className="flex items-center justify-between px-4 py-2 text-blue-600 border border-blue-300 rounded-md shadow-sm hover:bg-blue-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              >
+                <div className="flex items-center">
+                  <LuClock className="text-blue-600 h-5 w-5" />
+                  <span className="ml-2 text-sm font-medium">
+                    {responseTime > 0 ? `Up to ${responseTime} min` : "Quick Response"}
+                  </span>
+                </div>
+                <ChevronsUpDown className="h-4 w-4 text-gray-500" />
+              </Button>
+            </PopoverTrigger>
+            <PopoverContent className="z-[1001] w-[250px] p-2 bg-white rounded-lg shadow-lg border border-gray-200">
+              <Command>
+                <CommandInput placeholder="Search response time..." className="border border-gray-300 rounded-md p-2 mb-2" />
+                <CommandList>
+                  <CommandEmpty>No response time found.</CommandEmpty>
+                  <CommandGroup>
+                    {[10, 15, 20, 25, 30, 35, 40, 60].map((time) => (
+                      <CommandItem
+                        key={time}
+                        value={time.toString()}
+                        onSelect={(currentValue) => {
+                          handleResponseTimeChange(parseInt(currentValue));
+                          setResponseTimeOpen(false);
+                        }}
+                        className="flex items-center p-2 rounded-md hover:bg-blue-100 focus:bg-blue-200"
+                      >
+                        <Check
+                          className={cn(
+                            "mr-2 h-4 w-4",
+                            responseTime === time ? "text-blue-600" : "text-gray-400"
+                          )}
+                        />
+                        {`Up to ${time} min`}
+                      </CommandItem>
+                    ))}
+                  </CommandGroup>
+                </CommandList>
+              </Command>
+            </PopoverContent>
+          </Popover>
+
+
           <Button
             variant={openNow ? "solid" : "outline"}
             onClick={handleOpenNowToggle}
@@ -364,6 +623,24 @@ export default function Page() {
             )}
             <span className="ml-1">{verified ? 'CZ Verified' : 'Verified'}</span>
           </Button>
+
+          <Button
+            variant={todayDeal ? "solid" : "outline"}
+            onClick={handleTodayDealToggle}
+            className={`flex items-center space-x-2 ${todayDeal
+              ? 'bg-gradient-to-r from-blue-500 to-purple-500 text-white border-transparent'
+              : 'bg-transparent text-blue-600 border-blue-500'
+              } border-2 rounded-lg transition-all duration-300 transform ${todayDeal ? 'scale-105' : 'scale-100'}`}
+          >
+            {todayDeal ? (
+              <TbStar className="text-white" />
+            ) : (
+              <TbStar className="text-blue-600" />
+            )}
+            <span className="ml-1 ">{todayDeal ? 'Today’s Deal' : 'Deal of the Day'}</span>
+          </Button>
+
+
         </div>
       </div>
 

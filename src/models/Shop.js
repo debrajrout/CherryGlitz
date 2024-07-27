@@ -20,12 +20,15 @@ const ShopSchema = new Schema({
   Website: String,
   Liked: { type: Boolean, default: false },
   visitCount: { type: Number, default: 0 }, // New field
-});
+  Since: { type: Number },
+  responseTime: { type: Number, default: 60 }, // New field
+}, { timestamps: true });
 
 // Compound index for optimized querying
 ShopSchema.index({
   Name: 'text',
   Category: 'text',
+  Address: 'text',
   Area: 'text',
   City: 'text',
 }, { name: "compoundTextIndex" });
