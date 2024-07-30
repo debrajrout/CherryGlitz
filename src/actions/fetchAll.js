@@ -7,29 +7,6 @@ import { City } from "@/models/City";
 import { VisitIncrement } from "@/models/VisitIncrement";
 import cron from 'node-cron';
 
-// Cache for categories and cities
-let categoriesCache = null;
-let citiesCache = null;
-
-// Cache for filtered shops
-let shopCache = {};
-const CACHE_CLEAR_INTERVAL = 60 * 60 * 1000; // Clear cache every 1 hour
-let cacheClearTimeout = null;
-
-// Function to clear shopCache
-function clearShopCache() {
-    shopCache = {};
-    console.log("Shop cache cleared.");
-}
-
-// Function to initialize cache clearing
-function initializeCacheClearing() {
-    if (cacheClearTimeout) {
-        clearTimeout(cacheClearTimeout);
-    }
-    cacheClearTimeout = setTimeout(clearShopCache, CACHE_CLEAR_INTERVAL);
-}
-
 // Helper function to connect to MongoDB
 async function connectToDatabase() {
     if (mongoose.connection.readyState === 0) {
@@ -48,16 +25,12 @@ async function connectToDatabase() {
 
 // Fetch unique categories from Category collection
 export async function fetchCategories() {
-    if (categoriesCache) {
-        return categoriesCache;
-    }
-
     await connectToDatabase();
 
     try {
-        const categoriesDoc = await Category.findOne().lean().exec();
-        categoriesCache = categoriesDoc?.categories || [];
-        return categoriesCache;
+        const categoriesDoc = await Category.findOne().lean().select('categories').exec();
+        const categories = categoriesDoc?.categories || [];
+        return categories;
     } catch (error) {
         console.error("Error fetching categories:", error);
         throw new Error("Failed to fetch categories");
@@ -85,16 +58,11 @@ export async function fetchLiked(ids) {
 
 // Fetch cities and their respective areas from City collection
 export async function fetchCitiesAndAreas() {
-    if (citiesCache) {
-        return citiesCache;
-    }
-
     await connectToDatabase();
 
     try {
         const cities = await City.find().lean().exec();
-        citiesCache = cities;
-        return citiesCache;
+        return cities;
     } catch (error) {
         console.error("Error fetching cities and areas:", error);
         throw new Error("Failed to fetch cities and areas");
@@ -106,12 +74,6 @@ export async function filterShops(category, city, area, starRating, responseTime
     await connectToDatabase();
 
     try {
-        const cacheKey = `${category}-${city}-${area}-${starRating}-${responseTime}-${page}-${limit}`;
-        if (shopCache[cacheKey]) {
-            console.log("Returning from cache.");
-            return shopCache[cacheKey];
-        }
-
         const query = {};
         if (category) {
             query.Category = new RegExp(category, 'i');
@@ -123,25 +85,21 @@ export async function filterShops(category, city, area, starRating, responseTime
             query.Area = new RegExp(area, 'i');
         }
         if (starRating && !isNaN(starRating)) {
-            const rating = parseInt(starRating);
-            query.Rating = { $gte: rating };
+            query.Rating = { $gte: parseInt(starRating) };
         }
-        if (responseTime && !isNaN(responseTime)) {
-            const time = parseInt(responseTime);
-            query.responseTime = { $lte: time };
+
+        const sortQuery = {};
+        if (responseTime) {
+            sortQuery.responseTime = -1; // Sort by responseTime descending
         }
 
         const shops = await Shop.find(query)
-            // .sort({ Rating: -1, Reviews: -1 })
+            .sort(sortQuery)
             .skip((page - 1) * limit)
             .limit(limit)
             .lean()
+            .select('Uid Name Category City Area Rating responseTime') // Select only necessary fields
             .exec();
-
-        shopCache[cacheKey] = shops;
-
-        // Reset cache clearing timer
-        initializeCacheClearing();
 
         return shops;
     } catch (error) {
@@ -191,9 +149,6 @@ export async function incrementVisitCount(shopId) {
         throw new Error(`Failed to increment visit count for shop with ID ${shopId}`);
     }
 }
-
-// Initialize cache clearing when the module is first loaded
-initializeCacheClearing();
 
 // Set up background job to decrement visit count
 cron.schedule('0 0 * * *', async () => {

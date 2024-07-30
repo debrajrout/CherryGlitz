@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { fetchShopById, incrementVisitCount } from "@/actions/fetchAll";
 import { fetchAllImages } from "@/actions/aws";
 import Image from "next/image";
@@ -51,6 +51,43 @@ import {
 } from "@/components/ui/dialog"
 import ImageCarousel2 from "@/components/imageCarousul";
 
+const generateMetadata = (shop) => {
+    const shopName = shop.Name || "";
+    const category = (shop.Category || "").toLowerCase();
+    const category2 = (shop.Category2 || "").toLowerCase();
+    const category3 = (shop.Category3 || "").toLowerCase();
+    const city = (shop.City || "").toLowerCase();
+    const area = (shop.Area || "").toLowerCase();
+
+    const description = `Discover top-rated ${category}, ${category2}, and ${category3} services and offers at ${shopName} in ${city}, ${area}. Find the best beauty parlors, hair salons, massage centers, spas, and tattoo shops. Book appointments and enjoy exclusive discounts with Cherry Glitz.`;
+
+    const keywords = [
+        `${shopName} ${category}`,
+        `${shopName} ${category2}`,
+        `${shopName} ${category3}`,
+        `${category} in ${city}`,
+        `${category2} in ${city}`,
+        `${category3} in ${city}`,
+        `${category} in ${area}`,
+        `${category2} in ${area}`,
+        `${category3} in ${area}`,
+        `best ${category} in ${city}`,
+        `top ${category2} services in ${city}`,
+        `affordable ${category3} in ${area}`,
+        `book ${category} in ${city}`,
+        `find ${category2} in ${area}`,
+        `exclusive ${category3} offers ${city}`,
+    ].filter(Boolean);
+
+    return {
+        title: `${shopName} - Top ${category}, ${category2}, ${category3} Services in ${city}, ${area} with Cherry Glitz`,
+        description: description,
+        keywords: keywords,
+    };
+};
+
+
+
 
 
 export default function ShopPage({ params }) {
@@ -63,13 +100,18 @@ export default function ShopPage({ params }) {
     const [reviews, setReviews] = useState([]);
     const [totalreview, setTotalreview] = useState()
     const [averageRating, setAverageRating] = useState()
+    const [currentIndex, setCurrentIndex] = useState(0);
+    const touchStartX = useRef(0);
+    const touchEndX = useRef(0);
     const categoryIcons = {
         "Beauty Parlour": <GiCutDiamond className="text-base text-red-600" />,
         "Men's Salon": <GiHairStrands className="text-base text-blue-600" />,
-        Massage: <GiHealing className="text-base text-green-600" />,
-        Tattoo: <GiScalpel className="text-base text-black" />,
-        Spa: <GiPalmTree className="text-base text-purple-600" />,
+        "Massage": <GiHealing className="text-base text-green-600" />,
+        "Tattoo": <GiScalpel className="text-base text-black" />,
+        "Spa": <GiPalmTree className="text-base text-purple-600" />,
     };
+
+
 
     useEffect(() => {
         if (id) {
@@ -89,6 +131,14 @@ export default function ShopPage({ params }) {
                     setAverageRating(reviewsData.averageRating)
                     setTotalreview(reviewsData.totalReviews)
                     incrementVisitCount(id);
+
+                    const metadata = generateMetadata(shopData);
+                    document.title = metadata.title;
+                    // Update other metadata as needed (e.g., meta description, keywords)
+                    document.querySelector('meta[name="description"]').setAttribute("content", metadata.description);
+                    document.querySelector('meta[name="keywords"]').setAttribute("content", metadata.keywords.join(", "));
+
+
                 } catch (error) {
                     console.error("Error fetching shop data:", error);
                     setLoading(false);
@@ -178,10 +228,50 @@ export default function ShopPage({ params }) {
             });
     };
 
+
+    const handleTouchStart = (e) => {
+        touchStartX.current = e.targetTouches[0].clientX;
+    };
+
+    const handleTouchMove = (e) => {
+        touchEndX.current = e.targetTouches[0].clientX;
+    };
+
+
+    const handleTouchEnd = () => {
+        if (touchStartX.current - touchEndX.current > 50) {
+            // Swiped left (next image)
+            const newIndex = (currentIndex + 1) % allImages.length;
+            setMainImage(allImages[newIndex]);
+            setCurrentIndex(newIndex);
+        }
+
+        if (touchStartX.current - touchEndX.current < -50) {
+            // Swiped right (previous image)
+            const newIndex = (currentIndex - 1 + allImages.length) % allImages.length;
+            setMainImage(allImages[newIndex]);
+            setCurrentIndex(newIndex);
+        }
+    };
+
     return (
         <section className="container mx-auto mt-[45px] px-3 py-8 md:px-6">
             <div className="grid items-start gap-4 lg:grid-cols-2">
-                <div>
+                <div
+                    onWheel={(e) => {
+                        let newIndex = currentIndex;
+                        if (e.deltaY > 0) {
+                            newIndex = (currentIndex + 1) % allImages.length;
+                        } else {
+                            newIndex = (currentIndex - 1 + allImages.length) % allImages.length;
+                        }
+                        setMainImage(allImages[newIndex]);
+                        setCurrentIndex(newIndex);
+                    }}
+                    onTouchStart={handleTouchStart}
+                    onTouchMove={handleTouchMove}
+                    onTouchEnd={handleTouchEnd}
+                >
                     {mainImage && (
                         <Image
                             src={mainImage}
@@ -200,7 +290,10 @@ export default function ShopPage({ params }) {
                                 width={200}
                                 height={200}
                                 className="aspect-square w-full cursor-pointer rounded-lg object-cover"
-                                onClick={() => setMainImage(imageUrl)}
+                                onClick={() => {
+                                    setMainImage(imageUrl);
+                                    setCurrentIndex(index);
+                                }}
                             />
                         ))}
                     </div>
@@ -227,6 +320,14 @@ export default function ShopPage({ params }) {
                             {shop.Area}, {shop.City}
                         </span>
                     </div>
+                    <div type="button" className="m-1 ms-0 relative inline-flex items-center gap-x-2 text-sm font-medium rounded-lg  bg-white text-gray-800 shadow-sm hover:bg-gray-50 focus:outline-none focus:bg-gray-50 disabled:opacity-50 dark:bg-neutral-900 dark:border-neutral-700 dark:text-white dark:hover:bg-neutral-800 dark:focus:bg-neutral-800">
+                        <span className="text-black/60 font-semibold">Response expected in {shop.responseTime} minutes</span>
+                        <span className="flex absolute top-0 end-0  -me-3">
+                            <span className="animate-ping absolute inline-flex size-full rounded-full bg-red-400 opacity-75 dark:bg-red-600"></span>
+                            <span className="relative w-3 h-3 inline-flex text-xs bg-green-400/55 text-white rounded-full py-0.5 px-1.5">
+                            </span>
+                        </span>
+                    </div>
                     <div className="flex flex-row items-center gap-2">
                         <div className="mt-1 flex flex-row items-center justify-start gap-1">
                             {categoryIcons[shop.Category] || (
@@ -242,6 +343,7 @@ export default function ShopPage({ params }) {
                         )}
                     </div>
                     <span>{shop.Category2}</span>
+                    <span className="ml-3 text-sm font-semibold text-purple-400">.{shop.Category3}</span>
 
                     {shop.Time && (
                         <div className="mt-1">
@@ -278,6 +380,7 @@ export default function ShopPage({ params }) {
                             </div>
                         </div>
                     )}
+
                 </div>
             </div>
 

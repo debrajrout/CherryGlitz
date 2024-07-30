@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import Image from "next/image";
 import { Skeleton } from "@/components/ui/skeleton";
 import { likeShop } from "@/actions/LikeShop";
-import { FcShop } from "react-icons/fc";
+import { FcClock, FcShop } from "react-icons/fc";
 import { CiLocationOn } from "react-icons/ci";
 import { IoIosStar } from "react-icons/io";
 import { HiArrowTrendingUp } from "react-icons/hi2";
@@ -13,6 +13,7 @@ import Link from "next/link";
 import { LuPhoneCall } from "react-icons/lu";
 import { GrLocation } from "react-icons/gr";
 import { MdPeople } from "react-icons/md";
+
 
 const ShopListing = ({ shopResults }) => {
     const [shopImages, setShopImages] = useState({});
@@ -72,18 +73,28 @@ const ShopListing = ({ shopResults }) => {
                     {/* Image Section */}
                     <Link href={`/search/${shop._id}`} className="flex ">
                         <div className="mr-4 h-[132px] w-24 overflow-hidden rounded-md shadow-md shadow-black/20">
-                            {loadingImages[shop.Uid] || !shopImages[shop.Uid] ? (
+                            {loadingImages[shop.Uid] ? (
                                 <Skeleton className="h-full w-full" />
                             ) : (
                                 <Image
+                                    priority={true}
+
                                     alt=""
-                                    src={shopImages[shop.Uid]}
+                                    src={
+                                        shopImages[shop.Uid] ||
+                                        (shop.Category === "Beauty Parlour" ? "/noimg/1.jpg" :
+                                            shop.Category === "Men’s Salon" ? "/noimg/8.jpg" :
+                                                shop.Category === "Massage" ? "/noimg/3.jpg" :
+                                                    shop.Category === "Spa" ? "/noimg/10.jpg" :
+                                                        shop.Category === "Tattoo" ? "/noimg/5.jpg" : "/default.jpg") // fallback to a default image
+                                    }
                                     width={96}
                                     height={96}
                                     className="h-full w-full object-cover"
                                 />
                             )}
                         </div>
+
                         {/* Shop Details */}
                         <div className="flex w-[70%] flex-col py-1">
                             <div className="flex flex-row items-center justify-start gap-1">
@@ -123,9 +134,9 @@ const ShopListing = ({ shopResults }) => {
 
                             {shop.visitCount && (
                                 <div className="flex flex-row items-center gap-1 mt-1 justify-start ">
-                                    <MdPeople className="text-base text-blue-600" />
-                                    <span className="text-sm font-medium text-black">
-                                        {shop.visitCount} inquires from last month
+
+                                    <span className="text-sm font-semibold text-black flex flex-row items-center content-start">
+                                        <FcClock className="text-base text-blue-600 mr-1" />   Responds in {shop.responseTime} mins  <MdPeople className="text-base text-blue-600 ml-3 mr-1" /> {shop.visitCount} visits...
                                     </span>
                                 </div>
                             )}
