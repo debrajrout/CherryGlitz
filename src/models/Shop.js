@@ -19,12 +19,12 @@ const ShopSchema = new Schema({
   Address: String,
   Website: String,
   Liked: { type: Boolean, default: false },
-  visitCount: { type: Number, default: 0 }, // New field
+  visitCount: { type: Number, default: 0 },
   Since: { type: Number },
-  responseTime: { type: Number, default: 60 }, // New field
+  responseTime: { type: Number, default: 60 },
 }, { timestamps: true });
 
-// Compound index for optimized querying
+// Compound text index for optimized searching
 ShopSchema.index({
   Name: 'text',
   Category: 'text',
@@ -32,10 +32,5 @@ ShopSchema.index({
   Area: 'text',
   City: 'text',
 }, { name: "compoundTextIndex" });
-
-// Ensure indexes are created
-ShopSchema.on('index', error => {
-  if (error) console.error('Index creation error:', error);
-});
 
 export const Shop = models?.Shop || model("Shop", ShopSchema);

@@ -69,44 +69,59 @@ export async function fetchCitiesAndAreas() {
     }
 }
 
-// Function to filter shops based on category, city, area, starRating, page, and limit
-export async function filterShops(category, city, area, starRating, responseTime, page = 1, limit = 10) {
+function calculateDistance(lat1, lon1, lat2, lon2) {
+    const R = 6371; // Radius of the Earth in kilometers
+    const dLat = (lat2 - lat1) * (Math.PI / 180);
+    const dLon = (lon2 - lon1) * (Math.PI / 180);
+    const a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+        Math.cos(lat1 * (Math.PI / 180)) * Math.cos(lat2 * (Math.PI / 180)) *
+        Math.sin(dLon / 2) * Math.sin(dLon / 2);
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+    const distance = R * c; // Distance in kilometers
+    return distance;
+}
+
+
+export async function filterShops(category, city, area, starRating, responseTime, userLat, userLon, page = 1, limit = 10) {
     await connectToDatabase();
 
     try {
-        const query = {};
-        if (category) {
-            query.Category = new RegExp(category, 'i');
-        }
-        if (city) {
-            query.City = new RegExp(city, 'i');
-        }
-        if (area) {
-            query.Area = new RegExp(area, 'i');
-        }
-        if (starRating && !isNaN(starRating)) {
-            query.Rating = { $gte: parseInt(starRating) };
-        }
+        // Base query
+        const query = {
+            ...(category && { Category: new RegExp(category, 'i') }),
+            ...(city && { City: new RegExp(city, 'i') }),
+            ...(area && { Area: new RegExp(area, 'i') }),
+            ...(starRating && !isNaN(starRating) && { Rating: { $gte: parseInt(starRating) } })
+        };
 
-        const sortQuery = {};
-        if (responseTime) {
-            sortQuery.responseTime = -1; // Sort by responseTime descending
-        }
-
+        // Fetch shops matching the base query
         const shops = await Shop.find(query)
-            .sort(sortQuery)
             .skip((page - 1) * limit)
             .limit(limit)
             .lean()
-            .select('Uid Name Category City Area Rating responseTime') // Select only necessary fields
             .exec();
 
-        return shops;
+        // Calculate distances and filter results
+        const filteredShops = shops
+            .map(shop => {
+                const distance = calculateDistance(userLat, userLon, shop.Latitude, shop.Longitude);
+                return { ...shop, distance };
+            })
+            .sort((a, b) => a.distance - b.distance); // Sort by distance
+
+        // Apply response time sorting
+        if (responseTime) {
+            filteredShops.sort((a, b) => b.responseTime - a.responseTime); // Sort by responseTime descending
+        }
+
+        return filteredShops;
+
     } catch (error) {
         console.error("Error filtering shops:", error);
         throw new Error("Failed to filter shops");
     }
 }
+
 
 // Function to fetch shop details by ID 
 export async function fetchShopById(shopId) {

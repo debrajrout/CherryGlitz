@@ -78,7 +78,6 @@ const ShopListing = ({ shopResults }) => {
                             ) : (
                                 <Image
                                     priority={true}
-
                                     alt=""
                                     src={
                                         shopImages[shop.Uid] ||

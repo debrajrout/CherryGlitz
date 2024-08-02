@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo, useCallback } from "react";
 import { Button } from "@/components/ui/button";
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 import {
@@ -20,8 +20,6 @@ import {
   CommandList,
 } from "@/components/ui/command";
 import { Separator } from "@/components/ui/separator";
-import { BsFillLightningChargeFill, BsLightningCharge } from "react-icons/bs";
-
 import {
   Drawer,
   DrawerClose,
@@ -32,7 +30,6 @@ import {
   DrawerTitle,
   DrawerTrigger,
 } from "@/components/ui/drawer";
-
 import {
   Popover,
   PopoverContent,
@@ -46,7 +43,7 @@ import { Spa } from "@/components/special-components/Scroll";
 import { Tattoo } from "@/components/special-components/Scroll";
 import { Beauty } from "@/components/special-components/Scroll";
 import SelectSection from "@/components/sections/SelectSection";
-import { FaStar } from "react-icons/fa";
+import { FaBolt, FaCheckCircle, FaClock, FaCrown, FaCut, FaSpa, FaStar, FaTabletAlt, FaTags, FaWarehouse } from "react-icons/fa";
 import { LuClock } from "react-icons/lu";
 import {
   TbCheck,
@@ -56,6 +53,13 @@ import {
   TbX,
 } from "react-icons/tb";
 import { grabShop } from "@/actions/Search";
+import { MdCategory } from "react-icons/md";
+import { GiHummingbird } from "react-icons/gi";
+import { FaTabletButton } from "react-icons/fa6";
+import { Slider } from "@/components/ui/slider";
+import debounce from "lodash.debounce";
+
+
 
 export default function Page() {
   const [categoryOpen, setCategoryOpen] = useState(false);
@@ -70,12 +74,16 @@ export default function Page() {
   const [page, setPage] = useState(1);
   const [showSearch, setShowSearch] = useState(true);
   const [shopFixed, setShopFixed] = useState(false);
-  const [starRatingOpen, setStarRatingOpen] = useState(false);
   const [starRating, setStarRating] = useState(0);
   const [openNow, setOpenNow] = useState(false);
   const [todayDeal, setTodayDeal] = useState(false);
   const [verified, setVerified] = useState(false);
   const [responseTime, setResponseTime] = useState(false);
+  const [latitude, setLatitude] = useState(null);
+  const [longitude, setLongitude] = useState(null);
+  const [priceRange, setPriceRange] = useState([500]);
+  const [starRatingOpen, setStarRatingOpen] = useState(false);
+
 
   const updateQueryString = (key, value) => {
     const params = new URLSearchParams(window.location.search);
@@ -87,17 +95,18 @@ export default function Page() {
     window.history.replaceState(
       null,
       "",
-      `${window.location.pathname}?${params.toString()}`,
+      `${window.location.pathname}?${params.toString()}`
     );
   };
 
   useEffect(() => {
     const fetchInitialData = async () => {
       try {
-        const citiesResponse = await fetchCitiesAndAreas();
-        setCities(citiesResponse);
-        const categoriesResponse = await fetchCategories();
-        setCategories(categoriesResponse);
+        const [citiesResponse, categoriesResponse] = await Promise.all([
+          fetchCitiesAndAreas(),
+          fetchCategories(),
+        ]);
+
         const params = new URLSearchParams(window.location.search);
         const category = params.get("category") || "";
         const city = params.get("city") || "";
@@ -108,6 +117,11 @@ export default function Page() {
         const openNow = params.get("openNow") === "true";
         const verified = params.get("verified") === "true";
         const todayDeal = params.get("todayDeal") === "true";
+        const latitude = parseFloat(params.get("latitude") || "0");
+        const longitude = parseFloat(params.get("longitude") || "0");
+
+        setCities(citiesResponse);
+        setCategories(categoriesResponse);
         setCategory(category);
         setCity(city);
         setSubCity(subCity);
@@ -118,7 +132,10 @@ export default function Page() {
         setOpenNow(openNow);
         setVerified(verified);
         setTodayDeal(todayDeal);
-        fetchShopsData(category, city, subCity, starRating, responseTime, 1);
+        setLatitude(latitude);
+        setLongitude(longitude);
+
+        fetchShopsData(category, city, subCity, starRating, responseTime, latitude, longitude, 1);
       } catch (error) {
         console.error("Error fetching initial data:", error);
       }
@@ -150,7 +167,9 @@ export default function Page() {
     subCity,
     starRating,
     responseTime,
-    page,
+    latitude,
+    longitude,
+    page
   ) => {
     try {
       const results = await filterShops(
@@ -159,7 +178,9 @@ export default function Page() {
         subCity,
         starRating,
         responseTime,
-        page,
+        latitude,
+        longitude,
+        page
       );
       setShops(results);
       console.log("Shops fetched:", results);
@@ -172,7 +193,7 @@ export default function Page() {
   const handleNext = () => {
     const nextPage = page + 1;
     setPage(nextPage);
-    fetchShopsData(category, city, subCity, starRating, responseTime, nextPage);
+    fetchShopsData(category, city, subCity, starRating, responseTime, latitude, longitude, nextPage);
   };
 
   const handlePrevious = () => {
@@ -185,32 +206,43 @@ export default function Page() {
         subCity,
         starRating,
         responseTime,
-        prevPage,
+        latitude,
+        longitude,
+        prevPage
       );
     }
   };
 
-  const handleCategoryChange = (value) => {
+  const handleCategoryChange = useCallback((value) => {
     setCategory(value);
     updateQueryString("category", value);
-    fetchShopsData(value, city, subCity, starRating, responseTime, 1);
-  };
+    fetchShopsData(
+      value, // Use the new category value here
+      city,
+      subCity,
+      starRating,
+      responseTime,
+      latitude,
+      longitude,
+      1
+    );
+  }, [city, subCity, starRating, responseTime, latitude, longitude]);
 
   const handleCityChange = (value) => {
     setCity(value);
     setSubCity(""); // Reset subCity when city changes
-    fetchShopsData(category, value, "", starRating, responseTime, 1);
+    fetchShopsData(category, value, "", starRating, responseTime, latitude, longitude, 1);
   };
 
   const handleSubCityChange = (value) => {
     setSubCity(value);
-    fetchShopsData(category, city, value, starRating, responseTime, 1);
+    fetchShopsData(category, city, value, starRating, responseTime, latitude, longitude, 1);
   };
 
   const handleStarRatingChange = (value) => {
     setStarRating(value);
     updateQueryString("starRating", value);
-    fetchShopsData(category, city, subCity, value, responseTime, 1);
+    fetchShopsData(category, city, subCity, value, responseTime, latitude, longitude, 1);
   };
 
   const handleOpenNowToggle = () => {
@@ -221,7 +253,7 @@ export default function Page() {
   const handleQuickResponseToggle = () => {
     setResponseTime(!responseTime);
     updateQueryString("responseTime", !responseTime ? "true" : "");
-    fetchShopsData(value, city, subCity, starRating, responseTime, 1);
+    fetchShopsData(category, city, subCity, starRating, !responseTime, latitude, longitude, 1);
   };
 
   const handleTodayDealToggle = () => {
@@ -229,10 +261,10 @@ export default function Page() {
     updateQueryString("todayDeal", !todayDeal ? "true" : "");
   };
 
-  const handleSearchTextChange = (value) => {
+  const handleSearchTextChange = debounce((value) => {
     setSearchText(value);
     fetchSuggestions(value);
-  };
+  }, 300);
 
   const handleVerifiedToggle = () => {
     setVerified(!verified);
@@ -253,11 +285,20 @@ export default function Page() {
     }
   };
 
-  const filteredSubCities = city
-    ? matchSorter(cities.find((c) => c.name === city)?.areas || [], subCity, {
-      threshold: matchSorter.rankings.CONTAINS,
-    })
-    : [];
+  const filteredSubCities = useMemo(() => {
+    return city
+      ? matchSorter(cities.find((c) => c.name === city)?.areas || [], subCity, {
+        threshold: matchSorter.rankings.CONTAINS,
+      })
+      : [];
+  }, [city, subCity, cities]);
+
+  const handleLocationUpdate = (latitude, longitude) => {
+    setLatitude(latitude);
+    setLongitude(longitude);
+    updateQueryString("latitude", latitude);
+    updateQueryString("longitude", longitude);
+  };
 
   return (
     <div className="mt-[50px] flex w-full flex-col items-center">
@@ -277,7 +318,7 @@ export default function Page() {
           />
         </div>
       </div>
-      <SelectSection />
+      <SelectSection onLocationUpdate={handleLocationUpdate} />
       <div
         className={cn(
           "z-10 w-full bg-white transition-transform duration-300",
@@ -304,6 +345,152 @@ export default function Page() {
                   Choose your preferences below.
                 </DrawerDescription>
               </DrawerHeader>
+              <div className="w-full flex flex-col justify-start gap-3">
+                <div className="flex flex-col">
+                  <span className="text-xl font-bold text-gray-800 mb-4">Top Categories</span>
+                  <div className="flex flex-wrap gap-2">
+                    <button
+                      className="inline-flex items-center gap-2 rounded-lg border border-pink-600 px-5 py-2.5 text-sm font-semibold text-pink-600 bg-white transition hover:scale-105 hover:shadow-lg focus:outline-none active:bg-pink-500 active:text-white"
+                      onClick={() => handleCategoryChange('Beauty Parlour')}
+                    >
+                      <FaSpa className="text-lg text-pink-600" />
+                      Beauty Parlour
+                    </button>
+                    <button
+                      className="inline-flex items-center gap-2 rounded-lg border border-teal-600 px-5 py-2.5 text-sm font-semibold text-teal-600 bg-white transition hover:scale-105 hover:shadow-lg focus:outline-none active:bg-teal-500 active:text-white"
+                      onClick={() => handleCategoryChange('Spa')}
+                    >
+                      <GiHummingbird className="text-lg text-teal-600" />
+                      Spa
+                    </button>
+                    <button
+                      className="inline-flex items-center gap-2 rounded-lg border border-purple-600 px-5 py-2.5 text-sm font-semibold text-purple-600 bg-white transition hover:scale-105 hover:shadow-lg focus:outline-none active:bg-purple-500 active:text-white"
+                      onClick={() => handleCategoryChange('Tattoo')}
+                    >
+                      <FaTabletAlt className="text-lg text-purple-600" />
+                      Tattoo
+                    </button>
+                    <button
+                      className="inline-flex items-center gap-2 rounded-lg border border-blue-600 px-5 py-2.5 text-sm font-semibold text-blue-600 bg-white transition hover:scale-105 hover:shadow-lg focus:outline-none active:bg-blue-500 active:text-white"
+                      onClick={() => handleCategoryChange('Men’s Salon')}
+                    >
+                      <FaCut className="text-lg text-blue-600" />
+                      Men’s Salon
+                    </button>
+                    <button
+                      className="inline-flex items-center gap-2 rounded-lg border border-green-600 px-5 py-2.5 text-sm font-semibold text-green-600 bg-white transition hover:scale-105 hover:shadow-lg focus:outline-none active:bg-green-500 active:text-white"
+                      onClick={() => handleCategoryChange('Massage')}
+                    >
+                      <FaWarehouse className="text-lg text-green-600" />
+                      Massage
+                    </button>
+                  </div>
+                </div>
+                <div className="flex flex-col">
+                  <span className="text-xl font-bold text-gray-800 mb-4">Sort By</span>
+                  <div className="flex flex-wrap gap-2">
+                    <button
+                      className={`inline-flex items-center gap-2 rounded-lg border px-5 py-2.5 text-sm font-semibold transition hover:scale-105 hover:shadow-lg focus:outline-none active:text-white ${openNow ? 'border-blue-400 bg-blue-200 text-blue-800' : 'border-green-600 text-green-600 bg-white active:bg-green-500'
+                        }`}
+                      onClick={handleOpenNowToggle}
+                    >
+                      {openNow ? <TbClockCheck className="text-pink-700" /> : <LuClock className="text-black" />}
+                      <span className="ml-1">{openNow ? 'Open Now' : 'Open'}</span>
+                    </button>
+                    <button
+                      className={`inline-flex items-center gap-2 rounded-lg border px-5 py-2.5 text-sm font-semibold transition hover:scale-105 hover:shadow-lg focus:outline-none active:text-white ${responseTime ? 'border-green-700 bg-green-200 text-green-600' : 'border-red-600 text-red-600 bg-white active:bg-red-500'
+                        }`}
+                      onClick={handleQuickResponseToggle}
+                    >
+                      <TbClockCheck className={responseTime ? 'text-yellow-600' : 'text-green-600'} />
+                      <span className="ml-1">{responseTime ? 'Quick response' : 'Quick response'}</span>
+                    </button>
+                    <button
+                      className={`inline-flex items-center gap-2 rounded-lg border px-5 py-2.5 text-sm font-semibold transition hover:scale-105 hover:shadow-lg focus:outline-none active:text-white ${verified ? 'border-green-400 bg-green-200 text-green-800' : 'border-blue-600 text-blue-600 bg-white active:bg-blue-500'
+                        }`}
+                      onClick={handleVerifiedToggle}
+                    >
+                      <TbCheck className={verified ? 'text-green-800' : 'text-blue-500'} />
+                      <span className="ml-1">{verified ? 'CZ Verified' : 'Verified'}</span>
+                    </button>
+                    <button
+                      className={`inline-flex items-center gap-2 rounded-lg border px-5 py-2.5 text-sm font-semibold transition hover:scale-105 hover:shadow-lg focus:outline-none active:text-white ${todayDeal ? 'border-transparent bg-gradient-to-r from-blue-500 to-purple-500 text-white' : 'border-purple-600 text-purple-600 bg-white active:bg-purple-500'
+                        } ${todayDeal ? 'scale-105' : 'scale-100'}`}
+                      onClick={handleTodayDealToggle}
+                    >
+                      <TbStar className={todayDeal ? 'text-white' : 'text-blue-600'} />
+                      <span className="ml-1">{todayDeal ? 'Today’s Deal' : 'Deal of the Day'}</span>
+                    </button>
+                    <button
+                      className={`inline-flex items-center gap-2 rounded-lg border border-yellow-600 px-5 py-2.5 text-sm font-semibold text-yellow-600 bg-white transition hover:scale-105 hover:shadow-lg focus:outline-none active:bg-yellow-500 active:text-white`}
+
+                    >
+                      <FaCrown className="text-lg text-yellow-600" />
+                      Luxury
+                    </button>
+                  </div>
+                </div>
+                <div className="flex flex-col">
+                  <span className="text-xl font-bold text-gray-800 mb-4">Rating</span>
+                  <div className="flex flex-wrap gap-2">
+                    <button
+                      className={`inline-flex items-center gap-2 rounded-lg border px-5 py-2.5 text-sm font-semibold transition hover:scale-105 hover:shadow-lg focus:outline-none active:text-white ${starRating === 0 ? 'border-gray-600 text-gray-600 bg-white active:bg-gray-500' : 'border-gray-600 text-gray-600 bg-white'
+                        }`}
+                      onClick={() => handleStarRatingChange(0)}
+                    >
+                      <FaStar className="text-lg text-gray-600" />
+                      All
+                    </button>
+                    <button
+                      className={`inline-flex items-center gap-2 rounded-lg border px-5 py-2.5 text-sm font-semibold transition hover:scale-105 hover:shadow-lg focus:outline-none active:text-white ${starRating === 5 ? 'border-yellow-600 text-yellow-600 bg-white active:bg-yellow-500' : 'border-yellow-600 text-yellow-600 bg-white'
+                        }`}
+                      onClick={() => handleStarRatingChange(5)}
+                    >
+                      <FaStar className="text-lg text-yellow-600" />
+                      5 Star
+                    </button>
+                    <button
+                      className={`inline-flex items-center gap-2 rounded-lg border px-5 py-2.5 text-sm font-semibold transition hover:scale-105 hover:shadow-lg focus:outline-none active:text-white ${starRating === 4 ? 'border-orange-600 text-orange-600 bg-white active:bg-orange-500' : 'border-orange-600 text-orange-600 bg-white'
+                        }`}
+                      onClick={() => handleStarRatingChange(4)}
+                    >
+                      <FaStar className="text-lg text-orange-600" />
+                      4 Star +
+                    </button>
+                    <button
+                      className={`inline-flex items-center gap-2 rounded-lg border px-5 py-2.5 text-sm font-semibold transition hover:scale-105 hover:shadow-lg focus:outline-none active:text-white ${starRating === 3 ? 'border-green-600 text-green-600 bg-white active:bg-green-500' : 'border-green-600 text-green-600 bg-white'
+                        }`}
+                      onClick={() => handleStarRatingChange(3)}
+                    >
+                      <FaStar className="text-lg text-green-600" />
+                      3 Star +
+                    </button>
+                    <button
+                      className={`inline-flex items-center gap-2 rounded-lg border px-5 py-2.5 text-sm font-semibold transition hover:scale-105 hover:shadow-lg focus:outline-none active:text-white ${starRating === 2 ? 'border-blue-600 text-blue-600 bg-white active:bg-blue-500' : 'border-blue-600 text-blue-600 bg-white'
+                        }`}
+                      onClick={() => handleStarRatingChange(2)}
+                    >
+                      <FaStar className="text-lg text-blue-600" />
+                      2 Star +
+                    </button>
+                  </div>
+                </div>
+                <div className="flex flex-col items-start">
+                  <span className="text-xl font-bold text-gray-800 mb-4">Price Range</span>
+                  <div className="flex items-center justify-between w-full mb-2">
+                    <span className="text-lg font-semibold text-indigo-600">
+                      INR {priceRange[0]}
+                    </span>
+                  </div>
+                  <Slider
+                    value={priceRange}
+                    onValueChange={setPriceRange}
+                    max={5000}
+                    step={50}
+                    className="w-full"
+                  />
+                </div>
+              </div>
               <DrawerFooter className=" mt-4">
                 <DrawerClose>
                   <Button
@@ -440,9 +627,9 @@ export default function Page() {
               } rounded-lg border-2  transition-all duration-300`}
           >
             {responseTime ? (
-              <BsLightningCharge className="text-yellow-600" />
+              <TbClockCheck className="text-yellow-600" />
             ) : (
-              <BsFillLightningChargeFill className="text-green-600" />
+              <TbClockCheck className="text-green-600" />
             )}
             <span className="ml-1">
               {responseTime ? "Quick response" : "Quick response"}
