@@ -1,22 +1,14 @@
 import React from "react";
-
 import {
   Drawer,
   DrawerClose,
   DrawerContent,
-  DrawerDescription,
-  DrawerFooter,
-  DrawerHeader,
   DrawerTitle,
   DrawerTrigger,
 } from "@/components/ui/drawer";
 import { RxCross1 } from "react-icons/rx";
-
-import { Button } from "./ui/button";
-import { Input } from "./ui/input";
 import Searchtext from "./gsap/Searchtext";
 import { PlaceholdersAndVanishInputDemo } from "./sections/SearchDiv";
-import { ComboboxDemo } from "./search/searchCity";
 import { IoMdArrowRoundForward } from "react-icons/io";
 
 const cities = [
@@ -43,8 +35,6 @@ const category = [
   "massage-parlour",
   "spa-centre",
 ];
-
-
 
 const CityDisplay = () => {
   return (

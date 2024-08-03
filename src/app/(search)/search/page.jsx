@@ -8,8 +8,6 @@ import {
   fetchCategories,
 } from "@/actions/fetchAll";
 import ShopListing from "@/components/ShopListing";
-import { Input } from "@/components/ui/input";
-import { IoSearchOutline } from "react-icons/io5";
 import { cn } from "@/lib/utils";
 import {
   Command,
@@ -43,7 +41,7 @@ import { Spa } from "@/components/special-components/Scroll";
 import { Tattoo } from "@/components/special-components/Scroll";
 import { Beauty } from "@/components/special-components/Scroll";
 import SelectSection from "@/components/sections/SelectSection";
-import { FaBolt, FaCheckCircle, FaClock, FaCrown, FaCut, FaSpa, FaStar, FaTabletAlt, FaTags, FaWarehouse } from "react-icons/fa";
+import { FaCrown, FaCut, FaSpa, FaStar, FaTabletAlt, FaWarehouse } from "react-icons/fa";
 import { LuClock } from "react-icons/lu";
 import {
   TbCheck,
@@ -53,14 +51,10 @@ import {
   TbX,
 } from "react-icons/tb";
 import { grabShop } from "@/actions/Search";
-import { MdCategory } from "react-icons/md";
 import { GiHummingbird } from "react-icons/gi";
-import { FaTabletButton } from "react-icons/fa6";
 import { Slider } from "@/components/ui/slider";
 import debounce from "lodash.debounce";
-
-
-
+import SearchbarResult from "@/components/SearchbarResult";
 export default function Page() {
   const [categoryOpen, setCategoryOpen] = useState(false);
   const [category, setCategory] = useState("");
@@ -84,7 +78,6 @@ export default function Page() {
   const [priceRange, setPriceRange] = useState([500]);
   const [starRatingOpen, setStarRatingOpen] = useState(false);
 
-
   const updateQueryString = (key, value) => {
     const params = new URLSearchParams(window.location.search);
     if (value) {
@@ -106,7 +99,6 @@ export default function Page() {
           fetchCitiesAndAreas(),
           fetchCategories(),
         ]);
-
         const params = new URLSearchParams(window.location.search);
         const category = params.get("category") || "";
         const city = params.get("city") || "";
@@ -119,7 +111,6 @@ export default function Page() {
         const todayDeal = params.get("todayDeal") === "true";
         const latitude = parseFloat(params.get("latitude") || "0");
         const longitude = parseFloat(params.get("longitude") || "0");
-
         setCities(citiesResponse);
         setCategories(categoriesResponse);
         setCategory(category);
@@ -134,7 +125,6 @@ export default function Page() {
         setTodayDeal(todayDeal);
         setLatitude(latitude);
         setLongitude(longitude);
-
         fetchShopsData(category, city, subCity, starRating, responseTime, latitude, longitude, 1);
       } catch (error) {
         console.error("Error fetching initial data:", error);
@@ -308,15 +298,7 @@ export default function Page() {
           showSearch ? "translate-y-0" : "-translate-y-full",
         )}
       >
-        <div className="mt-2 w-full px-2">
-          <Input
-            placeholder="Search for services"
-            className="bg-slate-400 shadow-md shadow-blue-200/30"
-            icon={<IoSearchOutline />}
-            value={searchText}
-            onChange={(e) => handleSearchTextChange(e.target.value)}
-          />
-        </div>
+        <SearchbarResult />
       </div>
       <SelectSection onLocationUpdate={handleLocationUpdate} />
       <div
