@@ -1,11 +1,15 @@
 "use server";
 
 import mongoose from "mongoose";
+import NodeCache from "node-cache";
 import { Shop } from "@/models/Shop";
 import { Category } from "@/models/Category";
 import { City } from "@/models/City";
 import { VisitIncrement } from "@/models/VisitIncrement";
 import cron from 'node-cron';
+
+// Initialize cache
+const cache = new NodeCache({ stdTTL: 600 }); // Cache TTL (Time To Live) in seconds
 
 // Helper function to connect to MongoDB
 async function connectToDatabase() {
@@ -25,11 +29,18 @@ async function connectToDatabase() {
 
 // Fetch unique categories from Category collection
 export async function fetchCategories() {
+    const cacheKey = "categories";
+    const cachedCategories = cache.get(cacheKey);
+    if (cachedCategories) {
+        return cachedCategories;
+    }
+
     await connectToDatabase();
 
     try {
         const categoriesDoc = await Category.findOne().lean().select('categories').exec();
         const categories = categoriesDoc?.categories || [];
+        cache.set(cacheKey, categories);
         return categories;
     } catch (error) {
         console.error("Error fetching categories:", error);
@@ -43,12 +54,19 @@ export async function fetchLiked(ids) {
         return []; // Return an empty array if no IDs are provided
     }
 
+    const cacheKey = `liked_${ids.join("_")}`;
+    const cachedShops = cache.get(cacheKey);
+    if (cachedShops) {
+        return cachedShops;
+    }
+
     await connectToDatabase();
 
     const query = { Uid: { $in: ids.map(id => new RegExp(id, 'i')) } };
 
     try {
         const shops = await Shop.find(query).lean().exec();
+        cache.set(cacheKey, shops);
         return shops;
     } catch (error) {
         console.error("Error fetching liked shops:", error);
@@ -58,10 +76,17 @@ export async function fetchLiked(ids) {
 
 // Fetch cities and their respective areas from City collection
 export async function fetchCitiesAndAreas() {
+    const cacheKey = "cities_and_areas";
+    const cachedCities = cache.get(cacheKey);
+    if (cachedCities) {
+        return cachedCities;
+    }
+
     await connectToDatabase();
 
     try {
         const cities = await City.find().lean().exec();
+        cache.set(cacheKey, cities);
         return cities;
     } catch (error) {
         console.error("Error fetching cities and areas:", error);
@@ -81,8 +106,13 @@ function calculateDistance(lat1, lon1, lat2, lon2) {
     return distance;
 }
 
-
 export async function filterShops(category, city, area, starRating, responseTime, userLat, userLon, page = 1, limit = 10) {
+    const cacheKey = `shops_${category}_${city}_${area}_${starRating}_${responseTime}_${userLat}_${userLon}_${page}_${limit}`;
+    const cachedShops = cache.get(cacheKey);
+    if (cachedShops) {
+        return cachedShops;
+    }
+
     await connectToDatabase();
 
     try {
@@ -114,6 +144,7 @@ export async function filterShops(category, city, area, starRating, responseTime
             filteredShops.sort((a, b) => b.responseTime - a.responseTime); // Sort by responseTime descending
         }
 
+        cache.set(cacheKey, filteredShops);
         return filteredShops;
 
     } catch (error) {
@@ -122,9 +153,14 @@ export async function filterShops(category, city, area, starRating, responseTime
     }
 }
 
-
 // Function to fetch shop details by ID 
 export async function fetchShopById(shopId) {
+    const cacheKey = `shop_${shopId}`;
+    const cachedShop = cache.get(cacheKey);
+    if (cachedShop) {
+        return cachedShop;
+    }
+
     await connectToDatabase();
 
     try {
@@ -132,6 +168,7 @@ export async function fetchShopById(shopId) {
         if (!shop) {
             throw new Error(`Shop with ID ${shopId} not found`);
         }
+        cache.set(cacheKey, shop);
         return shop;
     } catch (error) {
         console.error(`Error fetching shop with ID ${shopId}:`, error);
@@ -158,6 +195,9 @@ export async function incrementVisitCount(shopId) {
             throw new Error(`Shop with ID ${shopId} not found`);
         }
 
+        // Update cache
+        cache.set(`shop_${shopId}`, shop);
+
         return shop;
     } catch (error) {
         console.error(`Error incrementing visit count for shop with ID ${shopId}:`, error);
@@ -179,6 +219,9 @@ cron.schedule('0 0 * * *', async () => {
             ).exec();
 
             await increment.remove();
+
+            // Invalidate cache for the shop
+            cache.del(`shop_${increment.shopId}`);
         }
     } catch (error) {
         console.error("Error decrementing visit count:", error);
