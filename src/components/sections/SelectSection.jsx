@@ -137,7 +137,7 @@ export default function SelectSection({ onLocationUpdate }) {
                 <div className="flex flex-col gap-4">
                     <Button
                         onClick={handleLocationDetection}
-                        className="w-full py-3 bg-green-600 text-white rounded-lg shadow-lg hover:bg-green-700 transition-colors duration-300"
+                        className="w-full py-4 bg-green-600 text-white rounded-lg shadow-lg hover:bg-green-700 transition-colors duration-300"
                     >
                         {loading ? "Detecting your location..." : "Locate Me"}
                     </Button>

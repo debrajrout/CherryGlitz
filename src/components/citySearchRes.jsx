@@ -24,8 +24,7 @@ export default function CitySearchBarRes() {
             <Drawer>
                 <DrawerTrigger className="w-full">
                     <div
-
-                        className="w-full px-2 py-3 bg-blue-600 text-white rounded-lg shadow-lg hover:bg-blue-700 transition-colors duration-300"
+                        className="w-full px-2 py-2 bg-blue-600 text-white rounded-lg shadow-lg hover:bg-blue-700 transition-colors duration-300"
                     >
                         Enter Address Manually
                     </div>
