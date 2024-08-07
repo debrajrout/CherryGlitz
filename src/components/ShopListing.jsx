@@ -7,13 +7,12 @@ import { FcClock, FcShop } from "react-icons/fc";
 import { CiLocationOn } from "react-icons/ci";
 import { IoIosStar } from "react-icons/io";
 import { HiArrowTrendingUp } from "react-icons/hi2";
-import { PiHeartStraightBold, PiPlusLight } from "react-icons/pi";
+import { PiHeartStraightBold, PiPlusLight, PiShareFatDuotone } from "react-icons/pi";
 import { fetchFirstImage } from "@/actions/aws";
 import Link from "next/link";
 import { LuPhoneCall } from "react-icons/lu";
 import { GrLocation } from "react-icons/gr";
 import { MdPeople } from "react-icons/md";
-
 
 const ShopListing = ({ shopResults }) => {
     const [shopImages, setShopImages] = useState({});
@@ -35,6 +34,22 @@ const ShopListing = ({ shopResults }) => {
 
         fetchImages();
     }, [shopResults]);
+
+    const handleShareClick = (shopId) => {
+        const url = `http://localhost:3000/search/${shopId}`;
+        if (navigator.share) {
+            navigator.share({
+                title: document.title,
+                text: "Check out this shop!",
+                url,
+            }).catch((error) => console.error("Error sharing:", error));
+        } else {
+            navigator.clipboard.writeText(url).then(() => {
+                alert("URL copied to clipboard");
+            }).catch((error) => console.error("Error copying to clipboard:", error));
+        }
+    };
+
 
     if (shopResults.length === 0) {
         return (
@@ -142,29 +157,30 @@ const ShopListing = ({ shopResults }) => {
                         </div>
                     </Link>
                     {/* Action Buttons */}
-                    <div className="w-full flex flex-row gap-3 mt-3 ">
-
-                        <button className=" flex flex-row h-9  w-44 animate-shimmer items-center justify-center gap-1 rounded-md border border-slate-300 bg-[linear-gradient(110deg,#6366f1,45%,#818cf8,55%,#6366f1)] bg-[length:200%_100%] px-6 transition-colors focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 focus:ring-offset-indigo-600">
+                    <div className="w-full flex justify-between flex-row gap-2 mt-3">
+                        <button className="flex flex-row h-9 w-40 items-center justify-center gap-1 rounded-md border border-transparent bg-gradient-to-r from-indigo-500 via-purple-500 to-indigo-500 bg-[length:200%_100%] animate-shimmer px-6 transition-all duration-1000 ease-in-out hover:scale-105 hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-indigo-300 focus:ring-offset-2">
                             <GrLocation className="text-white text-lg" />
                             <span className="text-sm font-medium text-white">
-                                Visite Now
+                                Visit Now
                             </span>
                         </button>
 
-                        <button className="gap-2 shadow-[inset_0_0_0_2px_#616467] flex flex-row justify-center items-center text-black  h-9  w-44 rounded-lg tracking-widest uppercase font-bold bg-transparent hover:bg-[#616467] hover:text-white dark:text-neutral-200 transition duration-200">
-
+                        <button className="flex flex-row gap-2 justify-center items-center h-9 w-[150px] rounded-lg tracking-widest uppercase font-bold text-black bg-transparent border-2 border-black transition-all duration-300 ease-in-out hover:bg-black hover:text-white hover:scale-105 hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-black focus:ring-offset-2">
                             <LuPhoneCall className="text-xl" />
                             <span className="text-xs">
-                                Contact Now
+                                Contact
                             </span>
                         </button>
 
+                        <button onClick={() => handleShareClick(shop._id)} className="w-9 h-9 flex items-center justify-center rounded-md ring-1 ring-gray-500 transition-all duration-300 ease-in-out hover:bg-gray-200 hover:text-white hover:scale-105 hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-gray-300">
+                            <PiShareFatDuotone className="text-xl text-gray-500" />
+                        </button>
 
-
-                        <button onClick={() => likeShop(shop.Uid)} className="w-9 h-9 ring-black ring-1  flex items-center justify-center rounded-md">
-                            <PiHeartStraightBold className="text-xl text-black/50 " />
+                        <button onClick={() => likeShop(shop.Uid)} className="w-9 h-9 flex items-center justify-center rounded-md ring-1 ring-red-500 transition-all duration-300 ease-in-out hover:bg-red-100 hover:text-white hover:scale-105 hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-red-300">
+                            <PiHeartStraightBold className="text-xl text-red-500" />
                         </button>
                     </div>
+
                 </div>
             ))}
         </div>

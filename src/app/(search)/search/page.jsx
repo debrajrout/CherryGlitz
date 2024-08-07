@@ -207,7 +207,7 @@ export default function Page() {
     setCategory(value);
     updateQueryString("category", value);
     fetchShopsData(
-      value, // Use the new category value here
+      value,
       city,
       subCity,
       starRating,

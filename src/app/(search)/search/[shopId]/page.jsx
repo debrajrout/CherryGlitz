@@ -609,7 +609,7 @@ export default function ShopPage({ params }) {
                                     <ReviewCard key={index} review={review} />
                                 ))
                             ) : (
-                                <p>No reviews yet. Be the first to add a review!</p>
+                                <p>No reviews yet. Be the first to add a review</p>
                             )}
                         </div>
                     </div>

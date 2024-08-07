@@ -4,9 +4,11 @@ import { useEffect, useState, useRef } from "react";
 import { PiFlowArrow } from "react-icons/pi";
 import { Input } from "../ui/input";
 import { fetchCitiesAndAreas } from "@/actions/fetchAll";
-import {
-    DrawerClose,
-} from "@/components/ui/drawer";
+import { DrawerClose } from "@/components/ui/drawer";
+
+const OPENCAGE_API_KEY = 'dc631bbd029a49eb90c4161daebffb62'; // Replace with your OpenCage API key
+const CACHE_KEY = 'locationData';
+const CACHE_EXPIRATION_TIME = 1000 * 60 * 60; // 1 hour
 
 export function LocationSearchComponent({ onLocationSelect }) {
     const [text, setText] = useState("");
@@ -21,14 +23,12 @@ export function LocationSearchComponent({ onLocationSelect }) {
         const fetchCities = async () => {
             try {
                 const response = await fetchCitiesAndAreas();
-
                 setCities(response);
                 console.log("Cities:", response);
             } catch (error) {
                 console.error("Error fetching cities:", error);
             }
         };
-
         fetchCities();
     }, []);
 
@@ -60,6 +60,27 @@ export function LocationSearchComponent({ onLocationSelect }) {
         fetchData();
     }, [query, cities]);
 
+    const fetchLocationFromCache = () => {
+        const cachedData = localStorage.getItem(CACHE_KEY);
+        if (cachedData) {
+            const { locationName, timestamp } = JSON.parse(cachedData);
+            const currentTime = new Date().getTime();
+            if (currentTime - timestamp < CACHE_EXPIRATION_TIME) {
+                setText(locationName);
+                return true;
+            }
+        }
+        return false;
+    };
+
+    const cacheLocationData = (locationName) => {
+        const cacheData = {
+            locationName,
+            timestamp: new Date().getTime()
+        };
+        localStorage.setItem(CACHE_KEY, JSON.stringify(cacheData));
+    };
+
     const handleChange = (e) => {
         setText(e.target.value);
     };
@@ -68,10 +89,7 @@ export function LocationSearchComponent({ onLocationSelect }) {
         const [area, city] = location.includes(", ")
             ? location.split(", ")
             : [null, location];
-
         onLocationSelect(city, area);
-        // Close the drawer
-        // document.querySelector('[data-drawer-overlay]').click();
     };
 
     const handleLocationDetection = () => {
@@ -82,7 +100,7 @@ export function LocationSearchComponent({ onLocationSelect }) {
                     const { latitude, longitude } = position.coords;
                     // Use your geocoding API here
                     const response = await fetch(
-                        `https://api.opencagedata.com/geocode/v1/json?q=${latitude}+${longitude}&key=dc631bbd029a49eb90c4161daebffb62`
+                        `https://api.opencagedata.com/geocode/v1/json?q=${latitude}+${longitude}&key=${OPENCAGE_API_KEY}`
                     );
                     const data = await response.json();
                     const location = data.results[0].components;
@@ -93,8 +111,14 @@ export function LocationSearchComponent({ onLocationSelect }) {
                     console.log("City:", city, "Area:", area, "Location:", location);
 
                     if (city && area) {
+                        const locationName = `${area}, ${city}`;
+                        setText(locationName);
+                        cacheLocationData(locationName);
                         onLocationSelect(city, area);
                     } else if (city) {
+                        const locationName = city;
+                        setText(locationName);
+                        cacheLocationData(locationName);
                         onLocationSelect(city, null);
                     }
                     // Close the drawer
@@ -111,20 +135,29 @@ export function LocationSearchComponent({ onLocationSelect }) {
         }
     };
 
+    useEffect(() => {
+        const isLocationCached = fetchLocationFromCache();
+        if (!isLocationCached) {
+            const timer = setTimeout(() => {
+                // Show popup only if no valid cache is found
+                setText('');
+            }, 10000);
+            return () => clearTimeout(timer);
+        }
+    }, []);
+
     const SuggestionList = ({ suggestions }) => (
         <div className="mt-2 p-2 flex flex-col gap-1 border rounded shadow-lg bg-white">
             {suggestions.map((location, index) => (
                 <DrawerClose key={index}>
-
-
                     <div
-
                         className="px-2 py-1 cursor-pointer hover:bg-gray-100 rounded-md flex flex-row items-center justify-between"
                         onClick={() => handleSuggestionClick(location)}
                     >
                         <span className="text-sm text-gray-700">{location}</span>
                         <PiFlowArrow className="mr-3 mt-1 text-2xl text-blue-500" />
-                    </div>  </DrawerClose>
+                    </div>
+                </DrawerClose>
             ))}
         </div>
     );

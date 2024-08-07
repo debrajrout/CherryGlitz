@@ -13,7 +13,6 @@ export default function page() {
       <CardHoverEffectDemo />
       <span className="text-yellow-400 text-xl  mb-3 px-8 -mt-7 w-full  text-center">Hairstyling Services</span>
       <MeteorsDemo />
-
     </div>
   );
 }
