@@ -53,26 +53,15 @@ export function DialogDemo({ uid }) {
         <Dialog open={isOpen} onOpenChange={setIsOpen}>
             <DialogTrigger asChild>
                 <button
-                    className="relative p-2 bg-green-400 text-white rounded-full border-2 border-yellow-600 hover:bg-green-500 focus:outline-none"
+                    className="text-blue-800 mt-1 font-semibold hover:scale-105 "
                     onClick={() => setIsOpen(true)}
                 >
-                    <motion.svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        viewBox="0 0 100 100"
-                        className="w-8 h-8"
-                    >
-                        <motion.path
-                            d="M0 100V0l50 50 50-50v100L75 75l-25 25-25-25z"
-                            variants={iconVariants}
-                            initial="hidden"
-                            animate="visible"
-                            transition={{ duration: 0.6 }}
-                        />
-                    </motion.svg>
-                    <span className="absolute inset-0 flex items-center justify-center text-xs font-bold">
-                        Share your Review +
+                    <span className="relative text-sm ">
+                        Share your Review
+                        <span className="ml-3 animate-ping text-blue-600">+</span>
                     </span>
                 </button>
+
             </DialogTrigger>
             <DialogContent className="w-[90%] sm:max-w-[600px] rounded-lg bg-white shadow-lg p-6">
                 <DialogHeader className="flex items-center justify-between">
