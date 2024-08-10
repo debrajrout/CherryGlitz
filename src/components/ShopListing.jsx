@@ -84,26 +84,10 @@ const ShopListing = ({ shopResults }) => {
                     key={shop._id}
                     className="relative mb-4 p-4 rounded-lg bg-white shadow-lg hover:shadow-xl transition-shadow duration-300"
                 >
-                    {/* Tags */}
-                    <div className="absolute top-0 flex flex-row gap-2 ">
-                        <span className="relative px-2 py-0.5 text-xs font-semibold text-yellow-800 bg-yellow-100 border border-yellow-800 rounded-md shadow-lg opacity-80">
-                            Verified
-                            <span className="absolute right-0 top-0 w-2 h-2 bg-yellow-800 rounded-br-md transform rotate-45 origin-bottom-right opacity-90"></span>
-                        </span>
-                        <span className="relative px-2 py-0.5 text-xs font-semibold text-green-800 bg-green-100 border border-green-800 rounded-md shadow-lg opacity-80">
-                            Trusted
-                            <span className="absolute right-0 top-0 w-2 h-2 bg-green-800 rounded-br-md transform rotate-45 origin-bottom-right opacity-90"></span>
-                        </span>
-                        <span className="relative px-2 py-0.5 text-xs font-semibold text-blue-800 bg-blue-100 border border-blue-800 rounded-md shadow-lg opacity-80">
-                            Exclusive
-                            <span className="absolute right-0 top-0 w-2 h-2 bg-blue-800 rounded-br-md transform rotate-45 origin-bottom-right opacity-90"></span>
-                        </span>
-                    </div>
-
                     {/* Image and Shop Details */}
-                    <Link href={`/search/${shop._id}`} className="flex gap-4 mt-3">
+                    <Link href={`/search/${shop._id}`} className="flex gap-4">
                         <div className="flex-shrink-0">
-                            <div className="relative h-32 w-32 rounded-md overflow-hidden shadow-md">
+                            <div className="relative h-36 w-28 rounded-md overflow-hidden shadow-md">
                                 {loadingImages[shop.Uid] ? (
                                     <Skeleton className="h-full w-full" />
                                 ) : (

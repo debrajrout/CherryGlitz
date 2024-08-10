@@ -108,7 +108,7 @@ export default function SelectSection({ onLocationUpdate }) {
             <PopoverTrigger asChild>
                 <div className='my-[2px] text-sm font-semibold text-gray-700 text-start flex flex-row gap-1 justify-center items-center'>
                     <SlLocationPin className='text-sm text-blue-500' />
-                    <span className='text-xs text-gray-800 font-bold'>
+                    <span className='text-xs truncate w-48 text-gray-800 font-bold'>
                         {locationName ? `Results near ${locationName}` : 'Select Location for best results'}
                     </span>
                     <CiEdit className='text-lg text-orange-500 ml-2' />
@@ -121,7 +121,7 @@ export default function SelectSection({ onLocationUpdate }) {
                     {locationName ? (
                         <>
                             <h2 className="text-2xl font-bold text-teal-600 mb-2">You’re All Set</h2>
-                            <p className="text-md font-semibold text-gray-500 mb-4">Enjoy our services near {locationName}</p>
+                            <p className="text-md font-medium text-gray-500 mb-4">Enjoy our services near <span className='text-blue-500'>{locationName}</span></p>
                         </>
                     ) : (
                         <>
