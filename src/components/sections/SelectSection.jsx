@@ -1,5 +1,4 @@
 "use client"
-
 import React, { useState, useEffect } from 'react';
 import { CiEdit } from 'react-icons/ci';
 import { SlLocationPin } from "react-icons/sl";
@@ -12,7 +11,8 @@ import {
 import Image from 'next/image';
 import CitySearchBarRes from '../citySearchRes';
 
-const OPENCAGE_API_KEY = 'dc631bbd029a49eb90c4161daebffb62'; // Replace with your OpenCage API key
+// Access the API key from environment variables
+const AZURE_MAPS_API_KEY = process.env.NEXT_PUBLIC_AZURE_MAPS_API_KEY;
 
 const CACHE_KEY = 'locationData';
 const CACHE_EXPIRATION_TIME = 1000 * 60 * 60; // 1 hour
@@ -45,7 +45,6 @@ export default function SelectSection({ onLocationUpdate }) {
 
     const handleLocationDetection = async () => {
         setLoading(true);
-
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(
                 async (position) => {
@@ -53,20 +52,17 @@ export default function SelectSection({ onLocationUpdate }) {
                     setLoading(false);
                     console.log("Latitude:", latitude, "Longitude:", longitude);
 
-                    // Fetch location name using OpenCage API
+                    // Fetch location name using Azure Maps API
                     try {
-                        const response = await fetch(`https://api.opencagedata.com/geocode/v1/json?q=${latitude}+${longitude}&key=${OPENCAGE_API_KEY}`);
+                        const response = await fetch(`https://atlas.microsoft.com/search/address/reverse/json?api-version=1.0&query=${latitude},${longitude}&subscription-key=${AZURE_MAPS_API_KEY}`);
                         const data = await response.json();
-                        const formattedAddress = data.results[0]?.formatted || 'Unknown location';
+                        const address = data.addresses[0]?.address?.freeformAddress || 'Unknown location';
 
-                        // Extract city and locality from the formatted address
-                        const addressParts = formattedAddress.split(', ');
-                        const locality = addressParts.slice(-3, -1).join(', '); // Assumes city and locality are the last two parts
-                        setLocationName(locality);
-                        console.log("Location:", locality);
+                        setLocationName(address);
+                        console.log("Location:", address);
 
                         // Cache the location data
-                        cacheLocationData(locality);
+                        cacheLocationData(address);
 
                         // Call the onLocationUpdate callback with the detected coordinates
                         if (onLocationUpdate) {

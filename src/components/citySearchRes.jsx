@@ -8,7 +8,6 @@ import {
 } from "@/components/ui/drawer";
 import { RxCross1 } from "react-icons/rx";
 import { LocationSearchComponent } from "./sections/citySearchInput";
-import { Button } from "./ui/button";
 
 
 export default function CitySearchBarRes() {

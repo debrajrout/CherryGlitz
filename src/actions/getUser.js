@@ -2,8 +2,7 @@
 
 import { User } from "@/models/User";
 import mongoose from "mongoose";
-import { getServerSession } from "next-auth";
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import { auth } from "@/auth";
 
 async function connectToDatabase() {
     if (mongoose.connection.readyState === 0) {
@@ -16,7 +15,7 @@ async function connectToDatabase() {
 
 export async function fetchUser() {
     try {
-        const session = await getServerSession(authOptions);
+        const session = await auth();
         if (!session || !session.user || !session.user.email) {
             throw new Error("User is not authenticated");
         }

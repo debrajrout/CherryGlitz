@@ -2,8 +2,7 @@
 import { Review } from "@/models/Reviews"; // Adjust the path to your Review model
 import mongoose from "mongoose";
 import { User } from "@/models/User";
-import { getServerSession } from "next-auth";
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import { auth } from "@/auth";
 
 // Helper function to connect to MongoDB
 async function connectToDatabase() {
@@ -20,7 +19,7 @@ export async function submitReview(shop_id, rating, review) {
     await connectToDatabase();
 
     try {
-        const session = await getServerSession(authOptions);
+        const session = await auth();
         if (!session || !session.user || !session.user.email) {
             throw new Error("User not authenticated");
         }

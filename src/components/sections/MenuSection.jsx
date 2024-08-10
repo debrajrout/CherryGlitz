@@ -8,8 +8,7 @@ import {
 } from "@/components/ui/sheet";
 import { PiPlusLight } from "react-icons/pi";
 import { CgMenuLeftAlt } from "react-icons/cg";
-import { getServerSession } from "next-auth";
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import LogoutMenu from "../buttons/menuLogout";
 
@@ -27,6 +26,7 @@ import { GoGift, GoGraph, GoHeartFill } from "react-icons/go";
 import { LiaHandsHelpingSolid } from "react-icons/lia";
 import { LuSparkles } from "react-icons/lu";
 import { FaRegCalendarAlt } from "react-icons/fa";
+import { auth } from "@/auth";
 
 const menuItems = [
   { name: "Home", icon: <AiFillHome /> },
@@ -45,7 +45,7 @@ const menuItems = [
 ];
 
 export default async function MenuSection() {
-  const session = await getServerSession(authOptions);
+  const session = await auth();
   return (
     <Sheet side="left">
       <SheetTrigger>

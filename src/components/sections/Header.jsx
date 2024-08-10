@@ -1,15 +1,14 @@
 import React from "react";
 import Login from "../buttons/Login";
-import { getServerSession } from "next-auth";
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import Logout from "../buttons/Logout";
 import { LuDownloadCloud } from "react-icons/lu";
 import CartSection from "./CartSection";
 import MenuSection from "./MenuSection";
 import Link from "next/link";
+import { auth } from "@/auth";
 
 export default async function Header() {
-  const session = await getServerSession(authOptions);
+  const session = await auth();
   return (
     <div className="fixed px-5 left-0 right-0 top-0 z-[100] flex h-[50px] w-full flex-row items-center justify-between  bg-neutral-200  ">
       <div className="flex flex-row items-center justify-center ">

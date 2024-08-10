@@ -1,8 +1,7 @@
 "use server";
 import { User } from "@/models/User";
 import mongoose from "mongoose";
-import { getServerSession } from "next-auth";
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import { auth } from "@/auth";
 
 // Helper function to connect to MongoDB
 async function connectToDatabase() {
@@ -19,7 +18,7 @@ export async function likeShop(shopId) {
     await connectToDatabase();
 
     try {
-        const session = await getServerSession(authOptions);
+        const session = await auth();
         if (!session) {
             throw new Error("User not authenticated");
         }
@@ -50,7 +49,7 @@ export async function RemoveLike(shopId) {
     await connectToDatabase();
 
     try {
-        const session = await getServerSession(authOptions);
+        const session = await auth();
         if (!session) {
             throw new Error("User not authenticated");
         }
