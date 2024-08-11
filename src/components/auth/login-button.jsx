@@ -1,5 +1,4 @@
-import { Copy } from "lucide-react"
-
+"use client"
 import { Button } from "@/components/ui/button"
 import {
     Dialog,
@@ -11,8 +10,6 @@ import {
     DialogTitle,
     DialogTrigger,
 } from "@/components/ui/dialog"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
 import { login } from "@/actions/authaction"
 
 export function DialogCloseButton() {
