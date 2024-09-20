@@ -2,170 +2,207 @@
 import { useRouter } from "next/navigation";
 import { useDebounce } from "use-debounce";
 import { PlaceholdersAndVanishInput } from "../ui/placeholders-input";
-import { useEffect, useState, useRef, useMemo } from "react";
+import { useEffect, useState, useMemo } from "react";
 import { PiFlowArrow } from "react-icons/pi";
-import { Separator } from "../ui/separator";
+import useLocationStore from "@/store/useLocationStore";
+import { motion } from 'framer-motion';
 
 export function PlaceholdersAndVanishInputDemo() {
-  const placeholders = [
-    "Express Yourself with Stunning Tattoos!",
-    "Find Your Perfect Piercing Style!",
-    "Unleash Your Beauty at Our Parlour!",
-    "Elevate Your Look at Our Unisex Salon!",
-    "Relax and Rejuvenate with Our Massages!",
-    "Escape to Tranquility at Our Spa Centre!",
-  ];
+  const { nearestCity } = useLocationStore();
+  console.log("City Name testing 2:", nearestCity);
 
-  const categorizedPhrases = useMemo(() => ({
-    "Tattoo": [
-      "Top-rated 3D tattoo artist",
-      "Lip piercing services at home",
-      "Best tattoo artist in the city",
-      "Eyebrow piercing at home",
-      "Super realistic tattoo artist",
-      "Best piercing studios near me",
-      "Tattoo removal and coverup services",
-      "Top-rated minimalist tattoo artist",
-      "Watercolor tattoo at your location",
-      "Geometric tattoo doorstep service",
-      "Ear piercing at home",
-      "Customized piercing services at home",
-      "Custom tattoo designs at home",
-      "Nose piercing near me",
-      "Professional tattoo artist at doorstep",
-      "3D tattoo artist near me",
-      "Lip piercing services in the city",
-      "Realistic tattoo artist at home",
-      "Best piercing parlors near me",
-      "Watercolor tattoo artists nearby",
-      "Geometric tattoo artist in my city",
-      "Custom tattoo designs near me",
-      "Professional tattoo artists nearby"
-    ],
-    "Massage": [
-      "Top-rated Swedish massage therapist",
-      "Couples massage session at home",
-      "Deep tissue massage services at home",
-      "Thai massage studio in the city",
-      "Best massage therapist in the city",
-      "Hot stone massage near me",
-      "Relaxation massage at your location",
-      "Sports massage therapist for athletes",
-      "Chair massage services at events",
-      "Reflexology session near me",
-      "Prenatal massage at home",
-      "Aromatherapy massage with essential oils",
-      "Shiatsu massage practitioner nearby",
-      "Indian head massage at your location",
-      "Professional masseuse for mobile services",
-      "Swedish massage therapy near me",
-      "Deep tissue massage therapists nearby",
-      "Hot stone massage at home",
-      "Relaxation massage services in the city",
-      "Sports massage therapists near me",
-      "Reflexology sessions at your location",
-      "Aromatherapy massage therapists nearby",
-      "Indian head massage in my city"
-    ],
-    "Beauty Parlour": [
-      "Top-rated beauty parlour near by",
-      "Best LED and LASER therapy near by",
-      "Microdermabrasion at home",
-      "Oxygen facial at home",
-      "Best beauty salon in the city",
-      "Bikini waxing at home",
-      "Eyelash extensions near me",
-      "Top-rated Bridal makeup at home",
-      "Professional makeup at home",
-      "Skin tightening treatment near me",
-      "Hair coloring services at home",
-      "Brazilian waxing near me",
-      "Haircut and styling near me",
-      "Nail art at home",
-      "Eyebrow threading at home",
-      "Full body waxing and polishing at home",
-      "Manicure and pedicure at home",
-      "Beauty parlors offering LED therapy nearby",
-      "Microdermabrasion treatments at home",
-      "Best beauty salons nearby",
-      "Eyelash extensions in my city",
-      "Top-rated Bridal makeup artists near me",
-      "Professional makeup artists nearby",
-      "Skin tightening treatments at home",
-      "Hair coloring services nearby",
-      "Brazilian waxing services in the city",
-      "Haircut and styling services at home",
-      "Nail art services nearby",
-      "Eyebrow threading services at home",
-      "Full body waxing and polishing services nearby",
-      "Manicure and pedicure services at home"
-    ],
-    "Men’s Salon": [
-      "Best UNISEX salon in my city",
-      "Haircutting and coloring services NEAR ME",
-      "Beard trimming nearby",
-      "Best oxygen facial at home",
-      "Anti-aging facial treatments nearby",
-      "Moustache care services",
-      "Top-rated MENS salon nearby",
-      "Kids haircutting and grooming services",
-      "Men's haircutting and grooming at home",
-      "Best hair coloring service",
-      "Beard sculpting at home",
-      "Polishing services nearby",
-      "Therapeutic massages nearby",
-      "Eyebrow threading at home",
-      "Chest waxing services",
-      "Unisex salons in my area",
-      "Haircutting and coloring services in the city",
-      "Beard trimming services nearby",
-      "Oxygen facial treatments at home",
-      "Anti-aging facial treatments in the city",
-      "Moustache care services nearby",
-      "Men's salon services in my area",
-      "Kids haircutting and grooming services nearby",
-      "Men's haircutting and grooming services at home",
-      "Best hair coloring services nearby",
-      "Beard sculpting services at home",
-      "Polishing services in the city",
-      "Therapeutic massages in my area",
-      "Eyebrow threading services nearby",
-      "Chest waxing services in the city"
-    ]
-  }), []);
+  const cityName = nearestCity || "Your City"; // Fallback to "Your City" if no nearest city is found
+  console.log("City Name testing 1:", cityName);
+
+
+  const placeholders = useMemo(() => {
+    return nearestCity ? [
+      `Get the Perfect Look at the Best Beauty Salon in ${cityName}`,
+      `Experience the Top-Rated Tattoo Artists in ${cityName}`,
+      `Relax and Rejuvenate with Premium Spa Treatments in ${cityName}`,
+      `Transform Your Style at the Best Unisex Salon in ${cityName}`,
+      `Indulge in the Best Massage Services in ${cityName}`,
+      `Find Your Unique Style with Custom Tattoo Designs in ${cityName}`,
+    ] : [
+      "Get the Perfect Look at the Best Beauty Salon Near You",
+      "Experience the Top-Rated Tattoo Artists in Your City",
+      "Relax and Rejuvenate with Premium Spa Treatments",
+      "Transform Your Style at the Best Unisex Salon",
+      "Indulge in the Best Massage Services Nearby",
+      "Find Your Unique Style with Custom Tattoo Designs",
+    ];
+  }, [nearestCity, cityName]);
+
+  // Memoize categorizedPhrases to avoid recalculating on each render
+  const categorizedPhrases = useMemo(() => {
+    return nearestCity ? {
+      "Tattoo": [
+        `Best tattoo artist in ${cityName}`,
+        `Top-rated 3D tattoo artist in ${cityName}`,
+        `Tattoo removal services in ${cityName}`,
+        `Custom tattoo designs in ${cityName}`,
+        `Professional piercing services in ${cityName}`,
+        `Nose and ear piercing in ${cityName}`,
+        `Watercolor tattoo artist in ${cityName}`,
+        `Realistic tattoo artist in ${cityName}`,
+        `Minimalist tattoo designs in ${cityName}`,
+        `Tattoo studios with highest reviews in ${cityName}`,
+        `Best piercing studios in ${cityName}`,
+        `Professional tattoo artists in ${cityName}`,
+        `Customized piercing services in ${cityName}`,
+        `Geometric tattoo service in ${cityName}`,
+        `Super realistic tattoo artist in ${cityName}`
+      ],
+      "Massage": [
+        `Best massage therapist in ${cityName}`,
+        `Deep tissue massage in ${cityName}`,
+        `Thai massage for stress relief in ${cityName}`,
+        `Hot stone massage in ${cityName}`,
+        `Aromatherapy massage services in ${cityName}`,
+        `Couples massage in ${cityName}`,
+        `Sports massage therapist for athletes in ${cityName}`,
+        `Prenatal massage in ${cityName}`,
+        `Reflexology massage in ${cityName}`,
+        `Swedish massage for relaxation in ${cityName}`,
+        `Relaxation massage in ${cityName}`,
+        `Indian head massage in ${cityName}`,
+        `Shiatsu massage practitioner in ${cityName}`,
+        `Professional masseuse services in ${cityName}`,
+        `Chair massage services at events in ${cityName}`
+      ],
+      "Beauty Parlour": [
+        `Top beauty parlour in ${cityName}`,
+        `LED and LASER therapy services in ${cityName}`,
+        `Best bridal makeup artist in ${cityName}`,
+        `Microdermabrasion treatment in ${cityName}`,
+        `Eyelash extensions in ${cityName}`,
+        `Full body waxing and polishing services in ${cityName}`,
+        `Hair coloring services in ${cityName}`,
+        `Oxygen facial treatment in ${cityName}`,
+        `Professional nail art services in ${cityName}`,
+        `Brazilian waxing services in ${cityName}`,
+        `Best beauty salons in ${cityName}`,
+        `Haircut and styling in ${cityName}`,
+        `Nail art in ${cityName}`,
+        `Eyelash extensions in ${cityName}`,
+        `Bridal makeup artists in ${cityName}`
+      ],
+      "Men’s Salon": [
+        `Top unisex salon in ${cityName}`,
+        `Men's haircut and grooming services in ${cityName}`,
+        `Best beard trimming and sculpting in ${cityName}`,
+        `Kids haircut services in ${cityName}`,
+        `Oxygen facial for men in ${cityName}`,
+        `Hair coloring services for men in ${cityName}`,
+        `Chest and back waxing services in ${cityName}`,
+        `Therapeutic massages for men in ${cityName}`,
+        `Eyebrow threading and shaping for men in ${cityName}`,
+        `Anti-aging facial treatments for men in ${cityName}`,
+        `Best haircuts for men in ${cityName}`,
+        `Moustache care services in ${cityName}`,
+        `Men's grooming packages in ${cityName}`,
+        `Beard trimming services in ${cityName}`,
+        `Polishing services in ${cityName}`
+      ]
+    } : {
+      "Tattoo": [
+        "Best tattoo artist near me",
+        "Top-rated 3D tattoo artist",
+        "Tattoo removal services nearby",
+        "Custom tattoo designs in my city",
+        "Professional piercing services at home",
+        "Nose and ear piercing near me",
+        "Watercolor tattoo artist at your location",
+        "Realistic tattoo artist near me",
+        "Minimalist tattoo designs at your doorstep",
+        "Tattoo studios with highest reviews near me",
+        "Best piercing studios near me",
+        "Professional tattoo artists nearby",
+        "Customized piercing services at home",
+        "Geometric tattoo doorstep service",
+        "Super realistic tattoo artist near me"
+      ],
+      "Massage": [
+        "Best massage therapist in my area",
+        "Deep tissue massage near me",
+        "Thai massage for stress relief",
+        "Hot stone massage at home",
+        "Aromatherapy massage services near me",
+        "Couples massage in the city",
+        "Sports massage therapist for athletes",
+        "Prenatal massage at home",
+        "Reflexology massage nearby",
+        "Swedish massage for relaxation",
+        "Relaxation massage at your location",
+        "Indian head massage in my city",
+        "Shiatsu massage practitioner nearby",
+        "Professional masseuse for mobile services",
+        "Chair massage services at events"
+      ],
+      "Beauty Parlour": [
+        "Top beauty parlour near me",
+        "LED and LASER therapy services nearby",
+        "Best bridal makeup artist in the city",
+        "Microdermabrasion treatment at home",
+        "Eyelash extensions near me",
+        "Full body waxing and polishing services at home",
+        "Hair coloring services near me",
+        "Oxygen facial treatment at home",
+        "Professional nail art services near me",
+        "Brazilian waxing services near me",
+        "Best beauty salons in the city",
+        "Haircut and styling near me",
+        "Nail art at home",
+        "Eyelash extensions in my city",
+        "Bridal makeup artists at home"
+      ],
+      "Men’s Salon": [
+        "Top unisex salon near me",
+        "Men's haircut and grooming services nearby",
+        "Best beard trimming and sculpting at home",
+        "Kids haircut services near me",
+        "Oxygen facial for men at home",
+        "Hair coloring services for men in the city",
+        "Chest and back waxing services near me",
+        "Therapeutic massages for men nearby",
+        "Eyebrow threading and shaping for men at home",
+        "Anti-aging facial treatments for men",
+        "Best haircuts for men near me",
+        "Moustache care services nearby",
+        "Men's grooming packages in my city",
+        "Beard trimming services nearby",
+        "Polishing services in the city"
+      ]
+    };
+  }, [nearestCity, cityName]);
 
   const [text, setText] = useState("");
   const [suggestions, setSuggestions] = useState([]);
 
   const router = useRouter();
-  const [query] = useDebounce(text, 500);
-  const isFirstRender = useRef(true);
+  const [debouncedQuery] = useDebounce(text, 700);
 
   useEffect(() => {
-    if (isFirstRender.current) {
-      isFirstRender.current = false;
-      return;
-    }
-
-    if (!query) {
+    if (!debouncedQuery) {
       setSuggestions([]);
       return;
     }
 
-    // Filter and limit suggestions
     const allPhrases = Object.values(categorizedPhrases).flat();
     const filteredPhrases = allPhrases
-      .filter((phrase) => phrase.toLowerCase().includes(query.toLowerCase()))
+      .filter((phrase) => phrase.toLowerCase().includes(debouncedQuery.toLowerCase()))
       .slice(0, 10);
     setSuggestions(filteredPhrases);
-  }, [query, categorizedPhrases]);
+  }, [debouncedQuery, categorizedPhrases]);
 
   const handleChange = (e) => {
     setText(e.target.value);
   };
 
   const handleSuggestionClick = (phrase) => {
-    // Determine the category of the phrase
+    const cityName = nearestCity || "Aligarh";
+    console.log("Selected phrase:", cityName);
+
     let selectedCategory = null;
     for (const [category, phrases] of Object.entries(categorizedPhrases)) {
       if (phrases.includes(phrase)) {
@@ -174,35 +211,53 @@ export function PlaceholdersAndVanishInputDemo() {
       }
     }
 
-    if (selectedCategory) {
-      router.push(`/search?search=${phrase}&category=${selectedCategory}`);
-    } else {
-      router.push(`/search?search=${phrase}`);
+    const searchUrl = selectedCategory
+      ? `/${cityName}?search=${phrase}&category=${selectedCategory}`
+      : `/${cityName}?search=${phrase}`;
+
+    router.push(searchUrl);
+
+    const drawerElement = document.querySelector('.drawer');
+    if (drawerElement) {
+      drawerElement.classList.remove('open');
     }
+
+    router.refresh();
   };
 
   const onSubmit = (e) => {
     e.preventDefault();
-    if (!query) {
+    if (!debouncedQuery) {
       router.push('/');
     } else {
-      router.push(`/search?search=${query}`);
+      const cityName = nearestCity || "Aligarh";
+      router.push(`/${cityName}?search=${debouncedQuery}`);
     }
   };
 
   const SuggestionList = ({ suggestions }) => (
-    <div className="mt-2 p-2 flex flex-col gap-1 border rounded shadow-lg">
+    <motion.div
+      className="mt-2 p-2 flex flex-col gap-1 border rounded shadow-lg bg-white overflow-y-auto"
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.3, ease: "easeInOut" }}
+    >
       {suggestions.map((phrase, index) => (
-        <div
+        <motion.div
           key={index}
           className="px-2 py-1 cursor-pointer bg-white rounded-md flex flex-row items-center justify-between"
+          whileHover={{ scale: 1.05, boxShadow: "0px 4px 15px rgba(0, 0, 0, 0.2)" }}
+          whileTap={{ scale: 0.95 }}
           onClick={() => handleSuggestionClick(phrase)}
+          initial={{ opacity: 0, x: -20 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.2, delay: index * 0.1 }}
         >
           <span className="text-sm">{phrase}</span>
           <PiFlowArrow className="mr-3 mt-1 text-2xl text-blue-500" />
-        </div>
+        </motion.div>
       ))}
-    </div>
+    </motion.div>
   );
 
   return (

@@ -8,6 +8,8 @@ import { Button } from "@/components/ui/button";
 import { CiLocationOn } from "react-icons/ci";
 import { IoIosStar } from "react-icons/io";
 import { HiArrowTrendingUp } from "react-icons/hi2";
+import { BsBookmarkStar } from "react-icons/bs";
+import { IoNavigate } from "react-icons/io5";
 import {
     GiCutDiamond,
     GiHairStrands,
@@ -281,22 +283,40 @@ export default function ShopPage({ params }) {
                             className="h-80 w-full cursor-pointer rounded-lg object-cover"
                         />
                     )}
-                    <div className="mt-4 flex h-32 flex-row gap-2 overflow-x-auto py-1">
-                        {allImages.map((imageUrl, index) => (
+                    <div className="flex  flex-row gap-2 overflow-x-auto py-1">
+                        {allImages.length > 0 ? (
+                            allImages.map((imageUrl, index) => (
+                                <Image
+                                    key={index}
+                                    src={imageUrl}
+                                    alt={`Product Thumbnail ${index + 1}`}
+                                    width={500}
+                                    height={500}
+                                    className="aspect-square w-full cursor-pointer rounded-lg object-cover"
+                                    onClick={() => {
+                                        setMainImage(imageUrl);
+                                        setCurrentIndex(index);
+                                    }}
+                                />
+                            ))
+                        ) : (
+                            // If no images are present, show a default image based on category
                             <Image
-                                key={index}
-                                src={imageUrl}
-                                alt={`Product Thumbnail ${index + 1}`}
+                                src={
+                                    shop.Category === "Beauty Parlour" ? "/noimg/1.jpg" :
+                                        shop.Category === "Men’s Salon" ? "/noimg/8.jpg" :
+                                            shop.Category === "Massage" ? "/noimg/3.jpg" :
+                                                shop.Category === "Spa" ? "/noimg/10.jpg" :
+                                                    shop.Category === "Tattoo" ? "/noimg/5.jpg" : "/default.jpg"
+                                }
+                                alt="Default Thumbnail"
                                 width={200}
-                                height={200}
+                                height={400}
                                 className="aspect-square w-full cursor-pointer rounded-lg object-cover"
-                                onClick={() => {
-                                    setMainImage(imageUrl);
-                                    setCurrentIndex(index);
-                                }}
                             />
-                        ))}
+                        )}
                     </div>
+
                 </div>
                 <div className="-mt-2">
                     <span className="text-xl font-bold text-black/80">{shop.Name}</span>
@@ -314,10 +334,23 @@ export default function ShopPage({ params }) {
                         )}
                         <DialogDemo uid={id} />
                     </div>
-                    <div className="flex flex-row items-center justify-start">
-                        <CiLocationOn className="mt-1 text-sm" />
-                        <span className="mt-1 text-sm font-semibold text-black/50">
-                            {shop.Area}, {shop.City}
+                    <div className="flex flex-row items-center mt-1 justify-start">
+                        <CiLocationOn className="mr-1 text-base font-bold" />
+                        <span className="truncate text-sm font-semibold text-slate-800/90">
+                            {shop.Address ? (
+                                (() => {
+                                    const addressParts = shop.Address.split(",").map(part => part.trim());
+                                    if (addressParts.length >= 4) {
+                                        return addressParts.slice(-4, -2).join(", ");
+                                    } else if (addressParts.length === 3) {
+                                        return addressParts.slice(-3, -1).join(", ");
+                                    } else {
+                                        return addressParts.join(", ");
+                                    }
+                                })()
+                            ) : (
+                                `${shop.Area}, ${shop.City}`
+                            )}
                         </span>
                     </div>
                     <div type="button" className="m-1 ms-0 relative inline-flex items-center gap-x-2 text-sm font-medium rounded-lg  bg-white text-gray-800 shadow-sm hover:bg-gray-50 focus:outline-none focus:bg-gray-50 disabled:opacity-50 dark:bg-neutral-900 dark:border-neutral-700 dark:text-white dark:hover:bg-neutral-800 dark:focus:bg-neutral-800">
@@ -400,13 +433,13 @@ export default function ShopPage({ params }) {
                     <span className="mt-1 text-xs font-semibold">Whatsapp</span>
                 </div>
 
-                <div
+                <Link href={shop.Map} target="_blank"
                     className="flex cursor-pointer flex-col items-center justify-center rounded-xl p-3 ring-1"
-                    onClick={handleWhatsAppClick}
+
                 >
-                    <FaWhatsapp className="text-3xl text-green-600 hover:text-green-800" />
-                    <span className="mt-1 text-xs font-semibold">Whatsapp</span>
-                </div>
+                    <IoNavigate className="text-3xl text-blue-500 hover:text-green-800" />
+                    <span className="mt-1 text-xs font-semibold">Navigate</span>
+                </Link>
                 <div
                     className="flex w-[70px] cursor-pointer flex-col  items-center justify-center rounded-xl p-3 ring-1"
                     onClick={handleShareClick}
@@ -415,14 +448,23 @@ export default function ShopPage({ params }) {
                     <span className="mt-1 text-xs font-semibold">Share</span>
                 </div>
             </div>
-            <Link
-                href={shop.Map}
-                target="_blank"
-                className="mt-3 flex h-11 w-full flex-row items-center justify-center gap-2 rounded-lg bg-blue-600 "
+            <div
+                className="relative mt-3 flex h-12 w-full items-center justify-center gap-2 rounded-lg bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 transition-all duration-300 ease-in-out shadow-xl hover:shadow-2xl transform hover:scale-110"
             >
-                <span className="text-base font-normal text-white ">Visit Now</span>
-                <FaDirections className=" ml-1 text-xl" />
-            </Link>
+                <span className="relative z-10 text-base font-semibold text-white tracking-wide transition-transform duration-500 ease-in-out hover:scale-110 hover:tracking-wider">
+                    Book a Service
+                </span>
+                <BsBookmarkStar className="ml-1 text-2xl text-yellow-400 relative z-10 transition-transform duration-500 ease-in-out hover:rotate-45 hover:scale-110" />
+
+                {/* Glowing animation */}
+                <div className="absolute inset-0 rounded-lg bg-gradient-to-r from-blue-400 to-purple-500 opacity-75 blur-lg animate-glow"></div>
+
+                {/* Pulsating effect behind the button */}
+                <div className="absolute inset-0 rounded-lg bg-gradient-to-r from-blue-500 to-purple-600 opacity-50 animate-pulse"></div>
+            </div>
+
+
+
 
             {/* Add the Tab Section here */}
             <Tabs defaultValue="overview" className="mt-6">

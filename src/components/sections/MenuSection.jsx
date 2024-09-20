@@ -27,20 +27,21 @@ import { LiaHandsHelpingSolid } from "react-icons/lia";
 import { LuSparkles } from "react-icons/lu";
 import { FaRegCalendarAlt } from "react-icons/fa";
 import { auth } from "@/auth";
+import Link from "next/link";
 
 const menuItems = [
-  { name: "Home", icon: <AiFillHome /> },
-  { name: "Explore", icon: <MdOutlineTravelExplore /> },
+  { name: "Home", icon: <AiFillHome />, src: "" },
+  { name: "Explore", icon: <MdOutlineTravelExplore />, src: "explore" },
   { name: "Offer Zone", icon: <MdOutlineLocalOffer /> },
-  { name: "My Wishlist", icon: <GoHeartFill /> },
+  { name: "My Wishlist", icon: <GoHeartFill />, src: "liked" },
   { name: "Book an Appointment", icon: <FaRegCalendarAlt /> },
   { name: "Subscription", icon: <MdOutlineWorkspacePremium /> },
   { name: "Event Sparklers", icon: <LuSparkles /> },
   { name: "Customer Support", icon: <LiaHandsHelpingSolid /> },
   { name: "Gift Vouchers", icon: <GoGift /> },
   { name: "Franchise", icon: <MdOutlineStorefront /> },
-  { name: "Career and Growth", icon: <GoGraph /> },
-  { name: "Terms and Conditions", icon: <IoDocumentTextOutline /> },
+  { name: "Career and Growth", icon: <GoGraph />, src: "groth" },
+  { name: "Terms and Conditions", icon: <IoDocumentTextOutline />, src: "termscg" },
   { name: "Contact Us", icon: <FcBusinessContact /> },
 ];
 
@@ -131,19 +132,19 @@ export default async function MenuSection() {
 
         <div className="flex w-full flex-col gap-2 px-4 ">
           {menuItems.map((item, index) => (
-            <div
+            <Link href={`/${item.src}`}
               key={index}
               className="inline-flex items-center gap-x-2 rounded-lg border border-transparent bg-black/5 px-4 py-2 text-sm font-medium text-black transition duration-100 hover:scale-105 hover:bg-white/20 focus:bg-white/20 focus:outline-none"
             >
               {item.icon}
               <span className="text-gray-900">{item.name}</span>
-            </div>
+            </Link>
           ))}
         </div>
 
         <div className="mt-2 flex w-[90%] flex-col gap-3">
           <div className="inline-flex items-center gap-x-2 rounded-lg border border-transparent bg-black/5 px-4 py-3 text-sm font-medium text-black transition duration-100 hover:scale-105  focus:outline-none ">
-            <span>About Cherry Glitz</span>
+            <Link href="/about">About Cherry Glitz</Link>
             <Image
               src="/menuicon/information.png"
               width={15}

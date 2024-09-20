@@ -1,11 +1,11 @@
 import React from "react";
 import Login from "../buttons/Login";
-import Logout from "../buttons/Logout";
 import { LuDownloadCloud } from "react-icons/lu";
 import CartSection from "./CartSection";
 import MenuSection from "./MenuSection";
 import Link from "next/link";
 import { auth } from "@/auth";
+import Image from "next/image";
 
 export default async function Header() {
   const session = await auth();
@@ -37,9 +37,13 @@ export default async function Header() {
         </div>
         <CartSection />
         {session ? (
-          <>
-            <Logout url={session?.user?.image} />
-          </>
+          <Link href="/account">
+            <Image src={session?.user?.image} className=" rounded-full  ring-2 ring-gray-700"
+
+              alt="Profile Image Cherry Glitz user"
+              width={30}
+              height={30} />
+          </Link>
         ) : (
           <>
             <Login />

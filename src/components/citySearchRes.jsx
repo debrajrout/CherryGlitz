@@ -7,7 +7,7 @@ import {
     DrawerTrigger,
 } from "@/components/ui/drawer";
 import { RxCross1 } from "react-icons/rx";
-import { LocationSearchComponent } from "./sections/citySearchInput";
+import { LocationSearchComponent2 } from "./sections/citySearchInputSearch";
 
 
 export default function CitySearchBarRes() {
@@ -39,7 +39,7 @@ export default function CitySearchBarRes() {
                             </div>
                         </DrawerClose>
                     </div>
-                    <LocationSearchComponent onLocationSelect={handleLocationSelect} />
+                    <LocationSearchComponent2 onLocationSelect={handleLocationSelect} />
                 </DrawerContent>
             </Drawer>
         </div>

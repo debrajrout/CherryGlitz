@@ -74,9 +74,9 @@ export async function fetchLiked(ids) {
     }
 }
 
-// Fetch cities and their respective areas from City collection
-export async function fetchCitiesAndAreas() {
-    const cacheKey = "cities_and_areas";
+// Fetch cities and their respective latitude and longitude from City collection
+export async function fetchCities() {
+    const cacheKey = "cities_with_lat_lon";
     const cachedCities = cache.get(cacheKey);
     if (cachedCities) {
         return cachedCities;
@@ -85,73 +85,118 @@ export async function fetchCitiesAndAreas() {
     await connectToDatabase();
 
     try {
-        const cities = await City.find().lean().exec();
+        const cities = await City.find({}, { name: 1, latitude: 1, longitude: 1 }).lean().exec();
         cache.set(cacheKey, cities);
         return cities;
     } catch (error) {
-        console.error("Error fetching cities and areas:", error);
-        throw new Error("Failed to fetch cities and areas");
+        console.error("Error fetching cities:", error);
+        throw new Error("Failed to fetch cities");
     }
 }
 
 function calculateDistance(lat1, lon1, lat2, lon2) {
     const R = 6371; // Radius of the Earth in kilometers
     const dLat = (lat2 - lat1) * (Math.PI / 180);
-    const dLon = (lon2 - lon1) * (Math.PI / 180);
-    const a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+    const dLon = (lon1 - lon2) * (Math.PI / 180); // Corrected calculation
+    const a = Math.sin(dLat / 2) ** 2 +
         Math.cos(lat1 * (Math.PI / 180)) * Math.cos(lat2 * (Math.PI / 180)) *
-        Math.sin(dLon / 2) * Math.sin(dLon / 2);
+        Math.sin(dLon / 2) ** 2;
     const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-    const distance = R * c; // Distance in kilometers
-    return distance;
+    return R * c; // Distance in kilometers
 }
 
 export async function filterShops(category, city, area, starRating, responseTime, userLat, userLon, page = 1, limit = 10) {
+    console.log("Filter Params:", { category, city, area, starRating, responseTime, userLat, userLon, page, limit });
+
     const cacheKey = `shops_${category}_${city}_${area}_${starRating}_${responseTime}_${userLat}_${userLon}_${page}_${limit}`;
     const cachedShops = cache.get(cacheKey);
     if (cachedShops) {
+        console.log("Returning cached data.");
         return cachedShops;
     }
 
     await connectToDatabase();
 
     try {
-        // Base query
-        const query = {
-            ...(category && { Category: new RegExp(category, 'i') }),
+        // Step 1: Filter by city
+        let query = {
             ...(city && { City: new RegExp(city, 'i') }),
-            ...(area && { Area: new RegExp(area, 'i') }),
-            ...(starRating && !isNaN(starRating) && { Rating: { $gte: parseInt(starRating) } })
         };
 
-        // Fetch shops matching the base query
-        const shops = await Shop.find(query)
+        // Step 2: Further filter by category if present
+        if (category) {
+            query = {
+                ...query,
+                $or: [
+                    { Category: new RegExp(category, 'i') },
+                ]
+            };
+        }
+
+        // Step 3: Apply additional filters like star rating and area
+        if (area) {
+            query = {
+                ...query,
+                Area: new RegExp(area, 'i')
+            };
+        }
+
+        // Filter by star rating (only include shops with a rating >= starRating)
+        if (starRating && !isNaN(starRating)) {
+            query = {
+                ...query,
+                Rating: { $gte: parseInt(starRating) } // Only include shops with Rating >= starRating
+            };
+        }
+
+        console.log("Generated Query:", query);
+
+        // Fetch filtered shops from the database
+        let shops = await Shop.find(query)
             .skip((page - 1) * limit)
             .limit(limit)
             .lean()
             .exec();
 
-        // Calculate distances and filter results
-        const filteredShops = shops
-            .map(shop => {
-                const distance = calculateDistance(userLat, userLon, shop.Latitude, shop.Longitude);
-                return { ...shop, distance };
-            })
-            .sort((a, b) => a.distance - b.distance); // Sort by distance
-
-        // Apply response time sorting
-        if (responseTime) {
-            filteredShops.sort((a, b) => b.responseTime - a.responseTime); // Sort by responseTime descending
+        if (!shops.length) {
+            console.log("No shops found for the given filters.");
+            return [];
         }
 
-        cache.set(cacheKey, filteredShops);
-        return filteredShops;
+        console.log("Fetched Shops:", shops);
+
+        // Step 4: Calculate distance for filtered shops if user location is provided
+        if (userLat != null && userLon != null) {
+            shops = shops.map(shop => {
+                if (shop.Latitude && shop.Longitude) {
+                    const distance = calculateDistance(userLat, userLon, shop.Latitude, shop.Longitude);
+                    return { ...shop, distance };
+                }
+                return shop;
+            });
+
+            // Step 5: Sort by distance
+            shops.sort((a, b) => a.distance - b.distance);
+            console.log("Shops sorted by distance.");
+        }
+
+        // Step 6: Sort by response time if filter is applied
+        if (responseTime) {
+            shops.sort((a, b) => a.responseTime - b.responseTime); // Sort by response time in ascending order
+            console.log("Shops sorted by response time.");
+        }
+
+        cache.set(cacheKey, shops);
+        return shops;
 
     } catch (error) {
         console.error("Error filtering shops:", error);
         throw new Error("Failed to filter shops");
     }
 }
+
+
+
 
 // Function to fetch shop details by ID 
 export async function fetchShopById(shopId) {

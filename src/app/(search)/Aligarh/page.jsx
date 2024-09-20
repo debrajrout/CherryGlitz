@@ -1,64 +1,34 @@
 "use client";
-import React, { useState, useEffect, useMemo, useCallback } from "react";
-import { Button } from "@/components/ui/button";
-import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
+import React, { useState, useEffect, useMemo, useCallback, useRef } from "react";
 import {
   filterShops,
-  fetchCitiesAndAreas,
+  fetchCities,
   fetchCategories,
 } from "@/actions/fetchAll";
 import ShopListing from "@/components/ShopListing";
 import { cn } from "@/lib/utils";
-import {
-  Command,
-  CommandEmpty,
-  CommandGroup,
-  CommandInput,
-  CommandItem,
-  CommandList,
-} from "@/components/ui/command";
-import { Separator } from "@/components/ui/separator";
-import {
-  Drawer,
-  DrawerClose,
-  DrawerContent,
-  DrawerDescription,
-  DrawerFooter,
-  DrawerHeader,
-  DrawerTitle,
-  DrawerTrigger,
-} from "@/components/ui/drawer";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
-import { matchSorter } from "match-sorter";
 import Footer from "@/components/footer/Footer";
-import { Check, ChevronsUpDown } from "lucide-react";
-import { HairCut } from "@/components/special-components/Scroll";
-import { Spa } from "@/components/special-components/Scroll";
-import { Tattoo } from "@/components/special-components/Scroll";
-import { Beauty } from "@/components/special-components/Scroll";
+import { HairCut, Spa, Tattoo, Beauty } from "@/components/special-components/Scroll";
 import SelectSection from "@/components/sections/SelectSection";
-import { FaCrown, FaCut, FaSpa, FaStar, FaTabletAlt, FaWarehouse } from "react-icons/fa";
-import { LuClock } from "react-icons/lu";
-import {
-  TbCheck,
-  TbClockCheck,
-  TbSortAscendingShapes,
-  TbStar,
-  TbX,
-} from "react-icons/tb";
-import { grabShop } from "@/actions/Search";
-import { GiHummingbird } from "react-icons/gi";
-import { Slider } from "@/components/ui/slider";
 import debounce from "lodash.debounce";
 import SearchbarResult from "@/components/SearchbarResult";
+import useLocationStore from "@/store/useLocationStore";
+import { Separator } from "@/components/ui/separator";
+import { TbCheck, TbClockCheck, TbSortAscendingShapes, TbStar } from "react-icons/tb";
+import { Button } from "@/components/ui/button";
+import { LuClock } from "react-icons/lu";
+import { Check, ChevronsUpDown } from "lucide-react";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from "@/components/ui/command";
+import { FaCrown, FaCut, FaSpa, FaStar, FaTabletAlt, FaWarehouse } from "react-icons/fa";
+import { Drawer, DrawerClose, DrawerContent, DrawerDescription, DrawerFooter, DrawerHeader, DrawerTitle, DrawerTrigger } from "@/components/ui/drawer";
+import { Slider } from "@radix-ui/react-slider";
+import { GiHummingbird } from "react-icons/gi";
+import { matchSorter } from 'match-sorter';
+
 export default function Page() {
   const [categoryOpen, setCategoryOpen] = useState(false);
   const [category, setCategory] = useState("");
-  const [city, setCity] = useState("");
   const [subCity, setSubCity] = useState("");
   const [searchText, setSearchText] = useState("");
   const [tag, setTag] = useState("");
@@ -73,10 +43,19 @@ export default function Page() {
   const [todayDeal, setTodayDeal] = useState(false);
   const [verified, setVerified] = useState(false);
   const [responseTime, setResponseTime] = useState(false);
-  const [latitude, setLatitude] = useState(null);
-  const [longitude, setLongitude] = useState(null);
   const [priceRange, setPriceRange] = useState([500]);
+  const [loading, setLoading] = useState(false);
+  const observerRef = useRef(null);
   const [starRatingOpen, setStarRatingOpen] = useState(false);
+
+  const { selectedLocation, nearestCity } = useLocationStore((state) => ({
+    selectedLocation: state.selectedLocation,
+    nearestCity: state.nearestCity,
+  }));
+
+  const { latitude, longitude } = selectedLocation;
+
+  const city = nearestCity || "Aligarh"; // Use nearestCity from store, default to "Aligarh" if empty
 
   const updateQueryString = (key, value) => {
     const params = new URLSearchParams(window.location.search);
@@ -96,12 +75,11 @@ export default function Page() {
     const fetchInitialData = async () => {
       try {
         const [citiesResponse, categoriesResponse] = await Promise.all([
-          fetchCitiesAndAreas(),
+          fetchCities(),
           fetchCategories(),
         ]);
         const params = new URLSearchParams(window.location.search);
         const category = params.get("category") || "";
-        const city = params.get("city") || "";
         const subCity = params.get("subCity") || "";
         const search = params.get("search") || "";
         const starRating = parseInt(params.get("starRating") || "0");
@@ -109,12 +87,10 @@ export default function Page() {
         const openNow = params.get("openNow") === "true";
         const verified = params.get("verified") === "true";
         const todayDeal = params.get("todayDeal") === "true";
-        const latitude = parseFloat(params.get("latitude") || "0");
-        const longitude = parseFloat(params.get("longitude") || "0");
+
         setCities(citiesResponse);
         setCategories(categoriesResponse);
         setCategory(category);
-        setCity(city);
         setSubCity(subCity);
         setSearchText(search);
         setTag(search);
@@ -123,16 +99,25 @@ export default function Page() {
         setOpenNow(openNow);
         setVerified(verified);
         setTodayDeal(todayDeal);
-        setLatitude(latitude);
-        setLongitude(longitude);
-        fetchShopsData(category, city, subCity, starRating, responseTime, latitude, longitude, 1);
+
+        fetchShopsData(
+          category,
+          city,
+          subCity,
+          starRating,
+          responseTime,
+          latitude,
+          longitude,
+          1,
+          true // Reset results on initial load
+        );
       } catch (error) {
         console.error("Error fetching initial data:", error);
       }
     };
 
     fetchInitialData();
-  }, []);
+  }, [latitude, longitude, city]); // Add city as a dependency
 
   useEffect(() => {
     const handleScroll = () => {
@@ -159,8 +144,10 @@ export default function Page() {
     responseTime,
     latitude,
     longitude,
-    page
+    page,
+    reset = false // Add reset flag
   ) => {
+    setLoading(true);
     try {
       const results = await filterShops(
         category,
@@ -172,24 +159,21 @@ export default function Page() {
         longitude,
         page
       );
-      setShops(results);
-      console.log("Shops fetched:", results);
-      console.log("Star Rating:", starRating, "Response Time:", responseTime);
+
+      setShops((prevShops) => (reset ? results : [...prevShops, ...results]));
     } catch (error) {
       console.error("Error fetching shops:", error);
+    } finally {
+      setLoading(false);
     }
   };
 
-  const handleNext = () => {
-    const nextPage = page + 1;
-    setPage(nextPage);
-    fetchShopsData(category, city, subCity, starRating, responseTime, latitude, longitude, nextPage);
+  const loadMoreShops = () => {
+    setPage((prevPage) => prevPage + 1);
   };
 
-  const handlePrevious = () => {
+  useEffect(() => {
     if (page > 1) {
-      const prevPage = page - 1;
-      setPage(prevPage);
       fetchShopsData(
         category,
         city,
@@ -198,57 +182,150 @@ export default function Page() {
         responseTime,
         latitude,
         longitude,
-        prevPage
+        page
       );
     }
+  }, [page]);
+
+  const lastShopElementRef = useCallback((node) => {
+    if (loading) return;
+    if (observerRef.current) observerRef.current.disconnect();
+
+    observerRef.current = new IntersectionObserver((entries) => {
+      if (entries[0].isIntersecting) {
+        loadMoreShops();
+      }
+    });
+
+    if (node) observerRef.current.observe(node);
+  }, [loading]);
+
+  const handleCategoryChange = useCallback(
+    (value) => {
+      setCategory(value);
+      setPage(1); // Reset the page
+      setShops([]); // Clear previous shops
+      updateQueryString("category", value);
+      fetchShopsData(
+        value,
+        city,
+        subCity,
+        starRating,
+        responseTime,
+        latitude,
+        longitude,
+        1,
+        true // Reset shops when category changes
+      );
+    },
+    [city, subCity, starRating, responseTime, latitude, longitude]
+  );
+
+  const handleCityChange = (value) => {
+    setCity(value);
+    setSubCity(""); // Reset subCity when city changes
+    setPage(1); // Reset the page
+    setShops([]); // Clear previous shops
+    fetchShopsData(
+      category,
+      value,
+      "",
+      starRating,
+      responseTime,
+      latitude,
+      longitude,
+      1,
+      true // Reset shops when city changes
+    );
   };
 
-  const handleCategoryChange = useCallback((value) => {
-    setCategory(value);
-    updateQueryString("category", value);
+  const handleSubCityChange = (value) => {
+    setSubCity(value);
+    setPage(1); // Reset the page
+    setShops([]); // Clear previous shops
     fetchShopsData(
+      category,
+      city,
       value,
+      starRating,
+      responseTime,
+      latitude,
+      longitude,
+      1,
+      true // Reset shops when subCity changes
+    );
+  };
+
+  const handleStarRatingChange = (value) => {
+    setStarRating(value);
+    setPage(1); // Reset the page
+    setShops([]); // Clear previous shops
+    updateQueryString("starRating", value);
+    fetchShopsData(
+      category,
+      city,
+      subCity,
+      value,
+      responseTime,
+      latitude,
+      longitude,
+      1,
+      true // Reset shops when star rating changes
+    );
+  };
+
+  const handleOpenNowToggle = () => {
+    setOpenNow(!openNow);
+    setPage(1); // Reset the page
+    setShops([]); // Clear previous shops
+    updateQueryString("openNow", !openNow ? "true" : "");
+    fetchShopsData(
+      category,
+      city,
+      subCity,
+      starRating,
+      !responseTime,
+      latitude,
+      longitude,
+      1,
+      true // Reset shops when open now toggle changes
+    );
+  };
+
+  const handleQuickResponseToggle = () => {
+    setResponseTime(!responseTime);
+    setPage(1); // Reset the page
+    setShops([]); // Clear previous shops
+    updateQueryString("responseTime", !responseTime ? "true" : "");
+    fetchShopsData(
+      category,
+      city,
+      subCity,
+      starRating,
+      !responseTime,
+      latitude,
+      longitude,
+      1,
+      true // Reset shops when quick response toggle changes
+    );
+  };
+
+  const handleTodayDealToggle = () => {
+    setTodayDeal(!todayDeal);
+    setPage(1); // Reset the page
+    setShops([]); // Clear previous shops
+    updateQueryString("todayDeal", !todayDeal ? "true" : "");
+    fetchShopsData(
+      category,
       city,
       subCity,
       starRating,
       responseTime,
       latitude,
       longitude,
-      1
+      1,
+      true // Reset shops when today deal toggle changes
     );
-  }, [city, subCity, starRating, responseTime, latitude, longitude]);
-
-  const handleCityChange = (value) => {
-    setCity(value);
-    setSubCity(""); // Reset subCity when city changes
-    fetchShopsData(category, value, "", starRating, responseTime, latitude, longitude, 1);
-  };
-
-  const handleSubCityChange = (value) => {
-    setSubCity(value);
-    fetchShopsData(category, city, value, starRating, responseTime, latitude, longitude, 1);
-  };
-
-  const handleStarRatingChange = (value) => {
-    setStarRating(value);
-    updateQueryString("starRating", value);
-    fetchShopsData(category, city, subCity, value, responseTime, latitude, longitude, 1);
-  };
-
-  const handleOpenNowToggle = () => {
-    setOpenNow(!openNow);
-    updateQueryString("openNow", !openNow ? "true" : "");
-  };
-
-  const handleQuickResponseToggle = () => {
-    setResponseTime(!responseTime);
-    updateQueryString("responseTime", !responseTime ? "true" : "");
-    fetchShopsData(category, city, subCity, starRating, !responseTime, latitude, longitude, 1);
-  };
-
-  const handleTodayDealToggle = () => {
-    setTodayDeal(!todayDeal);
-    updateQueryString("todayDeal", !todayDeal ? "true" : "");
   };
 
   const handleSearchTextChange = debounce((value) => {
@@ -258,12 +335,24 @@ export default function Page() {
 
   const handleVerifiedToggle = () => {
     setVerified(!verified);
+    setPage(1); // Reset the page
+    setShops([]); // Clear previous shops
     updateQueryString("verified", !verified ? "true" : "");
+    fetchShopsData(
+      category,
+      city,
+      subCity,
+      starRating,
+      responseTime,
+      latitude,
+      longitude,
+      1,
+      true // Reset shops when verified toggle changes
+    );
   };
 
   const fetchSuggestions = async (query) => {
     if (query.trim() === "") {
-      // setSuggestions([]);
       return;
     }
 
@@ -282,13 +371,11 @@ export default function Page() {
       })
       : [];
   }, [city, subCity, cities]);
-
-  const handleLocationUpdate = (latitude, longitude) => {
-    setLatitude(latitude);
-    setLongitude(longitude);
-    updateQueryString("latitude", latitude);
-    updateQueryString("longitude", longitude);
-  };
+  const tagWords = tag.split(' ');
+  if (nearestCity) {
+    tagWords[tagWords.length - 1] = nearestCity;
+  }
+  const modifiedTag = tagWords.join(' ');
 
   return (
     <div className="mt-[50px] flex w-full flex-col items-center">
@@ -299,19 +386,21 @@ export default function Page() {
         )}
       >
         <SearchbarResult />
+        <SelectSection />
+        {category === "Beauty Parlour" && <Beauty />}
+        {category === "Spa" && <Spa />}
+        {category === "Tattoo" && <Tattoo />}
+        {category === "Men’s Salon" && <HairCut />}
+        {category === "Massage" && <Spa />}
       </div>
-      <SelectSection onLocationUpdate={handleLocationUpdate} />
+
       <div
         className={cn(
           "z-10 w-full bg-white transition-transform duration-300",
           shopFixed ? "fixed " : "",
         )}
       >
-        {category === "Beauty Parlour" && <Beauty />}
-        {category === "Spa" && <Spa />}
-        {category === "Tattoo" && <Tattoo />}
-        {category === "Men’s Salon" && <HairCut />}
-        {category === "Massage" && <Spa />}
+
 
         <div className="flex w-full  items-center gap-2 overflow-x-auto bg-slate-100 p-1">
           <Drawer>
@@ -656,27 +745,26 @@ export default function Page() {
         </div>
       </div>
 
-      <span className="-mb-3 w-full bg-gradient-to-r from-blue-700 to-lime-600 bg-clip-text px-2 text-lg font-medium text-transparent">
-        {tag.toLowerCase()}
+      <span className="-mb-3 w-full truncate bg-gradient-to-r from-blue-700 to-lime-600 bg-clip-text px-2 text-lg font-medium text-transparent">
+        {modifiedTag.toLowerCase()}
       </span>
       <Separator className=" mt-3.5 bg-black/30" />
 
-      <ShopListing shopResults={shops} />
+      <ShopListing
+        shopResults={shops}
+        cityName={city}
+        lastShopElementRef={lastShopElementRef}
+      />
 
-      <div className="mb-1 flex w-full flex-row items-center justify-end gap-6">
-        <Button
-          variant="outline"
-          onClick={handlePrevious}
-          disabled={page === 1}
-        >
-          <IoIosArrowBack className="mr-2" />
-          Previous
-        </Button>
-        <Button variant="ghost" onClick={handleNext}>
-          Next
-          <IoIosArrowForward className="ml-2" />
-        </Button>
-      </div>
+      {loading && (
+        <div className="flex justify-center items-center py-12">
+          <div className="relative inline-flex">
+            <div className="w-8 h-8 bg-blue-500 rounded-full"></div>
+            <div className="w-8 h-8 bg-blue-500 rounded-full absolute top-0 left-0 animate-ping"></div>
+            <div className="w-8 h-8 bg-blue-500 rounded-full absolute top-0 left-0 animate-pulse"></div>
+          </div>
+        </div>
+      )}
       <Footer />
     </div>
   );

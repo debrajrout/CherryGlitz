@@ -97,7 +97,7 @@ const images3 = [
   {
     src: "/category/piercing.png",
     name: "Piercing",
-    url: "/category/tatoos",
+    url: "/category/pearcing",
   },
   {
     src: "/category/massage.png",

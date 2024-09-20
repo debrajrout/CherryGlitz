@@ -1,276 +1,167 @@
+"use client";
 import Image from "next/image";
 import React from "react";
-import { FcSearch } from "react-icons/fc";
-import { LuDot } from "react-icons/lu";
-import { AiOutlineHome } from "react-icons/ai";
-import Link from "next/link";
+import { FaFemale, FaMale } from "react-icons/fa";
 
-import { GrFormNext } from "react-icons/gr";
-import {
-  LuSendHorizonal,
-  LuSettings,
-  LuLayoutDashboard,
-  LuAlignCenter,
-  LuAnchor,
-  LuAperture,
-  LuArrowRightCircle,
-  LuAward,
-  LuBell,
-  LuBookmark,
-  LuBox,
-  LuBriefcase,
-  LuCalendar,
-  LuCamera,
-  LuCast,
-  LuCheckCircle,
-  LuClipboard,
-  LuClock,
-  LuCloudDrizzle,
-  LuCode,
-} from "react-icons/lu";
-
-export const metadata = {
-  title: "Spa",
-}
-
-const treatments = [
+const spaData = [
   {
     name: "Hydrafacial",
-    icon: <LuSendHorizonal style={{ color: "#FF5733", fontSize: "1.5em" }} />,
-    description: "Deep cleansing and hydration for radiant skin.",
+    description: "A rejuvenating facial treatment that deeply cleanses and hydrates the skin.",
+    image: "/subcatf/spa/hydrafacial.jpg",
+    alt: "Hydrafacial treatment for skin hydration and rejuvenation.",
   },
   {
     name: "Himalayan Salt Stone Massage",
-    icon: <LuSettings style={{ color: "#33FF57", fontSize: "1.5em" }} />,
-    description: "Relaxing massage using warm salt stones to soothe muscles.",
+    description: "Massage using heated Himalayan salt stones to relax muscles and improve circulation.",
+    image: "/subcatf/spa/himalayansaltstone.jpg",
+    alt: "Himalayan Salt Stone Massage for muscle relaxation.",
   },
   {
     name: "Float Therapy (Sensory Deprivation Tank)",
-    icon: <LuLayoutDashboard style={{ color: "#3357FF", fontSize: "1.5em" }} />,
-    description: "Stress relief and meditation in a sensory-free environment.",
+    description: "Experience weightlessness and relaxation in a sensory deprivation tank.",
+    image: "/subcatf/spa/flottherapy.jpg",
+    alt: "Float Therapy with a sensory deprivation tank for relaxation.",
   },
   {
     name: "Infrared Sauna Sessions",
-    icon: <LuAlignCenter style={{ color: "#FF33A1", fontSize: "1.5em" }} />,
-    description: "Detoxify and rejuvenate with infrared heat therapy.",
+    description: "Sweat out toxins and improve circulation with infrared heat.",
+    image: "/subcatf/spa/infraredsaunas.jpg",
+    alt: "Infrared Sauna Sessions for detox and circulation.",
   },
   {
     name: "Body Wraps",
-    icon: <LuAnchor style={{ color: "#FFAA33", fontSize: "1.5em" }} />,
-    description: "Skin tightening and hydration treatment.",
+    description: "Detoxifying and nourishing wraps for the entire body.",
+    image: "/subcatf/spa/bodywraps.jpg",
+    alt: "Body wraps for detoxification and nourishment.",
   },
   {
     name: "Body Scrubs",
-    icon: <LuAperture style={{ color: "#FF33F6", fontSize: "1.5em" }} />,
-    description: "Exfoliate and smooth your skin with invigorating scrubs.",
+    description: "Exfoliating scrubs to remove dead skin and leave the body feeling smooth.",
+    image: "/subcatf/spa/bodyscrub.jpg",
+    alt: "Body scrubs for exfoliating dead skin.",
   },
   {
     name: "Cellulite Treatments",
-    icon: (
-      <LuArrowRightCircle style={{ color: "#33FFC5", fontSize: "1.5em" }} />
-    ),
-    description: "Target and reduce the appearance of cellulite.",
+    description: "Specialized treatments to reduce the appearance of cellulite.",
+    image: "/subcatf/spa/cellulitetreatment.jpg",
+    alt: "Cellulite treatments to smooth skin texture.",
   },
   {
     name: "Exfoliation Treatments",
-    icon: <LuAward style={{ color: "#8D33FF", fontSize: "1.5em" }} />,
-    description: "Remove dead skin cells for a fresh complexion.",
+    description: "Gentle exfoliation to remove dead skin and promote cell renewal.",
+    image: "/subcatf/spa/exfoliation.jpg",
+    alt: "Exfoliation treatments for skin renewal.",
   },
   {
     name: "Body Contouring Treatments",
-    icon: <LuBell style={{ color: "#FF5733", fontSize: "1.5em" }} />,
-    description: "Non-invasive body shaping and slimming.",
+    description: "Non-invasive treatments designed to sculpt and shape the body.",
+    image: "/subcatf/spa/bodywraps.jpg",
+    alt: "Body contouring treatments for sculpting and shaping.",
   },
   {
     name: "Chemical Peels",
-    icon: <LuBookmark style={{ color: "#33FF57", fontSize: "1.5em" }} />,
-    description: "Skin resurfacing to treat wrinkles and pigmentation.",
+    description: "Facial treatments that exfoliate and improve skin texture using chemical solutions.",
+    image: "/subcatf/spa/chemicalpeel.jpg",
+    alt: "Chemical peels to improve skin texture.",
   },
   {
     name: "Microdermabrasion",
-    icon: <LuBox style={{ color: "#3357FF", fontSize: "1.5em" }} />,
-    description: "Gently exfoliate and renew skin texture.",
+    description: "A non-invasive treatment that gently exfoliates the skin to reduce imperfections.",
+    image: "/subcatf/spa/microdermabrasion.jpg",
+    alt: "Microdermabrasion treatment for exfoliating the skin.",
   },
   {
     name: "Oxygen Facials",
-    icon: <LuBriefcase style={{ color: "#FF33A1", fontSize: "1.5em" }} />,
-    description: "Infuse oxygen to refresh and plump the skin.",
+    description: "Facials that use oxygen to rejuvenate and hydrate the skin.",
+    image: "/subcatf/spa/oxygenfacials.jpg",
+    alt: "Oxygen facial treatment for rejuvenation.",
   },
   {
     name: "LED Light Therapy",
-    icon: <LuCalendar style={{ color: "#FFAA33", fontSize: "1.5em" }} />,
-    description: "Light therapy for acne, aging, and inflammation.",
+    description: "A non-invasive treatment using LED lights to target various skin concerns.",
+    image: "/subcatf/spa/ledlighttherapy.jpg",
+    alt: "LED light therapy for targeting skin concerns.",
   },
   {
     name: "Cryotherapy",
-    icon: <LuCamera style={{ color: "#FF33F6", fontSize: "1.5em" }} />,
-    description: "Cold treatment to reduce pain and inflammation.",
+    description: "A cold treatment that helps reduce inflammation and promotes recovery.",
+    image: "/subcatf/spa/cryotherapy.jpg",
+    alt: "Cryotherapy for reducing inflammation and recovery.",
   },
   {
     name: "Vichy Shower",
-    icon: <LuCast style={{ color: "#33FFC5", fontSize: "1.5em" }} />,
-    description: "Hydrotherapy treatment under a rain-like shower.",
+    description: "A hydrotherapy treatment where warm water is sprayed over the body.",
+    image: "/subcatf/spa/vichyshowers.jpg",
+    alt: "Vichy shower for hydrotherapy and relaxation.",
   },
   {
     name: "Ayurvedic Spa Treatments",
-    icon: <LuCheckCircle style={{ color: "#8D33FF", fontSize: "1.5em" }} />,
-    description: "Traditional Indian treatments for balance and wellness.",
+    description: "Traditional Indian treatments that balance the mind, body, and spirit.",
+    image: "/subcatf/spa/ayurvedicspatreatments.jpg",
+    alt: "Ayurvedic treatments for holistic wellness.",
   },
   {
     name: "Hydrotherapy",
-    icon: <LuClipboard style={{ color: "#FF5733", fontSize: "1.5em" }} />,
-    description: "Water-based treatments for healing and relaxation.",
+    description: "Water-based treatments that promote relaxation and healing.",
+    image: "/subcatf/spa/hydrotherapy.jpg",
+    alt: "Hydrotherapy for relaxation and healing.",
   },
   {
     name: "Steam Rooms",
-    icon: <LuClock style={{ color: "#33FF57", fontSize: "1.5em" }} />,
-    description: "Relax and detoxify in a steam-filled room.",
+    description: "Moist heat therapy that helps cleanse the body and relax the muscles.",
+    image: "/subcatf/spa/steamrooms.jpg",
+    alt: "Steam room therapy for muscle relaxation and detox.",
   },
   {
     name: "Ice Baths",
-    icon: <LuCloudDrizzle style={{ color: "#3357FF", fontSize: "1.5em" }} />,
-    description: "Cold immersion to reduce muscle soreness.",
+    description: "Cold immersion therapy that helps reduce inflammation and improve recovery.",
+    image: "/subcatf/spa/icebaths.jpg",
+    alt: "Ice bath for cold therapy and muscle recovery.",
   },
   {
     name: "Herbal Wraps",
-    icon: <LuCode style={{ color: "#FF33A1", fontSize: "1.5em" }} />,
-    description: "Detox and nourish the skin with herbal-infused wraps.",
+    description: "Body wraps infused with herbal ingredients to nourish and detoxify the skin.",
+    image: "/subcatf/spa/herbalwraps.jpg",
+    alt: "Herbal wraps for nourishing and detoxifying the skin.",
   },
 ];
 
-const TreatmentItem = ({ name, icon, description }) => {
+export default function SpaPage() {
   return (
-    <div className="flex flex-col items-start rounded-lg bg-white/80 p-4 text-black shadow-md shadow-black/30 ring-1 ring-sky-400/40">
-      <div className="flex items-center gap-2">
-        <span className="text-lg">{icon}</span>
-        <span className="font-semibold">{name}</span>
-      </div>
-      <p className="mt-1 text-sm">{description}</p>
-    </div>
-  );
-};
-
-const TreatmentsGrid = () => {
-  return (
-    <div className="mt-4 grid w-full grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
-      {treatments.map((treatment, index) => (
-        <TreatmentItem
-          key={index}
-          name={treatment.name}
-          icon={treatment.icon}
-          description={treatment.description}
-        />
-      ))}
-    </div>
-  );
-};
-
-const TreatmentItem2 = ({ imageUrl, name, description }) => {
-  return (
-    <div className="mb-2 flex h-[120px] flex-row items-center justify-between gap-3 overflow-hidden rounded-sm bg-blue-400/30 p-2">
-      <div className="-ml-10 w-2/6">
-        <Image
-          src={imageUrl}
-          width={1000}
-          height={667}
-          alt=""
-          className="rounded-full shadow-md shadow-black/40"
-        />
-      </div>
-      <div className="flex w-4/6 flex-col">
-        <div className="flex flex-row justify-between">
-          <span className="text-xl font-medium text-green-500">{name}</span>
-          <span className="text-xs font-medium">. By- CherryGlitz</span>
-        </div>
-        <span className="w-4/5 text-xs font-normal">{description}</span>
-        <div className="mt-1 flex h-6 w-[110px] flex-row items-center justify-between rounded-full px-2 shadow-sm shadow-black/40 ring-1 ring-black/30">
-          <span className="mb-[2px] text-base font-semibold text-red-500">
-            visit now
-          </span>
-          <GrFormNext />
-        </div>
-      </div>
-    </div>
-  );
-};
-
-export default function page() {
-  const treatments = [
-    {
-      imageUrl: "/spa/spp1.jpg",
-      name: "Hydrafacial",
-      description: "Deep cleansing and hydration for radiant skin.",
-    },
-    {
-      imageUrl: "/spa/spp2.jpeg",
-      name: "Himalayan Salt Stone Massage",
-      description: "Relaxing massage using warm salt stones to soothe muscles.",
-    },
-    {
-      imageUrl: "/spa/spp3.avif",
-      name: "Float Therapy",
-      description:
-        "Stress relief and meditation in a sensory-free environment.",
-    },
-  ];
-
-  return (
-    <main className="flex w-full flex-col items-center ">
-      <div className="mt-4 flex h-16 w-[95%] flex-row items-center gap-2 rounded-full bg-white  px-3 py-2 shadow-md shadow-black/20 ring-1 ring-black/20 hover:ring-1 hover:ring-rose-500/50">
-        <div className="flex h-11 w-11 items-center justify-center rounded-full  p-1">
-          <FcSearch className="h-full w-full" />
-        </div>
-        <div className="flex h-full w-full flex-col ">
-          <span className="text-lg font-medium text-black/80">
-            Best spa near you
-          </span>
-          <div className="flex flex-row items-center text-sm font-semibold text-black/50">
-            <span> Hydrafacial</span>
-            <LuDot className=" text-black" />
-            <span>Himalayan</span>
-            <LuDot className=" text-black" />
-            <span>Cellulite</span>
-            <LuDot className=" text-black" />
-            <span>Exfoliation</span>
-          </div>
-        </div>
-      </div>
-
-      <div className="mb-2 mt-2 w-full">
-        <Image
-          src="/spa/spa1.png"
-          width={1920}
-          height={1080}
-          alt=""
-          className="shadow-md shadow-black/20"
-        />
-      </div>
-      <div className="mt-2 grid w-full grid-cols-1 gap-4">
-        {treatments.map((treatment, index) => (
-          <TreatmentItem2
+    <div className="p-4 -mt-2">
+      <h1 className="text-3xl font-bold text-center mb-4">Spa Center Treatments</h1>
+      <div className="grid grid-cols-2 gap-6">
+        {spaData.map((spa, index) => (
+          <div
             key={index}
-            imageUrl={treatment.imageUrl}
-            name={treatment.name}
-            description={treatment.description}
-          />
+            className="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-2xl transition-shadow duration-300"
+          >
+            <Image
+              src={spa.image}
+              alt={spa.alt}
+              width={200}
+              height={400}
+              className="w-full h-48 object-cover"
+            />
+            <div className="p-4">
+              <h2 className="text-lg truncate font-semibold">{spa.name}</h2>
+              <p className="text-sm text-gray-600 mb-2 truncate">{spa.description}</p>
+
+              {/* Gender Icons */}
+              <div className="flex items-center gap-1 text-gray-500 mb-4">
+                <FaMale className="text-blue-500" />
+                <FaFemale className="text-pink-500" />
+                <span className="text-xs font-bold">Unisex</span>
+              </div>
+
+              {/* Explore Now Button */}
+              <button className="w-full bg-gradient-to-r from-blue-500 to-indigo-600 text-white py-2 rounded-md text-sm font-semibold hover:from-blue-600 hover:to-indigo-700 transition-all duration-300">
+                Try it now
+              </button>
+            </div>
+          </div>
         ))}
       </div>
-
-      <div className="flex w-full flex-col gap-2 bg-blue-950/25 p-2 ">
-        <div className="overflow-hidden rounded-t-2xl shadow-md shadow-black/30 ">
-          <Image
-            src="/spa/spa4.png"
-            alt=""
-            width={1181}
-            height={945}
-            className=""
-          />
-        </div>
-        <div className="container mx-auto p-4">
-          <h2 className="mb-4 text-2xl font-bold">Our Spa Treatments</h2>
-          <TreatmentsGrid />
-        </div>
-      </div>
-    </main>
+    </div>
   );
 }

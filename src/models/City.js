@@ -1,5 +1,3 @@
-// models/City.js
-
 import mongoose from 'mongoose';
 
 const CitySchema = new mongoose.Schema({
@@ -8,9 +6,14 @@ const CitySchema = new mongoose.Schema({
         required: true,
         unique: true,
     },
-    areas: [{
-        type: String,
-    }],
+    latitude: {
+        type: Number,
+        required: true,
+    },
+    longitude: {
+        type: Number,
+        required: true,
+    },
 });
 
 export const City = mongoose.models.City || mongoose.model('City', CitySchema);

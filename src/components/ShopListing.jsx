@@ -14,7 +14,7 @@ import { LuPhoneCall } from "react-icons/lu";
 import { GrLocation } from "react-icons/gr";
 import { MdPeople } from "react-icons/md";
 
-const ShopListing = ({ shopResults }) => {
+const ShopListing = ({ shopResults, cityName, lastShopElementRef }) => {
     const [shopImages, setShopImages] = useState({});
     const [loadingImages, setLoadingImages] = useState({});
 
@@ -36,7 +36,7 @@ const ShopListing = ({ shopResults }) => {
     }, [shopResults]);
 
     const handleShareClick = (shopId) => {
-        const url = `http://localhost:3000/search/${shopId}`;
+        const url = `http://localhost:3000/${cityName}/${shopId}`;
         if (navigator.share) {
             navigator.share({
                 title: document.title,
@@ -79,13 +79,14 @@ const ShopListing = ({ shopResults }) => {
 
     return (
         <div className="mt-2 w-full space-y-4">
-            {shopResults.map((shop) => (
+            {shopResults.map((shop, index) => (
                 <div
-                    key={shop._id}
+                    key={`${shop._id}-${index}`} // Use a combination of _id and index to ensure uniqueness
+                    ref={index === shopResults.length - 1 ? lastShopElementRef : null}
                     className="relative mb-4 p-4 rounded-lg bg-white shadow-lg hover:shadow-xl transition-shadow duration-300"
                 >
                     {/* Image and Shop Details */}
-                    <Link href={`/search/${shop._id}`} className="flex gap-4">
+                    <Link href={`/${cityName}/${shop._id}`} className="flex gap-4">
                         <div className="flex-shrink-0">
                             <div className="relative h-36 w-28 rounded-md overflow-hidden shadow-md">
                                 {loadingImages[shop.Uid] ? (
@@ -118,10 +119,23 @@ const ShopListing = ({ shopResults }) => {
                                             {shop.Name}
                                         </span>
                                     </div>
-                                    <div className="flex items-center  gap-2 text-sm text-gray-500">
+                                    <div className="flex items-center gap-2 text-sm text-gray-500">
                                         <CiLocationOn />
                                         <span className="truncate">
-                                            {shop.Area}, {shop.City}
+                                            {shop.Address ? (
+                                                (() => {
+                                                    const addressParts = shop.Address.split(",").map(part => part.trim());
+                                                    if (addressParts.length >= 4) {
+                                                        return addressParts.slice(-4, -2).join(", ");
+                                                    } else if (addressParts.length === 3) {
+                                                        return addressParts.slice(-3, -1).join(", ");
+                                                    } else {
+                                                        return addressParts.join(", ");
+                                                    }
+                                                })()
+                                            ) : (
+                                                `${shop.Area}, ${shop.City}`
+                                            )}
                                         </span>
                                     </div>
                                 </div>
@@ -194,6 +208,7 @@ const ShopListing = ({ shopResults }) => {
             ))}
         </div>
     );
+
 };
 
 export default ShopListing;
